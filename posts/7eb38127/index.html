@@ -1,0 +1,713 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><title>力扣刷题日常(1-2) | 晨曦の小站</title><noscript>开启JavaScript才能访问本站哦~</noscript><link rel="icon" href="/img/nfa_icon.jpg"><link rel="stylesheet" href="/css/index.css?v=3.0.21"><link rel="canonical" href="https://blog.nfasystem.top/posts/7eb38127/index.html"><link rel="stylesheet" href="/libs/fontawesome/css/all.min.css"><!-- Feature-specific CSS--><!-- aplayer--><link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css"><!-- swiper--><link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/swiper@11.0.5/swiper-bundle.min.css"><!-- fancybox ui--><!-- katex--><link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"><!-- Open Graph--><meta name="description" content="力扣刷题日常(1-2) 第一题: 两数之和(难度: 简单) 原题: 给定一个整数数组 nums 和一个整数目标值 target，请你在该数组中找出 和为目标值 target 的那 两个 整数，并返回它们的数组下标。 你可以假设每种输入只会对应一个答案，并且你不能使用两次相同的元素。 你可以按任意顺序"><!-- pwa--><meta name="apple-mobile-web-app-capable" content="晨曦の小站"><meta name="theme-color" content="var(--efu-main)"><meta name="apple-mobile-web-app-status-bar-style" content="var(--efu-main)"><link rel="bookmark" href="/img/nfa_icon.jpg"><link rel="apple-touch-icon" href="/img/nfa_icon.jpg" sizes="180x180"><script>console.log(' %c Solitude %c ' + '3.0.21' + ' %c https://github.com/everfu/hexo-theme-solitude',
+    'background:#35495e ; padding: 1px; border-radius: 3px 0 0 3px;  color: #fff',
+    'background:#ff9a9a ; padding: 1px; border-radius: 0 3px 3px 0;  color: #fff',
+    'background:unset ; padding: 1px; border-radius: 0 3px 3px 0;  color: #fff')
+</script><script>let mdate = "7-7,9-18,12-13";
+mdate = (mdate.split(","));
+let ndate = new Date();
+for (let i of mdate) {
+    if (i === (ndate.getMonth()+1) + "-" + (ndate.getDate())) {
+        document.documentElement.classList.add('memorial');
+    }
+}
+</script><script>(()=>{
+        const saveToLocal = {
+            set: function setWithExpiry(key, value, ttl) {
+                if (ttl === 0)
+                    return
+                const now = new Date()
+                const expiryDay = ttl * 86400000
+                const item = {
+                    value: value,
+                    expiry: now.getTime() + expiryDay
+                }
+                localStorage.setItem(key, JSON.stringify(item))
+            },
+            get: function getWithExpiry(key) {
+                const itemStr = localStorage.getItem(key)
+
+                if (!itemStr) {
+                    return undefined
+                }
+                const item = JSON.parse(itemStr)
+                const now = new Date()
+
+                if (now.getTime() > item.expiry) {
+                    localStorage.removeItem(key)
+                    return undefined
+                }
+                return item.value
+            }
+        };
+        window.utils = {
+            saveToLocal: saveToLocal,
+            getCSS: (url, id = false) => new Promise((resolve, reject) => {
+              const link = document.createElement('link')
+              link.rel = 'stylesheet'
+              link.href = url
+              if (id) link.id = id
+              link.onerror = reject
+              link.onload = link.onreadystatechange = function() {
+                const loadState = this.readyState
+                if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+                link.onload = link.onreadystatechange = null
+                resolve()
+              }
+              document.head.appendChild(link)
+            }),
+            getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+              const script = document.createElement('script')
+              script.src = url
+              script.async = true
+              script.onerror = reject
+              script.onload = script.onreadystatechange = function() {
+                const loadState = this.readyState
+                if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+                script.onload = script.onreadystatechange = null
+                resolve()
+              }
+
+              Object.keys(attr).forEach(key => {
+                script.setAttribute(key, attr[key])
+              })
+
+              document.head.appendChild(script)
+            }),
+            addGlobalFn: (key, fn, name = false, parent = window) => {
+                const globalFn = parent.globalFn || {}
+                const keyObj = globalFn[key] || {}
+
+                if (name && keyObj[name]) return
+
+                name = name || Object.keys(keyObj).length
+                keyObj[name] = fn
+                globalFn[key] = keyObj
+                parent.globalFn = globalFn
+            },
+            addEventListenerPjax: (ele, event, fn, option = false) => {
+              ele.addEventListener(event, fn, option)
+              utils.addGlobalFn('pjax', () => {
+                  ele.removeEventListener(event, fn, option)
+              })
+            },
+            diffDateFormat: (selector) => {
+                selector.forEach(item => {
+                    const date = new Date(item.getAttribute('datetime') || item.textContent);
+                    item.textContent = (date.getMonth() + 1).toString()+'/'+date.getDate().toString();
+                });
+            },
+        }
+    })()</script><!-- theme--><script>initTheme = () => {
+    let isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const cachedMode = utils.saveToLocal.get('theme');
+    if (cachedMode === undefined) {
+        const nowMode =
+            isDarkMode ? 'dark' : 'light'
+        document.documentElement.setAttribute('data-theme', nowMode);
+    } else {
+        document.documentElement.setAttribute('data-theme', cachedMode);
+    }
+    typeof rm === 'object' && rm.mode(cachedMode === 'dark' && isDarkMode)
+}
+initTheme()</script><script>const GLOBAL_CONFIG = {
+    root: '/',
+    algolia: undefined,
+    localsearch: {"preload":false,"path":"/search.xml"},
+    runtime: '2025-07-10 00:00:00',
+    lazyload: {
+        enable: true,
+        error: '/img/error_load.avif'
+    },
+    copyright: {"limit":100,"author":"作者: NFA晨曦","link":"链接: ","source":"来源: 晨曦の小站","info":"著作权归作者所有。 商业转载请联系作者获得授权，非商业转载请注明出处。"},
+    highlight: {"limit":200,"expand":true,"copy":true,"syntax":"highlight.js"},
+    randomlink: false,
+    lang: {"theme":{"dark":"已切换至深色模式","light":"已切换至浅色模式"},"copy":{"success":"复制成功","error":"复制失败"},"backtop":"返回顶部","time":{"day":"天前","hour":"小时前","just":"刚刚","min":"分钟前","month":"个月前"},"day":" 天","f12":"开发者模式已打开，请遵循GPL协议。","totalk":"无需删除空行，直接输入评论即可","search":{"empty":"找不到你查询的内容：${query}","hit":"找到 ${hits} 条结果，用时 ${time} 毫秒","placeholder":"输入关键词快速查找","count":"共 <b>${count}</b> 条结果。","loading":"搜索中..."},"barrage":{"title":"热评"}},
+    aside: {
+        state: {
+            morning: "✨ 早上好，新的一天开始了",
+            noon: "🍲 午餐时间",
+            afternoon: "🌞 下午好",
+            night: "早点休息",
+            goodnight: "晚安 😴",
+        },
+        witty_words: ["你可以的","你一定可以的","祝你好运，陌生人"],
+        witty_comment: {
+            prefix: '好久不见，',
+            back: '欢迎再次回来，',
+        },
+    },
+    covercolor: {
+        enable: false
+    },
+    comment: {"avatar":"https://gravatar.com/avatar","commentBarrage":true},
+    lightbox: 'mediumZoom',
+    right_menu: {"mode":{"dark":"深色模式","light":"浅色模式"},"img_error":"此图片无法复制与下载","music":{"start":"播放音乐","stop":"暂停音乐"},"barrage":{"open":"显示热评","close":"关闭热评"},"ctrlOriginalMenu":"按住Ctrl+右键可打开浏览器右键菜单"},
+    translate: false,
+    lure: {"jump":"去哪了？快回来～","back":"Ciallo～(∠・ω< )⌒★"},
+    expire: false,
+};
+const routeSwitchConfig = {"enable":true,"routes":[{"name":"Vercel 线路","url":"https://cx.nfasystem.top"},{"name":"GitHub Pages","url":"https://nfachenxi.nfasystem.top"},{"name":"腾讯云 EdgePage","url":"https://chenxi.nfasystem.top"},{"name":"私人服务器","url":"https://blog.nfasystem.top"}]};
+if (routeSwitchConfig) {
+    window.routeSwitchConfig = routeSwitchConfig;
+}</script><script id="config-diff">var PAGE_CONFIG = {
+    is_post: true,
+    is_page: false,
+    is_home: false,
+    page: '',
+    toc: true,
+    comment: true,
+    ai_text: false,
+    color: false,
+}</script><meta name="generator" content="Hexo 8.1.1"></head><body id="body"><div><canvas id="universe"></canvas></div><div><div id="console"><div class="close-btn" onclick="sco.hideConsole()"><i class="solitude fas fa-xmark"></i></div><div class="console-card-group"><div class="console-card-group-left"><div class="console-card" id="card-newest-comments" onclick="sco.hideConsole()"><div class="card-content"><div class="author-content-item-tips">互动</div><div class="author-content-item-title">最新评论</div></div><div class="console_recentcomments"><script pjax>(async () => {
+    document.querySelector('.console-card .console_recentcomments').textContent = `加载中...`
+    const emojiReg = /<img class="tk-owo-emotion" [^>]+>/g
+    let cache = utils.saveToLocal.get('twikoo-recent-comments-console')
+    if (cache) {
+        setHtml(document.querySelector('.console-card .console_recentcomments'), cache)
+        return
+    }
+    let ls = []
+
+    await fetch('https://comment.nfasystem.top', {
+        method: "POST",
+        body: JSON.stringify({
+            "event": "GET_RECENT_COMMENTS",
+            "includeReply": true,
+            "pageSize": 6
+        }),
+        headers: {'Content-Type': 'application/json'}
+    }).then(res => res.json()).then(async ({data}) => {
+        for (const i of data) {
+            if (i.avatar === undefined) i.avatar = 'https://gravatar.com/avatar/avatar/d615d5793929e8c7d70eab5f00f7f5f1?d=mp'
+            let title = ''
+            if (i.url) {
+                await fetch(i.url).then(res => res.text()).then(html => {
+                    const parser = new DOMParser()
+                    const doc = parser.parseFromString(html, 'text/html')
+                    title = doc.querySelector('title').innerText
+                }).catch(() => {
+                    title = i.url
+                })
+            }
+            if (title.indexOf('|') > 0) {
+                title = title.split('|')[0]
+            }
+            ls.push({
+                avatar: i.avatar,
+                nick: i.nick,
+                title: title,
+                content: i.comment,
+                url: i.url + '#' + i.id,
+                time: i.created
+            })
+        }
+        setHtml(document.querySelector('.console-card .console_recentcomments'), ls)
+        utils.saveToLocal.set('twikoo-recent-comments-console', ls, 0.2)
+    });
+
+    function setHtml(el, data) {
+        el.innerHTML = data.length !== 0 ? data.map(i => `
+            <div class="comment-card" title="${i.title}" onclick="pjax.loadUrl('${i.url}')">
+                <div class="comment-info">
+                    <img src="${i.avatar}" class="nolazyload" alt="${i.nick}">
+                    <div>
+                        <span class="comment-user">${i.nick}</span>
+                    </div>
+                    <time class="comment-time" datetime="${new Date(i.time)}"></time>
+                </div>
+                <div class="comment-content">${formatContent(i.content)}</div>
+                <div class="comment-title">
+                <i class="solitude fas fa-comment"></i>
+                ${i.title}</div>
+            </div>
+        `).join('') : `暂无评论...`
+        if (typeof utils !== 'undefined') utils.diffDateFormat(document.querySelectorAll('.comment-time'))
+        else {
+            document.addEventListener('pjax:complete', () => utils.diffDateFormat(document.querySelectorAll('.comment-time')))
+            document.addEventListener('DOMContentLoaded', () => utils.diffDateFormat(document.querySelectorAll('.comment-time')))
+        }
+    }
+
+    function formatContent(content) {
+        content = content.replace(emojiReg, '表情')
+        content = content.replace(/<\/*br>|[\s\uFEFF\xA0]+/g, '');
+        content = content.replace(/<img.*?>/g, '[图片]');
+        content = content.replace(/<a.*?>.*?<\/a>/g, '[链接]');
+        content = content.replace(/<pre.*?>.*?<\/pre>/g, '[代码]');
+        content = content.replace(/<.*?>/g, '');
+        return content
+    }
+})()</script></div></div></div><div class="console-card-group-right"><div class="console-card tags" onclick="sco.hideConsole()"><div class="card-content"><div class="author-content-item-tips">标签</div><div class="author-content-item-title">寻找感兴趣的领域</div></div><div class="card-tag-cloud"><a href="/tags/Unity/">Unity<sup>6</sup></a><a href="/tags/Scroll-View/">Scroll-View<sup>1</sup></a><a href="/tags/Fire/">Fire<sup>1</sup></a><a href="/tags/%E7%AE%97%E6%B3%95/">算法<sup>9</sup></a><a href="/tags/%E5%8A%9B%E6%89%A3/">力扣<sup>9</sup></a><a href="/tags/%E5%B0%8F%E8%AF%B4/">小说<sup>1</sup></a><a href="/tags/%E7%BB%88%E6%9C%AB%E4%B9%8B%E6%97%85/">终末之旅<sup>1</sup></a></div></div><div class="console-card history" onclick="sco.hideConsole()"><ul class="card-archive-list"><li class="item"><a href="/archives/2025/11/"><span class="date">2025/11</span><div class="count-group"><span class="count">1</span><span class="unit">篇</span></div></a></li><li class="item"><a href="/archives/2025/08/"><span class="date">2025/08</span><div class="count-group"><span class="count">4</span><span class="unit">篇</span></div></a></li><li class="item"><a href="/archives/2025/07/"><span class="date">2025/07</span><div class="count-group"><span class="count">11</span><span class="unit">篇</span></div></a></li><li class="item"><a href="/archives/"><span class="date">全部文章</span><div class="count-group"><span class="count">16</span><span class="unit">篇</span></div></a></li></ul></div></div></div><div class="button-group"><div class="console-btn-item"><span class="darkmode_switchbutton" onclick="sco.switchDarkMode()" title="昼夜切换"><i class="solitude fas fa-circle-half-stroke"></i></span></div><div class="console-btn-item" id="consoleHideAside"><span class="asideSwitch" onclick="sco.switchHideAside()" title="边栏显示控制"><i class="solitude fas fa-arrows-left-right-to-line"></i></span></div><div class="console-btn-item" id="consoleMusic" onclick="sco.musicToggle()"><span class="music-switch" title="音乐开关"><i class="solitude fas fa-compact-disc"></i></span></div><div class="console-btn-item on" id="consoleCommentBarrage" onclick="sco.switchCommentBarrage()"><span class="commentBarrage"><i class="solitude fas fa-comment"></i></span></div></div><div class="console-mask" onclick="sco.hideConsole()"></div></div></div><div id="sidebar" style="zoom: 1;"><div id="menu-mask" style="display: none;"></div><div id="sidebar-menus"><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">16</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">7</div></a></div></div></div><span class="sidebar-menu-item-title">功能</span><div class="sidebar-menu-item"><span class="darkmode_switchbutton menu-child" onclick="sco.switchDarkMode()"><i class="solitude fas fa-circle-half-stroke"></i><span>显示模式</span></span></div><div class="back-menu-list-groups"><div class="back-menu-list-group"><div class="back-menu-list-title">我的项目</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://github.com/nfachenxi" title="我的Github主页"><img class="nolazyload back-menu-item-icon" src="/img/github.png" alt="我的Github主页"><span class="back-menu-item-text">我的Github主页</span></a></div></div></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><span>首页</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span>文库</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="solitude  fas fa-folder-closed"></i><span>全部文章</span></a></li><li><a class="site-page child" href="/categories/"><i class="solitude  fas fa-clone"></i><span>全部分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="solitude  fas fa-tags"></i><span>全部标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span>友链</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/links/"><i class="solitude  fas fa-user-group"></i><span>友情链接</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span>关于</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/about/"><i class="solitude  fas fa-user-circle"></i><span>关于我</span></a></li><li><a class="site-page child" href="/music/"><i class="solitude  fas fa-music"></i><span>音乐馆</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/message/"><span>留言板</span></a></div><div class="menus_item"><a class="site-page" href="/gallery/"><span>画廊</span></a></div></div><span class="sidebar-menu-item-title">标签</span><div class="card-tags"><div class="card-tag-cloud"><a href="/tags/Unity/">Unity<sup>6</sup></a><a href="/tags/Scroll-View/">Scroll-View<sup>1</sup></a><a href="/tags/Fire/">Fire<sup>1</sup></a><a href="/tags/%E7%AE%97%E6%B3%95/">算法<sup>9</sup></a><a href="/tags/%E5%8A%9B%E6%89%A3/">力扣<sup>9</sup></a><a href="/tags/%E5%B0%8F%E8%AF%B4/">小说<sup>1</sup></a><a href="/tags/%E7%BB%88%E6%9C%AB%E4%B9%8B%E6%97%85/">终末之旅<sup>1</sup></a></div></div><span class="sidebar-menu-item-title">网站信息</span><div class="webinfo"><div class="webinfo-item"><div class="item-name">全站字数 :</div><div class="item-count">58.6k</div></div></div></div></div><div><div class="needEndHide" id="rightside"><div class="rs_hide"><button class="mode" type="button" title="显示模式切换" onclick="sco.switchDarkMode()"><i class="fas fa-circle-half-stroke"></i></button><button class="aside pc" type="button" title="侧边栏" onclick="sco.switchHideAside()"><i class="fas fa-arrows-alt-h"></i></button></div><div class="rs_show"><button class="config" type="button" title="扩展" onclick="document.querySelector(&quot;.rs_hide&quot;).classList.toggle(&quot;show&quot;)"><i class="fas fa-gear fa-spin"></i></button><button class="mobile toc" type="button" title="目录" onclick="document.querySelector('#card-toc').classList.toggle('open')"><i class="fas fa-list"></i></button><button class="comment" type="button" title="评论" onclick="sco.scrollTo('post-comment')"><i class="fas fa-comment"></i></button><button class="barrage pc" type="button" title="弹" onclick="sco.switchCommentBarrage()"><span>弹</span></button><button class="top" type="button" title="返回顶部" onclick="sco.toTop()"><i class="fas fa-arrow-up"></i><span id="percent">0</span></button></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav class="show" id="nav"><div id="nav-group"><div id="blog_name"><div class="back-home-button" tabindex="-1"><i class="solitude fas fa-bars-progress"></i><div class="back-menu-list-groups"><div class="back-menu-list-group"><div class="back-menu-list-title">我的项目</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://github.com/nfachenxi" title="我的Github主页"><img class="nolazyload back-menu-item-icon" src="/img/github.png" alt="我的Github主页"><span class="back-menu-item-text">我的Github主页</span></a></div></div></div></div><a href="/" title="返回博客主页" id="site-name"><span class="title">晨曦の小站</span><i class="solitude fas fa-home"></i></a></div><div id="page-name-mask"><div id="page-name"><a id="page-name-text" onclick="sco.toTop()">力扣刷题日常(1-2)</a></div></div><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><span>首页</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span>文库</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="solitude  fas fa-folder-closed"></i><span>全部文章</span></a></li><li><a class="site-page child" href="/categories/"><i class="solitude  fas fa-clone"></i><span>全部分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="solitude  fas fa-tags"></i><span>全部标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span>友链</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/links/"><i class="solitude  fas fa-user-group"></i><span>友情链接</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span>关于</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/about/"><i class="solitude  fas fa-user-circle"></i><span>关于我</span></a></li><li><a class="site-page child" href="/music/"><i class="solitude  fas fa-music"></i><span>音乐馆</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/message/"><span>留言板</span></a></div><div class="menus_item"><a class="site-page" href="/gallery/"><span>画廊</span></a></div></div></div><div id="nav-left"></div><div id="nav-right"><div class="nav-button" id="travellings_button"><a class="site-page" target="_blank" rel="noopener" href="https://www.travellings.cn/go.html" title=""><i class="solitude fas fa-train"></i></a></div><div class="nav-button" id="randomPost_button"><a class="site-page" onclick="toRandomPost()" title="随机一篇文章" href="javascript:void(0);"><i class="solitude fas fa-dice-d6"></i></a></div><div class="nav-button" id="search-button"><a class="site-page social-icon search" href="javascript:void(0);" title="搜索"><i class="solitude fas fa-magnifying-glass"></i></a></div><div class="nav-button" id="nav-console"><a class="console_switchbutton" onclick="sco.showConsole()" title="中控台" href="javascript:void(0);"><label><i class="left"></i><i class="center"></i><i class="right"></i></label></a></div><div id="toggle-menu"><a class="site-page"><i class="solitude fas fa-bars"></i></a></div></div></div></nav><div class="coverdiv" id="coverdiv"><img class="nolazyload" id="post-cover" src="https://image.nfasystem.top/img-nfa/LK1-2.webp" alt="力扣刷题日常(1-2)"></div><div id="post-info"><div id="post-firstinfo"><div class="meta-firstline"><a class="post-meta-original" title="该文章为原创文章，注意版权协议">原创</a><span class="post-meta-categories"><a class="post-meta-categories" href="/categories/%E5%8A%9B%E6%89%A3%E5%88%B7%E9%A2%98/">力扣刷题</a></span><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E7%AE%97%E6%B3%95/"><span class="tags-name tags-punctuation"><i class="solitude fas fa-hashtag"></i>算法</span></a><a class="post-meta__tags" href="/tags/%E5%8A%9B%E6%89%A3/"><span class="tags-name tags-punctuation"><i class="solitude fas fa-hashtag"></i>力扣</span></a></div></div></div></div><h1 class="post-title">力扣刷题日常(1-2)</h1><div id="post-meta"><div class="meta-secondline"><span class="post-meta-date" title="发布于 2025-07-27 20:42:24"><i class="post-meta-icon solitude fas fa-calendar-days"></i><time datetime="2025-07-27T12:42:24.000Z">2025-07-27T12:42:24.000Z</time></span><span class="post-meta-date" title="最后更新于 2026-07-04 17:11:03"><i class="post-meta-icon solitude fas fa-arrows-rotate"></i><time datetime="2026-07-04T09:11:03.512Z">2026-07-04T09:11:03.512Z</time></span><span class="post-meta-wordcount"><i class="post-meta-icon solitude fas fa-file-word" title="文章字数"></i><span class="word-count">4.6k</span><span class="post-meta-separator"></span><i class="post-meta-icon solitude fas fa-clock" title="阅读耗时"></i><span>17 分钟</span></span></div></div></div><div class="post-radius-bottom"></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content article-container"><h1>力扣刷题日常(1-2)</h1>
+<h2 id="第一题-两数之和-难度-简单">第一题: 两数之和(难度: 简单)</h2>
+<h3 id="原题">原题:</h3>
+<p>给定一个整数数组 <code>nums</code> 和一个整数目标值 <code>target</code>，请你在该数组中找出 <strong>和为目标值</strong> <em><code>target</code></em> 的那 <strong>两个</strong> 整数，并返回它们的数组下标。</p>
+<p>你可以假设每种输入只会对应一个答案，并且你不能使用两次相同的元素。</p>
+<p>你可以按任意顺序返回答案。</p>
+<p><strong>示例 1：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：nums = [2,7,11,15], target = 9</span><br><span class="line">输出：[0,1]</span><br><span class="line">解释：因为 nums[0] + nums[1] == 9 ，返回 [0, 1] 。</span><br></pre></td></tr></table></figure>
+<p><strong>示例 2：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：nums = [3,2,4], target = 6</span><br><span class="line">输出：[1,2]</span><br></pre></td></tr></table></figure>
+<p><strong>示例 3：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：nums = [3,3], target = 6</span><br><span class="line">输出：[0,1]</span><br></pre></td></tr></table></figure>
+<p><strong>提示：</strong></p>
+<ul>
+<li><code>2 &lt;= nums.length &lt;= 104</code></li>
+<li><code>-109 &lt;= nums[i] &lt;= 109</code></li>
+<li><code>-109 &lt;= target &lt;= 109</code></li>
+<li><strong>只会存在一个有效答案</strong></li>
+</ul>
+<p>**进阶：**你可以想出一个时间复杂度小于 <code>O(n2)</code> 的算法吗？</p>
+<hr>
+<h3 id="官方提示-附翻译">官方提示(附翻译)</h3>
+<ol>
+<li>
+<p>A really brute force way would be to search for all possible pairs of numbers but that would be too slow. Again, it’s best to try out brute force solutions for just for completeness. It is from these brute force solutions that you can come up with optimizations.(一种非常暴力的方法是搜索所有可能的数字对，但这会太慢。同样，为了完整性，最好尝试一下暴力解决方案。正是从这些暴力解决方案中，你才能想出优化方法。)</p>
+</li>
+<li>
+<p>So, if we fix one of the numbers, say <code>x</code>, we have to scan the entire array to find the next number <code>y</code> which is <code>value - x</code> where value is the input parameter. Can we change our array somehow so that this search becomes faster?(所以，如果我们固定其中一个数字，比如说 <code>x</code> ，我们就得扫描整个数组来寻找下一个数字 <code>y</code> ，它等于 <code>value - x</code> ，其中 <code>value</code> 是输入参数。我们能否以某种方式改变我们的数组，从而使这种搜索变得更快？)</p>
+</li>
+<li>
+<p>The second train of thought is, without changing the array, can we use additional space somehow? Like maybe a hash map to speed up the search?(第二种思路是，在不改变数组的情况下，我们能否以某种方式使用额外的空间？比如，或许可以使用哈希表来加快搜索速度？)</p>
+</li>
+</ol>
+<hr>
+<h3 id="开始解题">开始解题:</h3>
+<h4 id="思路一-暴力解题">思路一: 暴力解题</h4>
+<p>老实说在第一眼看到这个题的时候,我也是有点懵的,因为这和我在其他平台见过的<strong>两数之和</strong>完全不同,不过没关系,我们完全可以先暴力解题.那对于这道题来说,暴力解题的方法显而易见,两个 <code>for</code> 循环,当然各位也可能直接就有了自己的想法,我这里只阐述我自己的看法.</p>
+<p>那么它的流程就应该像下面这样</p>
+<ol>
+<li><strong>选择第一个数:</strong> 我们从数组的第一个元素开始,用一个大循环(也可以叫做外层循环)来依次选择第一个数,比如 <code>nums[i]</code>.</li>
+<li><strong>选择第二个数:</strong> 对于每一个选定的 <code>nums[i]</code> ,我们都需要在数组的剩余部分寻找一个数 <code>nums[j]</code> ,看看它们俩的和是不是 <code>target</code> .所以,我们在大循环的内部再嵌套一个小循环(内层循环), 从 <code>i+1</code> 的位置开始遍历(因为我们找的是和,所以是一个组合问题,不是排列问题),这样我们不会重复使用同一个元素</li>
+<li><strong>判断和:</strong> 在小循环中,我们检查 <code>nums[i] + nums[j]</code> 是否等于 <code>target</code> .
+<ul>
+<li>如果相等,则可以直接直接输出它们的下标 <code>[i,j]</code>.</li>
+<li>如果不相等，则内圈循环继续，知道所有的可能性检查完。</li>
+</ul>
+</li>
+</ol>
+<p><strong>复杂度分析:</strong></p>
+<ul>
+<li><strong>时间复杂度</strong>: <code>O(n²)</code>。因为我们用了两层嵌套循环，在最坏的情况下，外层循环执行n次，内层循环平均执行n/2次，总的计算量与 <code>n * n</code> 成正比。</li>
+<li><strong>空间复杂度</strong>: <code>O(1)</code>。我们没有使用额外的、随数组大小变化的存储空间。</li>
+</ul>
+<p><strong>思路总结:</strong> 这个方法虽然简单，但当数组非常大时，<code>n²</code> 的计算量会变得非常缓慢。题目的“进阶”提示也暗示我们，有比 <code>O(n²)</code> 更好的方法。</p>
+<hr>
+<h4 id="思路二-哈希表优化">思路二: 哈希表优化</h4>
+<p>那么这类问题的标准是什么呢.核心思想就是用<em>空间换时间</em>.</p>
+<p>我们上面讲的暴力解法的瓶颈在于“寻找”第二个数的过程太慢了。对于每个 <code>nums[i]</code>，我们都要遍历一遍数组的剩余部分来寻找 <code>target - nums[i]</code>。如果能让这个“寻找”过程变得飞快，问题就解决了。</p>
+<p>那什么数据结构查找起来最快呢？<strong>哈希表</strong>（在C#中是 <code>Dictionary</code>，在C++中是 <code>unordered_map</code>）。它能提供平均 <code>O(1)</code> 时间复杂度的查找、插入和删除操作。</p>
+<p>那么我们的实现逻辑应该是这样的</p>
+<ol>
+<li><strong>创建哈希表</strong>：我们创建一个哈希表，用来存储我们“遍历过”的数字及其对应的下标。键（Key）是数组中的值，值（Value）是该值对应的下标。</li>
+<li><strong>单次遍历</strong>：我们只需要遍历一次数组。对于数组中的每一个元素 <code>nums[i]</code>：<br>
+a. <strong>计算补数</strong>：计算出我们需要的“另一半”：<code>complement = target - nums[i]</code>。<br>
+b. <strong>查找哈希表</strong>：现在，我们不去数组里傻傻地找 <code>complement</code> 了，而是去哈希表里查一下，看看 <code>complement</code> 这个键（Key）是否存在。
+<ul>
+<li><strong>如果存在</strong>：这说明 <code>complement</code> 这个数字我们之前已经遇到过了。我们直接从哈希表中取出它的下标，再配上当前元素的下标 <code>i</code>，就是最终答案。</li>
+<li><strong>如果不存在</strong>：说明到目前为止，我们还没遇到能和 <code>nums[i]</code> 配对的数字。那么，<code>nums[i]</code> 本身可能就是未来某个数字的“另一半”。所以，我们把当前数字 <code>nums[i]</code> 和它的下标 <code>i</code> 存入哈希表中，以备后续的元素查询。</li>
+</ul>
+</li>
+</ol>
+<p>这里我们举个<strong>栗子</strong>: <code>nums = [2, 7, 11, 15]</code>, <code>target = 9</code></p>
+<ul>
+<li><strong>初始化</strong>：创建一个空的哈希表 <code>map</code>。</li>
+<li><strong>循环 <code>i = 0</code></strong>，当前元素 <code>nums[0]</code> (值为 2)。
+<ul>
+<li>计算补数：<code>complement = 9 - 2 = 7</code>。</li>
+<li>查哈希表：<code>map</code> 中有键 <code>7</code> 吗？没有，<code>map</code> 是空的。</li>
+<li>将当前元素存入哈希表：<code>map.Add(2, 0)</code>。现在 <code>map</code> 是 <code>{2: 0}</code>。</li>
+</ul>
+</li>
+<li><strong>循环 <code>i = 1</code></strong>，当前元素 <code>nums[1]</code> (值为 7)。
+<ul>
+<li>计算补数：<code>complement = 9 - 7 = 2</code>。</li>
+<li>查哈希表：<code>map</code> 中有键 <code>2</code> 吗？<strong>有！</strong> 它的值（下标）是 <code>0</code>。</li>
+<li>我们找到了,返回 <code>map</code> 中 <code>2</code> 的下标 <code>0</code> 和当前下标 <code>1</code>。最终结果 <code>[0, 1]</code>。</li>
+</ul>
+</li>
+</ul>
+<p><strong>复杂度分析:</strong></p>
+<ul>
+<li><strong>时间复杂度</strong>: <code>O(n)</code>。我们只遍历了数组一次。哈希表的插入和查找操作平均都是 <code>O(1)</code>。</li>
+<li><strong>空间复杂度</strong>: <code>O(n)</code>。在最坏的情况下，我们可能需要将数组中所有元素都存入哈希表。</li>
+</ul>
+<p><strong>思路总结:</strong> 这个方法用一个哈希表的额外空间，将时间复杂度从 <code>O(n²)</code> 成功降到了 <code>O(n)</code>，是这道题的最优解。</p>
+<hr>
+<h3 id="解法语句-仅方法二">解法语句(仅方法二):</h3>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Solution</span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">int</span>[] <span class="title">TwoSum</span>(<span class="params"><span class="built_in">int</span>[] nums, <span class="built_in">int</span> target</span>)</span> &#123;</span><br><span class="line"></span><br><span class="line">        Dictionary&lt;<span class="built_in">int</span>, <span class="built_in">int</span>&gt; map = <span class="keyword">new</span> Dictionary&lt;<span class="built_in">int</span>, <span class="built_in">int</span>&gt;();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; nums.Length; i++) &#123;</span><br><span class="line">            <span class="built_in">int</span> currentNum = nums[i];</span><br><span class="line">            <span class="built_in">int</span> complement = target - currentNum;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (map.ContainsKey(complement)) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">int</span>[] &#123; map[complement], i &#125;;</span><br><span class="line">            &#125;</span><br><span class="line">            map[currentNum] = i;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">int</span>[<span class="number">0</span>]; </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里最主要的方法是**<code>map.ContainsKey(complement)</code>**</p>
+<ul>
+<li>这是一个非常重要且常用的方法，用于检查字典中是否包含指定的键（Key）。它返回一个布尔值（<code>true</code> 或 <code>false</code>），并且这个操作的平均时间复杂度是 <code>O(1)</code>，非常高效。</li>
+</ul>
+<hr>
+<h3 id="知识点总结与举一反三-待补充">知识点总结与举一反三(待补充)</h3>
+<hr>
+<h2 id="第二题-两数相加-难度-中等">第二题: 两数相加(难度: 中等)</h2>
+<p>原题:</p>
+<p>给你两个 <strong>非空</strong> 的链表，表示两个非负的整数。它们每位数字都是按照 <strong>逆序</strong> 的方式存储的，并且每个节点只能存储 <strong>一位</strong> 数字。</p>
+<p>请你将两个数相加，并以相同形式返回一个表示和的链表。</p>
+<p>你可以假设除了数字 0 之外，这两个数都不会以 0 开头。</p>
+<p><strong>示例 1：</strong></p>
+<p><img src= "" data-lazy-src="https://assets.leetcode-cn.com/aliyun-lc-upload/uploads/2021/01/02/addtwonumber1.jpg" alt="img"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：l1 = [2,4,3], l2 = [5,6,4]</span><br><span class="line">输出：[7,0,8]</span><br><span class="line">解释：342 + 465 = 807.</span><br></pre></td></tr></table></figure>
+<p><strong>示例 2：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：l1 = [0], l2 = [0]</span><br><span class="line">输出：[0]</span><br></pre></td></tr></table></figure>
+<p><strong>示例 3：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：l1 = [9,9,9,9,9,9,9], l2 = [9,9,9,9]</span><br><span class="line">输出：[8,9,9,9,0,0,0,1]</span><br></pre></td></tr></table></figure>
+<p><strong>提示：</strong></p>
+<ul>
+<li>每个链表中的节点数在范围 <code>[1, 100]</code> 内</li>
+<li><code>0 &lt;= Node.val &lt;= 9</code></li>
+<li>题目数据保证列表表示的数字不含前导零</li>
+</ul>
+<hr>
+<h3 id="开始解题-2">开始解题:</h3>
+<p>那我作为 Unity 工程师呢,我可以把这个问题进行一个比喻.就比如我们现在有几条路(链表),路上插着几个独立的路标(节点),每个路标上只有一个数字,并且指向下一块路标,我们现在的任务就是沿着两条这样的路径，把每个对应路标上的数字加起来，形成一条新的路径。</p>
+<h4 id="算法逻辑详解">算法逻辑详解:</h4>
+<p>其实这道题的思路和我们小学学过的列竖式加法的过程类似.</p>
+<p>以 <code>342 + 465</code> 为例,我们从个位开始加. <code>2+5=7</code>.然后是十位 <code>4+6=10</code>,我们写下0,然后往百位进一位.最后是百位, <code>3+4</code>,再加上刚才进上来的<code>1</code>,最后等于<code>8</code>.最后结果为<code>807</code>.</p>
+<p>那么这道题目给我们创造了这一个环境,数字是 <strong>逆序</strong> 存储的.也就是说,链表的第一个节点,就是数字的 <strong>个位</strong>.</p>
+<ul>
+<li><code>l1 = [2,4,3]</code> 代表 <code>342</code></li>
+<li><code>l2 = [5,6,4]</code> 代表 <code>465</code></li>
+</ul>
+<p>链表的头节点 <code>l1.val=2</code> 和 <code>l2.val=5</code> 正好就是个位数</p>
+<p>那么我们的算法步骤就可以进行分解了</p>
+<ol>
+<li>
+<p>初始化:</p>
+<ul>
+<li>我们需要一个变量 <code>carry</code> 来存储“进位”，初始时没有进位，所以 <code>carry = 0</code>。</li>
+<li>我们需要一条新的链表来存放结果。为了方便操作，我们通常会创建一个“虚拟头节点”（dummy head）。这就像在拼乐高前，先放一个临时的底座，最后拼好了再把这个底座拿掉。我们用一个指针 <code>current</code> 指向这个虚拟头节点，之后每产生一个新节点，就接在 <code>current</code> 后面。</li>
+</ul>
+</li>
+<li>
+<p>遍历与计算:</p>
+<ul>
+<li>
+<p>我们从两个链表的头节点开始，同步向后遍历。</p>
+</li>
+<li>
+<p>在每一步，我们都取出两个链表当前节点的值。如果其中一个链表已经遍历完了（比如 <code>l1</code> 比 <code>l2</code> 短），我们就认为它的当前值是 <code>0</code>。</p>
+</li>
+<li>
+<p>计算总和：<code>sum = l1当前节点值 + l2当前节点值 + carry</code>。</p>
+<ul>
+<li>根据 <code>sum</code> 计算出要存入新节点的值和新的进位：
+<ul>
+<li>新节点的值应该是 <code>sum % 10</code> （<code>%</code> 是取余数，比如 <code>17 % 10</code> 结果是 <code>7</code>）。</li>
+<li>新的进位 <code>carry</code> 应该是 <code>sum / 10</code> （在C#中，两个整数相除会自动舍去小数，比如 <code>17 / 10</code> 结果是 <code>1</code>）。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>创建这个新节点，并将其链接到结果链表的末尾。然后，<code>current</code> 指针也向后移动到这个新节点上，为下一次链接做准备。</p>
+</li>
+</ul>
+</li>
+<li>
+<p>循环终止条件: 只要两个链表中还有一个没有遍历完，或者 <code>carry</code> 不为0（处理最高位的进位，例如 <code>99+1=100</code>），我们的循环就要继续。</p>
+</li>
+<li>
+<p>返回结果: 循环结束后，我们想要的完整结果链表就是我们创建的“虚拟头节点”的下一个节点。</p>
+</li>
+</ol>
+<p>我们简单举一个栗子吧:</p>
+<p><strong><code>l1 = [2,4,3]</code>, <code>l2 = [5,6,4]</code></strong></p>
+<ul>
+<li><strong>第1步 (个位):</strong>
+<ul>
+<li><code>carry = 0</code></li>
+<li><code>sum = 2 + 5 + 0 = 7</code></li>
+<li>新节点值为 <code>7 % 10 = 7</code>，新 <code>carry = 7 / 10 = 0</code>。</li>
+<li>结果链表: <code>[7]</code></li>
+</ul>
+</li>
+<li><strong>第2步 (十位):</strong>
+<ul>
+<li><code>carry = 0</code></li>
+<li><code>sum = 4 + 6 + 0 = 10</code></li>
+<li>新节点值为 <code>10 % 10 = 0</code>，新 <code>carry = 10 / 10 = 1</code>。</li>
+<li>结果链表: <code>[7, 0]</code></li>
+</ul>
+</li>
+<li><strong>第3步 (百位):</strong>
+<ul>
+<li><code>carry = 1</code></li>
+<li><code>sum = 3 + 4 + 1 = 8</code></li>
+<li>新节点值为 <code>8 % 10 = 8</code>，新 <code>carry = 8 / 10 = 0</code>。</li>
+<li>结果链表: <code>[7, 0, 8]</code></li>
+</ul>
+</li>
+<li><strong>结束:</strong>
+<ul>
+<li><code>l1</code> 和 <code>l2</code> 都遍历完了，<code>carry</code> 也变回了 <code>0</code>。循环结束。返回结果 <code>[7, 0, 8]</code>。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="解法语句">解法语句:</h3>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"> * public class ListNode &#123;</span></span><br><span class="line"><span class="comment"> *     public int val;</span></span><br><span class="line"><span class="comment"> *     public ListNode next;</span></span><br><span class="line"><span class="comment"> *     public ListNode(int val=0, ListNode next=null) &#123;</span></span><br><span class="line"><span class="comment"> *         this.val = val;</span></span><br><span class="line"><span class="comment"> *         this.next = next;</span></span><br><span class="line"><span class="comment"> *     &#125;</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Solution</span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> ListNode <span class="title">AddTwoNumbers</span>(<span class="params">ListNode l1, ListNode l2</span>)</span> &#123;</span><br><span class="line">        <span class="comment">// 1. 初始化：创建一个虚拟头节点，方便我们操作链表</span></span><br><span class="line">        ListNode dummyHead = <span class="keyword">new</span> ListNode(<span class="number">0</span>); </span><br><span class="line">        <span class="comment">// 创建一个“当前”指针，用于构建新的结果链表</span></span><br><span class="line">        ListNode current = dummyHead; </span><br><span class="line">        <span class="comment">// 初始化进位值为0</span></span><br><span class="line">        <span class="built_in">int</span> carry = <span class="number">0</span>; </span><br><span class="line"></span><br><span class="line">        <span class="comment">// 2. 循环：只要l1或l2不为空，或者还有进位，就继续计算</span></span><br><span class="line">        <span class="keyword">while</span> (l1 != <span class="literal">null</span> || l2 != <span class="literal">null</span> || carry != <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="comment">// 获取l1和l2的当前节点值，如果节点为空，则值为0</span></span><br><span class="line">            <span class="built_in">int</span> v1 = (l1 != <span class="literal">null</span>) ? l1.val : <span class="number">0</span>;</span><br><span class="line">            <span class="built_in">int</span> v2 = (l2 != <span class="literal">null</span>) ? l2.val : <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 计算总和 = 节点1的值 + 节点2的值 + 上一步的进位</span></span><br><span class="line">            <span class="built_in">int</span> sum = v1 + v2 + carry;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 更新进位值，为下一次循环做准备</span></span><br><span class="line">            carry = sum / <span class="number">10</span>;</span><br><span class="line">            </span><br><span class="line">            <span class="comment">// 创建新节点，值为总和的个位数</span></span><br><span class="line">            <span class="comment">// 并将其链接到结果链表的末尾</span></span><br><span class="line">            current.next = <span class="keyword">new</span> ListNode(sum % <span class="number">10</span>);</span><br><span class="line">            </span><br><span class="line">            <span class="comment">// 将“当前”指针移动到新创建的节点上</span></span><br><span class="line">            current = current.next;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 将l1和l2指针向后移动（如果它们不为空）</span></span><br><span class="line">            <span class="keyword">if</span> (l1 != <span class="literal">null</span>) &#123;</span><br><span class="line">                l1 = l1.next;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (l2 != <span class="literal">null</span>) &#123;</span><br><span class="line">                l2 = l2.next;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 3. 返回结果：虚拟头节点的下一个节点才是我们真正结果链表的头</span></span><br><span class="line">        <span class="keyword">return</span> dummyHead.next;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h4 id="代码讲解">代码讲解:</h4>
+<ol>
+<li>那么上面的代码用到了一个特殊的用法</li>
+</ol>
+<p><strong><code>int v1 = (l1 != null) ? l1.val : 0;</code> - 三元运算符</strong></p>
+<ul>
+<li>这是一个非常简洁的 <code>if-else</code> 写法，称为<strong>三元运算符</strong>。</li>
+<li>它的结构是 <code>condition ? value_if_true : value_if_false</code>。</li>
+<li>这行代码等价于：</li>
+</ul>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span> v1;</span><br><span class="line"><span class="keyword">if</span> (l1 != <span class="literal">null</span>) &#123;</span><br><span class="line">    v1 = l1.val;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    v1 = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>对 <code>dummyHead</code> 和最后的 <code>return dummyHead.next</code> 的讲解:</li>
+</ol>
+<p><code>dummyHead</code> 有一个名字----虚拟头节点/哨兵节点,是一个非常经典且有用的技巧.</p>
+<p>我们先来一个简单的比喻吧----穿珠子</p>
+<p>想象一下，我们要用线把一堆珠子（<code>ListNode</code>）串成一条手链（结果链表）。</p>
+<ul>
+<li>
+<p><strong>没有 <code>dummyHead</code> 的情况：</strong></p>
+<ol>
+<li>我们拿起第一个珠子。因为是第一个，我们的两只手都很忙，一只手要捏住珠子，另一只手要拿线准备穿过去。这个动作很特别。</li>
+<li>然后，我们拿起第二个珠子。现在我们一只手捏着已经穿好的第一个珠子和线头，另一只手拿新珠子穿进去。这个动作和第一步不一样。</li>
+<li>之后所有珠子，都重复第二步的动作。</li>
+</ol>
+<p>我们看，<strong>处理第一个珠子的方式和处理后续所有珠子的方式是不同的</strong>。在代码里，这就意味着你需要在循环里写一个 <code>if</code> 判断，来专门处理“头节点为空”的特殊情况。</p>
+</li>
+<li>
+<p><strong>有 <code>dummyHead</code> 的情况：</strong></p>
+<ol>
+<li>我们不是直接开始穿珠子，而是先在线的末端系上一个<strong>临时的、不起眼的小疙瘩</strong>（这就是 <code>dummyHead</code>）。这个小疙瘩你最后会剪掉。</li>
+<li>现在，我们拿起第一个“真正”的珠子，把它穿在线上，挨着那个小疙瘩。</li>
+<li>我们拿起第二个“真正”的珠子，把它穿在线上，挨着第一个珠子。</li>
+<li>我们拿起第 N 个“真正”的珠子，把它穿在线上，挨着第 N-1 个珠子。</li>
+</ol>
+<p>发现了么？有了这个“小疙瘩”作为起点，我们<strong>每一次穿珠子的动作都变得完全一样了</strong>！你不需要再特殊处理第一个珠子。</p>
+</li>
+</ul>
+<p>这个比喻可能还是有些难以理解,没关系,我们回到代码里看看</p>
+<ul>
+<li>为什么需要 <code>dummyHead</code>？——为了简化操作</li>
+</ul>
+<p>我们的目标是创建一个新链表。在循环的每一步，我们都会创建一个新节点 <code>newNode</code>。</p>
+<p><strong>如果没有 <code>dummyHead</code>，代码会长这样：</strong></p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> ListNode <span class="title">AddTwoNumbers</span>(<span class="params">ListNode l1, ListNode l2</span>)</span> &#123;</span><br><span class="line">    ListNode resultHead = <span class="literal">null</span>; <span class="comment">// 结果链表的头，一开始是空的</span></span><br><span class="line">    ListNode current = <span class="literal">null</span>;    <span class="comment">// 当前节点指针</span></span><br><span class="line">    <span class="built_in">int</span> carry = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (l1 != <span class="literal">null</span> || l2 != <span class="literal">null</span> || carry != <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="comment">// sum, carry 的逻辑不变</span></span><br><span class="line">        <span class="built_in">int</span> sum = ...;</span><br><span class="line">        carry = sum / <span class="number">10</span>;</span><br><span class="line">      </span><br><span class="line">        ListNode newNode = <span class="keyword">new</span> ListNode(sum % <span class="number">10</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 这里是关键的、繁琐的部分</span></span><br><span class="line">        <span class="keyword">if</span> (resultHead == <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="comment">// 如果是第一个节点</span></span><br><span class="line">            resultHead = newNode;</span><br><span class="line">            current = newNode;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">// 如果不是第一个节点</span></span><br><span class="line">            current.next = newNode;</span><br><span class="line">            current = current.next;</span><br><span class="line">        &#125;</span><br><span class="line">      </span><br><span class="line">        <span class="comment">//移动 l1, l2 的逻辑不变</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> resultHead;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>看到 <code>if-else</code> 了吗？它必须在<strong>每一次循环</strong>中都进行判断，这既不优雅，也稍微增加了一点点计算开销。</p>
+<p><strong>有了 <code>dummyHead</code>，代码就变得统一和简洁：</strong></p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">ListNode dummyHead = <span class="keyword">new</span> ListNode(<span class="number">0</span>); <span class="comment">// 创建“小疙瘩”</span></span><br><span class="line">ListNode current = dummyHead;         <span class="comment">// 用手先捏住这个“小疙瘩”</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> (l1 != <span class="literal">null</span> || l2 != <span class="literal">null</span> || carry != <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="comment">// 计算逻辑不变</span></span><br><span class="line">  </span><br><span class="line">    <span class="comment">// 每次的动作都完全一样：</span></span><br><span class="line">    <span class="comment">// 把新珠子(newNode)接到手捏着的那个珠子(current)后面</span></span><br><span class="line">    current.next = <span class="keyword">new</span> ListNode(sum % <span class="number">10</span>); </span><br><span class="line">    <span class="comment">// 然后手向前移动，捏住刚穿好的新珠子</span></span><br><span class="line">    current = current.next; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>dummyHead</code> 的存在，确保了 <code>current</code> 指针一开始就指向一个实际的对象，而不是 <code>null</code>。因此，<code>current.next = ...</code> 这个操作永远不会因为 <code>current</code> 是 <code>null</code> 而报错。我们成功地<strong>消除了对第一个节点的特殊处理</strong>。</p>
+<ul>
+<li>为什么是 <code>return dummyHead.next</code>？——因为“小疙瘩”不是我们要的结果</li>
+</ul>
+<p>循环结束后，我们的链表结构是这样的（以 <code>[7,0,8]</code> 为例)：</p>
+<p><img src= "" data-lazy-src="https://image.nfasystem.top/img-nfa/2025%2F07%2F551a275f6e18a66f86eb2405111b28d8.ext.jpg" alt="IMG_20250727_223103"></p>
+<ul>
+<li><code>dummyHead</code> 这个变量，从始至终都指向我们最开始创建的那个值为 <code>0</code> 的<strong>临时节点</strong>。它就像那个我们不打算送人的“小疙瘩”。</li>
+<li>我们真正想要的手链（结果链表），是从第一个有意义的珠子，也就是值为 <code>7</code> 的那个节点开始的。</li>
+<li>这个值为 <code>7</code> 的节点，正好是 <code>dummyHead</code> 节点的 <code>next</code> 指针所指向的地方。</li>
+</ul>
+<p>所以，<code>return dummyHead.next;</code> 的意思就是：“好了，手链穿完了，现在我们把开头的那个临时小疙瘩忽略掉，把从第一个真正的珠子开始的整条链返回给别人。”</p>
+<p><strong>总结一下：</strong></p>
+<ul>
+<li><strong><code>dummyHead</code></strong> 是一个编程技巧，它是一个<strong>辅助性的、不属于最终结果</strong>的节点。它的核心作用是<strong>简化链表头部的插入操作，让循环逻辑保持统一</strong>，避免对空链表进行特殊判断。</li>
+<li><strong><code>return dummyHead.next</code></strong> 是因为 <code>dummyHead</code> 本身是我们的“脚手架”，而真正的“建筑”（结果链表）是从它的下一个节点开始的。返回 <code>dummyHead.next</code> 就是返回我们真正构建的结果。</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author_group"><div class="post-copyright__author_img"><img class="post-copyright__author_img_front" src="/img/avatar.png"></div><div class="post-copyright__author_name">NFA晨曦</div><div class="post-copyright__author_desc">记录与分享</div></div><div class="post-tools" id="post-tools"><div class="post-tools-left"><div id="quit-box" onclick="RemoveRewardMask()"></div><div class="post-reward"><div class="reward-button" title="赞赏作者" onclick="AddRewardMask()"><i class="solitude fas fa-heart"></i>赞赏作者</div><div class="reward-main"><ul class="reward-all"><span class="reward-title">感谢您的赞赏</span><ul class="reward-group"><li class="reward-item"><a href="https://blog.nfasystem.top/img/wechat.jpg"><img class="post-qr-code-img nolazyload" src="/img/wechat.jpg" alt="微信赞赏码" style="border-color: var(--efu-black)"></a><div class="post-qr-code-desc">微信赞赏码</div></li></ul><a class="reward-main-btn" href="/about/"><div class="reward-text">赞赏名单</div><div class="reward-dec"></div></a></ul></div></div><script>function RemoveRewardMask() {
+    let rewardMainElements = document.querySelectorAll(".reward-main");
+    let quitBoxElement = document.querySelector("#quit-box");
+
+    rewardMainElements.forEach(element => {
+        element.style.display = "none";
+    });
+
+    if (quitBoxElement) {
+        quitBoxElement.style.display = "none";
+    }
+}
+
+function AddRewardMask() {
+    let rewardMainElements = document.querySelectorAll(".reward-main");
+    let quitBoxElement = document.querySelector("#quit-box");
+
+    rewardMainElements.forEach(element => {
+        element.style.display = "flex";
+    });
+
+    if (quitBoxElement) {
+        quitBoxElement.style.display = "flex";
+    }
+}</script></div></div><div class="post-copyright__notice"><span class="post-copyright-info">本文是原创文章，采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans">CC BY-NC-SA 4.0</a>协议，完整转载请注明来自<a href="/">晨曦の小站</a></span></div></div><div class="post-tools-right"><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E7%AE%97%E6%B3%95/"><span class="tags-punctuation"><i class="solitude fas fa-hashtag"></i>算法<span class="tagsPageCount">9</span></span></a><a class="post-meta__tags" href="/tags/%E5%8A%9B%E6%89%A3/"><span class="tags-punctuation"><i class="solitude fas fa-hashtag"></i>力扣<span class="tagsPageCount">9</span></span></a></div></div></div><nav class="needEndHide pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/82e0ee2a/"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">力扣刷题日常(3-4)</div></div></a></div><div class="next-post pull-right"><a href="/posts/ec87c3ca/"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">从 Rider 的一条建议谈起：深入理解 C# 表达式体成员</div></div></a></div></nav>
+        <div class="relatedPosts">
+            <div class="headline">
+                <i class="solitude fas fa-star"></i>
+                <span>喜欢这篇的人也看了</span>
+                <div class="relatedPosts-link">
+                    <a onclick="event.preventDefault(); toRandomPost();" href="javascript:void(0);" rel="external nofollow" data-pjax-state="">随便逛逛</a>
+                </div>
+            </div>
+            <div class="relatedPosts-list">
+            <div>
+                <a href="/posts/6491732a/" title="力扣刷题日常(17-18)">
+                    <img class="cover" src= "" data-lazy-src="https://image.nfasystem.top/img-nfa/LK17-18.webp" alt="cover">
+                    <div class="content is-center">
+                        <div class="title">力扣刷题日常(17-18)</div>
+                    </div>
+                </a>
+            </div>
+            <div>
+                <a href="/posts/80d20dc4/" title="力扣刷题日常(15-16)">
+                    <img class="cover" src= "" data-lazy-src="https://image.nfasystem.top/img-nfa/LK15-16.webp" alt="cover">
+                    <div class="content is-center">
+                        <div class="title">力扣刷题日常(15-16)</div>
+                    </div>
+                </a>
+            </div>
+            </div>
+        </div><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="solitude fas fa-comment"></i><span> 评论</span><span class="count"> (<span class="twikoo-count"><i class="solitude fas fa-spinner fa-spin"></i></span>)</span></div></div><div class="comment-wrap"><div id="twikoo-wrap"></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-content"><div class="card-info-avatar is-center"><div class="top-group"><div class="sayhi" id="sayhi" onclick="sco.changeWittyWord()"></div></div></div><div class="avatar"><img alt="头像" src="/img/avatar.png"></div><div class="description">这是晨曦の博客，专注于分享，由第四领域——晨曦负责与维护。</div><div class="bottom-group"><span class="left"><div class="name">NFA晨曦</div><div class="desc">只有迎风，风筝才能飞得更高。</div></span><div class="social-icons is-center"><a class="social-icon" target="_blank" rel="noopener" href="https://github.com/nfachenxi" title="Github"><i class="solitude  fab fa-github"></i></a><a class="social-icon" target="_blank" rel="noopener" href="https://space.bilibili.com/316806831" title="Bilibili"><i class="solitude  fab fa-bilibili"></i></a></div></div></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="solitude fas fa-bars"></i><span>文章目录</span></div><div class="toc-content" id="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">力扣刷题日常(1-2)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E9%A2%98-%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8C-%E9%9A%BE%E5%BA%A6-%E7%AE%80%E5%8D%95"><span class="toc-text">第一题: 两数之和(难度: 简单)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%9F%E9%A2%98"><span class="toc-text">原题:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%98%E6%96%B9%E6%8F%90%E7%A4%BA-%E9%99%84%E7%BF%BB%E8%AF%91"><span class="toc-text">官方提示(附翻译)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%80%E5%A7%8B%E8%A7%A3%E9%A2%98"><span class="toc-text">开始解题:</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%9D%E8%B7%AF%E4%B8%80-%E6%9A%B4%E5%8A%9B%E8%A7%A3%E9%A2%98"><span class="toc-text">思路一: 暴力解题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%9D%E8%B7%AF%E4%BA%8C-%E5%93%88%E5%B8%8C%E8%A1%A8%E4%BC%98%E5%8C%96"><span class="toc-text">思路二: 哈希表优化</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E6%B3%95%E8%AF%AD%E5%8F%A5-%E4%BB%85%E6%96%B9%E6%B3%95%E4%BA%8C"><span class="toc-text">解法语句(仅方法二):</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93%E4%B8%8E%E4%B8%BE%E4%B8%80%E5%8F%8D%E4%B8%89-%E5%BE%85%E8%A1%A5%E5%85%85"><span class="toc-text">知识点总结与举一反三(待补充)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E9%A2%98-%E4%B8%A4%E6%95%B0%E7%9B%B8%E5%8A%A0-%E9%9A%BE%E5%BA%A6-%E4%B8%AD%E7%AD%89"><span class="toc-text">第二题: 两数相加(难度: 中等)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%80%E5%A7%8B%E8%A7%A3%E9%A2%98-2"><span class="toc-text">开始解题:</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AE%97%E6%B3%95%E9%80%BB%E8%BE%91%E8%AF%A6%E8%A7%A3"><span class="toc-text">算法逻辑详解:</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E6%B3%95%E8%AF%AD%E5%8F%A5"><span class="toc-text">解法语句:</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E8%AE%B2%E8%A7%A3"><span class="toc-text">代码讲解:</span></a></li></ol></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="solitude fas fa-map"></i><span>最近发布</span></div><div class="aside-list"><a class="aside-list-item" href="/posts/81s2cdc0/" title="序章"><div class="thumbnail"><img alt="序章" src="/img/deb5.webp"></div><div class="content"><span class="title" href="/posts/81s2cdc0/" title="序章">序章</span><span class="categories" href="/posts/81s2cdc0/">小说</span></div></a><a class="aside-list-item" href="/posts/6491732a/" title="力扣刷题日常(17-18)"><div class="thumbnail"><img alt="力扣刷题日常(17-18)" src="https://image.nfasystem.top/img-nfa/LK17-18.webp"></div><div class="content"><span class="title" href="/posts/6491732a/" title="力扣刷题日常(17-18)">力扣刷题日常(17-18)</span><span class="categories" href="/posts/6491732a/">力扣刷题</span></div></a><a class="aside-list-item" href="/posts/80d20dc4/" title="力扣刷题日常(15-16)"><div class="thumbnail"><img alt="力扣刷题日常(15-16)" src="https://image.nfasystem.top/img-nfa/LK15-16.webp"></div><div class="content"><span class="title" href="/posts/80d20dc4/" title="力扣刷题日常(15-16)">力扣刷题日常(15-16)</span><span class="categories" href="/posts/80d20dc4/">力扣刷题</span></div></a><a class="aside-list-item" href="/posts/3da49ae6/" title="力扣刷题日常(13-14)"><div class="thumbnail"><img alt="力扣刷题日常(13-14)" src="https://image.nfasystem.top/img-nfa/LK13-14.webp"></div><div class="content"><span class="title" href="/posts/3da49ae6/" title="力扣刷题日常(13-14)">力扣刷题日常(13-14)</span><span class="categories" href="/posts/3da49ae6/">力扣刷题</span></div></a><a class="aside-list-item" href="/posts/113e6e00/" title="力扣刷题日常(11-12)"><div class="thumbnail"><img alt="力扣刷题日常(11-12)" src="https://image.nfasystem.top/img-nfa/LK11-12.webp"></div><div class="content"><span class="title" href="/posts/113e6e00/" title="力扣刷题日常(11-12)">力扣刷题日常(11-12)</span><span class="categories" href="/posts/113e6e00/">力扣刷题</span></div></a></div></div><div class="card-widget card-route-switch"><div class="card-content"><div class="item-headline"><i class="fas fa-route"></i><span>线路切换</span></div><div class="route-list" id="route-list"><div class="route-item" data-url="https://cx.nfasystem.top" data-name="Vercel 线路"><div class="route-name">Vercel 线路</div><div class="route-right"><div class="route-ping"><span class="ping-value">--</span><span class="ping-unit">ms</span></div><div class="route-status"><i class="fas fa-circle-notch fa-spin"></i></div></div></div><div class="route-item" data-url="https://nfachenxi.nfasystem.top" data-name="GitHub Pages"><div class="route-name">GitHub Pages</div><div class="route-right"><div class="route-ping"><span class="ping-value">--</span><span class="ping-unit">ms</span></div><div class="route-status"><i class="fas fa-circle-notch fa-spin"></i></div></div></div><div class="route-item" data-url="https://chenxi.nfasystem.top" data-name="腾讯云 EdgePage"><div class="route-name">腾讯云 EdgePage</div><div class="route-right"><div class="route-ping"><span class="ping-value">--</span><span class="ping-unit">ms</span></div><div class="route-status"><i class="fas fa-circle-notch fa-spin"></i></div></div></div><div class="route-item" data-url="https://blog.nfasystem.top" data-name="私人服务器"><div class="route-name">私人服务器</div><div class="route-right"><div class="route-ping"><span class="ping-value">--</span><span class="ping-unit">ms</span></div><div class="route-status"><i class="fas fa-circle-notch fa-spin"></i></div></div></div></div></div></div></div></div></main><footer id="footer"><div id="st-footer-bar"><div class="footer-logo"><span>晨曦の小站</span></div><div class="footer-bar-description">文章来自第四领域晨曦</div><div><a class="footer-bar-link" href="/about/" title="了解更多">了解更多</a></div></div><div id="footer_deal"><a class="deal_link" target="_blank" rel="noopener" href="https://github.com/nfachenxi" title="Github"><i class="solitude  fab fa-github"></i></a><a class="deal_link" href="mailto:nfachenxi@163.com" title="邮箱"><i class="solitude  far fa-envelope"></i></a><div><div class="nolazyload footer_mini_logo" id="footer_mini_logo" title="返回顶部" onclick="sco.toTop()"><img src= "" data-lazy-src="/img/avatar.png" alt="返回顶部"></div></div><a class="deal_link" target="_blank" rel="noopener" href="https://space.bilibili.com/316806831" title="Bilibili"><i class="solitude  fab fa-bilibili"></i></a><a class="deal_link" target="_blank" rel="noopener" href="https://v.douyin.com/dvJIjrxxf6c/" title="抖音"><i class="solitude  fab fa-tiktok"></i></a></div><div><div id="st-footer"><div class="footer-group"><h3 class="footer-title">导航</h3><div class="footer-links"><a class="footer-item" href="/archives/" title="归档">归档</a><a class="footer-item" href="/categories/" title="分类">分类</a></div></div><div class="footer-group"><h3 class="footer-title">关于本站</h3><div class="footer-links"><a class="footer-item" href="/privacy/" title="隐私策略">隐私策略</a><a class="footer-item" href="/copyright/" title="版权声明">版权声明</a></div></div></div></div><div id="footer-bar"><div class="footer-bar-links"><div class="footer-bar-left"><div class="copyright">© 2025 - 2026 By<a class="footer-bar-link" href="/" title="NFA晨曦">NFA晨曦</a></div><div class="beian-group"><div><a class="footer-bar-link" target="_blank" rel="noopener" href="https://beian.mps.gov.cn/#/query/webSearch" title="鲁公网安备37028502240668号"><div><img class="beian-icon" src= "" data-lazy-src="https://beian.mps.gov.cn/img/logo01.dd7ff50e.png" alt="鲁公网安备37028502240668号"></div><span class="beian-name">鲁公网安备37028502240668号</span></a><a class="footer-bar-link" target="_blank" rel="noopener" href="https://beian.miit.gov.cn/" title="鲁ICP备2023032296号-1"><span class="beian-name">鲁ICP备2023032296号-1</span></a></div><a class="footer-bar-link" target="_blank" rel="noopener" href="https://hexo.io/" title="框架：Hexo">框架：Hexo</a><a class="footer-bar-link" target="_blank" rel="noopener" href="https://github.com/everfu/hexo-theme-solitude" title="主题：Solitude">主题：Solitude</a></div></div><div class="footer-bar-right"></div></div></div><div><div class="comment-barrage needEndHide"></div></div></footer></div><div><div id="rightMenu"><div class="rightMenu-group rightMenu-small"><div class="rightMenu-item" id="menu-backward"><i class="solitude fas fa-arrow-left"></i></div><div class="rightMenu-item" id="menu-forward"><i class="solitude fas fa-arrow-right"></i></div><div class="rightMenu-item" id="menu-refresh"><i class="solitude fas fa-arrows-rotate"></i></div><div class="rightMenu-item" id="menu-top"><i class="solitude fas fa-arrow-up"></i></div></div><div class="rightMenu-group rightMenu-line rightMenuPlugin"><div class="rightMenu-item" id="menu-copytext"><i class="solitude fas fa-clone"></i><span>复制选中文本</span></div><div class="rightMenu-item" id="menu-pastetext"><i class="solitude fas fa-clipboard"></i><span>粘贴文本</span></div><div class="rightMenu-item" id="menu-commenttext"><i class="solitude fas fa-comment-medical"></i><span>引用到评论</span></div><div class="rightMenu-item" id="menu-newwindow"><i class="solitude far fa-window-maximize"></i><span>新窗口打开</span></div><div class="rightMenu-item" id="menu-copylink"><i class="solitude fas fa-link"></i><span>复制链接地址</span></div><div class="rightMenu-item" id="menu-copyimg"><i class="solitude fas fa-clone"></i><span>复制此图片</span></div><div class="rightMenu-item" id="menu-downloadimg"><i class="solitude fas fa-cloud-arrow-down"></i><span>下载此图片</span></div><div class="rightMenu-item" id="menu-search"><i class="solitude fas fa-magnifying-glass"></i><span>站内搜索</span></div><div class="rightMenu-item" id="menu-music-toggle"><i class="solitude fas fa-play"></i><span>播放音乐</span></div><div class="rightMenu-item" id="menu-music-back"><i class="solitude fas fa-backward"></i><span>切换到上一首</span></div><div class="rightMenu-item" id="menu-music-forward"><i class="solitude fas fa-forward"></i><span>切换到下一首</span></div><div class="rightMenu-item" id="menu-music-copyMusicName"><i class="solitude fas fa-clone"></i><span>复制歌名</span></div></div><div class="rightMenu-group rightMenu-line rightMenuOther"><div class="rightMenu-item" id="menu-randomPost" onclick="toRandomPost()||rm.hideRightMenu()"><i class="solitude fas fa-tower-broadcast"></i><span>随机文章</span></div><div class="rightMenu-item" onclick="pjax.loadUrl('/categories/')||rm.hideRightMenu()"><i class="solitude fas fa-clone"></i><span>全部分类</span></div><div class="rightMenu-item" onclick="pjax.loadUrl('/tags/')||rm.hideRightMenu()"><i class="solitude fas fa-tags"></i><span>全部标签</span></div></div><div class="rightMenu-group rightMenu-line rightMenuOther"><div class="rightMenu-item" id="menu-darkmode" onclick="sco.switchDarkMode()"><i class="solitude fas fa-circle-half-stroke"></i><span class="menu-darkmode-text">深色模式</span></div></div></div><div id="rightmenu-mask"></div></div><div><!-- Critical scripts loaded synchronously--><script src="/js/utils.js?v=3.0.21"></script><script src="/js/main.js?v=3.0.21"></script><!-- Non-critical scripts loaded asynchronously--><script async src="/js/third_party/waterfall.min.js?v=3.0.21"></script><script src="https://fastly.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js"></script><!-- Feature-specific scripts loaded asynchronously--><script defer src="https://image.nfasystem.top/CDN/mermaid.min.js"></script><script defer src="/js/chart.umd.min.js"></script><script defer src="https://fastly.jsdelivr.net/npm/typeit@8.8.7/dist/index.umd.min.js"></script><script defer src="/js/third_party/universe.min.js?v=3.0.21"></script><script>document.addEventListener('DOMContentLoaded', () => {
+  if (typeof dark === 'function') dark();
+});
+</script><!-- UI enhancement scripts--><script src="/js/lazyload.iife.min.js"></script><script defer src="/js/snackbar.min.js"></script><script src="/js/medium-zoom.min.js"></script><script src="/js/swiper-bundle.min.js"></script><!-- Music player scripts--><script>var meting_api = 'https://meting.qjqq.cn/?server=:server&type=:type&id=:id&auth=:auth&r=:r';</script><script defer src="/js/APlayer.min.js"></script><script defer src="/js/Meting.min.js"></script><!-- Cover color processing scripts--><script>window.paceOptions = {
+  restartOnPushState: false
+}
+
+utils.addGlobalFn('pjaxSend', () => {
+  Pace.restart()
+}, 'pace_restart')
+</script><script src="/js/pace.min.js"></script><!-- Search functionality--><!-- Right menu functionality--><script defer src="/js/right_menu.js?v=3.0.21"></script><!-- Route switch functionality--><script defer src="/js/route-switch.js"></script><div class="js-pjax"><script>(() => {
+    const getCount = () => {
+        const ele = document.querySelectorAll('.twikoo-count')
+        if (!ele) return
+        twikoo.getCommentsCount({
+            envId: 'https://comment.nfasystem.top',
+            region: '',
+            urls: [window.location.pathname],
+            includeReply: false
+        }).then(res => {
+            ele.forEach(item => item.textContent = res[0].count)
+        }).catch(err => {
+            console.error(err)
+        })
+    }
+    const init = () => {
+        twikoo.init(Object.assign({
+            el: '#twikoo-wrap',
+            envId: 'https://comment.nfasystem.top',
+            region: '',
+            path: window.location.pathname,
+            onCommentLoaded: () => {
+                GLOBAL_CONFIG.lightbox && utils.lightbox(document.querySelectorAll('#twikoo .tk-content img:not(.tk-owo-emotion)'))
+            }
+        }, null))
+
+         && getCount()
+        sco.owoBig({
+            body: '.OwO-body',
+            item: '.OwO-items li'
+        })
+
+        true && barrageTwikoo()
+    }
+
+    const loadTwikoo = () => {
+        if (typeof twikoo === 'object') setTimeout(init,0)
+        else utils.getScript('/js/twikoo.all.min.js').then(init)
+    }
+
+    if ('Twikoo' === 'Twikoo' || true) {
+        if (true) utils.loadComment(document.getElementById('twikoo-wrap'), loadTwikoo)
+        else loadTwikoo()
+    } else {
+        window.loadTwoComment = loadTwikoo
+    }
+})()
+</script><script>async function barrageTwikoo() {
+    await fetch("https://comment.nfasystem.top", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            event: "COMMENT_GET",
+            accessToken: "",
+            url: window.location.pathname
+        })
+    }).then(async res => {
+        if (!res.ok) throw new Error("HTTP error! status: " + res.status)
+        const data = await res.json();
+        const init = () => {
+            initializeCommentBarrage((data.data).map(item => Object.assign({
+                content: item.comment,
+                nick: item.nick,
+                mailMd5: item.mailMd5,
+                id: item.id
+            })))
+        }
+        if (typeof initializeCommentBarrage === "undefined") await utils.getScript('/js/third_party/barrage.min.js?v=3.0.21').then(init)
+        else init()
+    }).catch(error => console.error("An error occurred while fetching comments: ", error))
+}</script><script>mermaid.run();
+</script></div></div><!-- pjax--><script>let pjax = null;
+
+function initPjax() {
+    if (typeof Pjax === 'undefined') {
+        console.warn('Pjax is not loaded yet, retrying...');
+        setTimeout(initPjax, 100);
+        return;
+    }
+
+    pjax = new Pjax({
+        elements: 'a:not([target="_blank"])',
+        selectors: ["title","#body-wrap","#site-config","meta[name=\"description\"]",".js-pjax","meta[property^=\"og:\"]","#config-diff",".rs_show",".rs_hide"],
+        cacheBust: false,
+        analytics: false,
+        scrollRestoration: false
+    })
+
+    // 将 pjax 实例挂载到全局
+    window.pjax = pjax;
+
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+        const newScript = document.createElement('script')
+        const content = item.text || item.textContent || item.innerHTML || ""
+        Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+        newScript.appendChild(document.createTextNode(content))
+        item.parentNode.replaceChild(newScript, item)
+    })
+
+    document.addEventListener('pjax:complete', () => {
+        window.refreshFn()
+
+        document.querySelectorAll('script[data-pjax]').forEach(item => {
+            const newScript = document.createElement('script')
+            const content = item.text || item.textContent || item.innerHTML || ""
+            Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+            newScript.appendChild(document.createTextNode(content))
+            item.parentNode.replaceChild(newScript, item)
+        })
+
+        GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+    })
+
+    document.addEventListener('pjax:error', (e) => {
+        if (e.request.status === 404) {
+            pjax.loadUrl('/404.html')
+        }
+    })
+}
+
+// 初始化 Pjax
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initPjax);
+} else {
+    initPjax();
+}</script><!-- google adsense--><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><button class="search-close-button"><i class="solitude fas fa-xmark"></i></button></nav><div class="search-wrap"><div class="search-box"><input class="search-box-input" id="search-input" type="text" autocomplete="off" spellcheck="false" autocorrect="off" autocapitalize="off" placeholder="输入关键词快速查找"></div><div id="search-results"><div id="search-hits"><a class="tag-list" href="javascript:void(0);" onclick="pjax.loadUrl('/tags/Unity/')">Unity</a><a class="tag-list" href="javascript:void(0);" onclick="pjax.loadUrl('/tags/%E7%AE%97%E6%B3%95/')">算法</a></div></div><div id="search-pagination"></div><div id="search-tips"></div></div></div><div id="search-mask"></div></div><script src="/js/search/local.js?v=3.0.21"></script><div><div class="needEndHide" id="nav-music"><div id="nav-music-hoverTips"><i class="music-control-btn fas fa-backward-step" id="music-prev" onclick="sco.musicSkipBack()"></i><i class="music-control-btn fas fa-pause" id="music-pause" onclick="sco.musicToggle()"></i><i class="music-control-btn fas fa-play" id="music-play" onclick="sco.musicToggle()"></i><i class="music-control-btn fas fa-forward-step" id="music-next" onclick="sco.musicSkipForward()"></i></div><meting-js id="13944001327" server="netease" type="playlist" mutex="true" preload="none" theme="var(--efu-main)" data-lrctype="0" order="random" volume="0.5"></meting-js></div></div></body></html>
+        <script>
+            const posts = ["posts/81s2cdc0/","posts/6491732a/","posts/80d20dc4/","posts/3da49ae6/","posts/113e6e00/","posts/9cf22d8b/","posts/a1373671/","posts/95bdd374/","posts/82e0ee2a/","posts/7eb38127/","posts/ec87c3ca/","posts/fc4aea50/","posts/a266d19c/","posts/878304ff/","posts/8596feee/","posts/efdc60b2/"];
+            function toRandomPost() {
+                const randomPost = posts[Math.floor(Math.random() * posts.length)];
+                pjax.loadUrl(GLOBAL_CONFIG.root + randomPost);
+            }
+        </script>

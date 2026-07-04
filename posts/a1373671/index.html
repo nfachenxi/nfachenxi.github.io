@@ -1,0 +1,944 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><title>力扣刷题日常(7-8) | 晨曦の小站</title><noscript>开启JavaScript才能访问本站哦~</noscript><link rel="icon" href="/img/nfa_icon.jpg"><link rel="stylesheet" href="/css/index.css?v=3.0.21"><link rel="canonical" href="https://blog.nfasystem.top/posts/a1373671/index.html"><link rel="stylesheet" href="/libs/fontawesome/css/all.min.css"><!-- Feature-specific CSS--><!-- aplayer--><link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css"><!-- swiper--><link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/swiper@11.0.5/swiper-bundle.min.css"><!-- fancybox ui--><!-- katex--><link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"><!-- Open Graph--><meta name="description" content="力扣刷题日常(7-8) 第7题: 整数反转(难度: 中等) 原题: 给你一个 32 位的有符号整数 x ,返回将 x 中的数字部分反转后的结果. 如果反转后整数超过 32 位的有符号整数的范围 [−231, 231 − 1] ,就返回 0. 假设环境不允许存储 64 位整数（有符号或无符号）. 示例"><!-- pwa--><meta name="apple-mobile-web-app-capable" content="晨曦の小站"><meta name="theme-color" content="var(--efu-main)"><meta name="apple-mobile-web-app-status-bar-style" content="var(--efu-main)"><link rel="bookmark" href="/img/nfa_icon.jpg"><link rel="apple-touch-icon" href="/img/nfa_icon.jpg" sizes="180x180"><script>console.log(' %c Solitude %c ' + '3.0.21' + ' %c https://github.com/everfu/hexo-theme-solitude',
+    'background:#35495e ; padding: 1px; border-radius: 3px 0 0 3px;  color: #fff',
+    'background:#ff9a9a ; padding: 1px; border-radius: 0 3px 3px 0;  color: #fff',
+    'background:unset ; padding: 1px; border-radius: 0 3px 3px 0;  color: #fff')
+</script><script>let mdate = "7-7,9-18,12-13";
+mdate = (mdate.split(","));
+let ndate = new Date();
+for (let i of mdate) {
+    if (i === (ndate.getMonth()+1) + "-" + (ndate.getDate())) {
+        document.documentElement.classList.add('memorial');
+    }
+}
+</script><script>(()=>{
+        const saveToLocal = {
+            set: function setWithExpiry(key, value, ttl) {
+                if (ttl === 0)
+                    return
+                const now = new Date()
+                const expiryDay = ttl * 86400000
+                const item = {
+                    value: value,
+                    expiry: now.getTime() + expiryDay
+                }
+                localStorage.setItem(key, JSON.stringify(item))
+            },
+            get: function getWithExpiry(key) {
+                const itemStr = localStorage.getItem(key)
+
+                if (!itemStr) {
+                    return undefined
+                }
+                const item = JSON.parse(itemStr)
+                const now = new Date()
+
+                if (now.getTime() > item.expiry) {
+                    localStorage.removeItem(key)
+                    return undefined
+                }
+                return item.value
+            }
+        };
+        window.utils = {
+            saveToLocal: saveToLocal,
+            getCSS: (url, id = false) => new Promise((resolve, reject) => {
+              const link = document.createElement('link')
+              link.rel = 'stylesheet'
+              link.href = url
+              if (id) link.id = id
+              link.onerror = reject
+              link.onload = link.onreadystatechange = function() {
+                const loadState = this.readyState
+                if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+                link.onload = link.onreadystatechange = null
+                resolve()
+              }
+              document.head.appendChild(link)
+            }),
+            getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+              const script = document.createElement('script')
+              script.src = url
+              script.async = true
+              script.onerror = reject
+              script.onload = script.onreadystatechange = function() {
+                const loadState = this.readyState
+                if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+                script.onload = script.onreadystatechange = null
+                resolve()
+              }
+
+              Object.keys(attr).forEach(key => {
+                script.setAttribute(key, attr[key])
+              })
+
+              document.head.appendChild(script)
+            }),
+            addGlobalFn: (key, fn, name = false, parent = window) => {
+                const globalFn = parent.globalFn || {}
+                const keyObj = globalFn[key] || {}
+
+                if (name && keyObj[name]) return
+
+                name = name || Object.keys(keyObj).length
+                keyObj[name] = fn
+                globalFn[key] = keyObj
+                parent.globalFn = globalFn
+            },
+            addEventListenerPjax: (ele, event, fn, option = false) => {
+              ele.addEventListener(event, fn, option)
+              utils.addGlobalFn('pjax', () => {
+                  ele.removeEventListener(event, fn, option)
+              })
+            },
+            diffDateFormat: (selector) => {
+                selector.forEach(item => {
+                    const date = new Date(item.getAttribute('datetime') || item.textContent);
+                    item.textContent = (date.getMonth() + 1).toString()+'/'+date.getDate().toString();
+                });
+            },
+        }
+    })()</script><!-- theme--><script>initTheme = () => {
+    let isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const cachedMode = utils.saveToLocal.get('theme');
+    if (cachedMode === undefined) {
+        const nowMode =
+            isDarkMode ? 'dark' : 'light'
+        document.documentElement.setAttribute('data-theme', nowMode);
+    } else {
+        document.documentElement.setAttribute('data-theme', cachedMode);
+    }
+    typeof rm === 'object' && rm.mode(cachedMode === 'dark' && isDarkMode)
+}
+initTheme()</script><script>const GLOBAL_CONFIG = {
+    root: '/',
+    algolia: undefined,
+    localsearch: {"preload":false,"path":"/search.xml"},
+    runtime: '2025-07-10 00:00:00',
+    lazyload: {
+        enable: true,
+        error: '/img/error_load.avif'
+    },
+    copyright: {"limit":100,"author":"作者: NFA晨曦","link":"链接: ","source":"来源: 晨曦の小站","info":"著作权归作者所有。 商业转载请联系作者获得授权，非商业转载请注明出处。"},
+    highlight: {"limit":200,"expand":true,"copy":true,"syntax":"highlight.js"},
+    randomlink: false,
+    lang: {"theme":{"dark":"已切换至深色模式","light":"已切换至浅色模式"},"copy":{"success":"复制成功","error":"复制失败"},"backtop":"返回顶部","time":{"day":"天前","hour":"小时前","just":"刚刚","min":"分钟前","month":"个月前"},"day":" 天","f12":"开发者模式已打开，请遵循GPL协议。","totalk":"无需删除空行，直接输入评论即可","search":{"empty":"找不到你查询的内容：${query}","hit":"找到 ${hits} 条结果，用时 ${time} 毫秒","placeholder":"输入关键词快速查找","count":"共 <b>${count}</b> 条结果。","loading":"搜索中..."},"barrage":{"title":"热评"}},
+    aside: {
+        state: {
+            morning: "✨ 早上好，新的一天开始了",
+            noon: "🍲 午餐时间",
+            afternoon: "🌞 下午好",
+            night: "早点休息",
+            goodnight: "晚安 😴",
+        },
+        witty_words: ["你可以的","你一定可以的","祝你好运，陌生人"],
+        witty_comment: {
+            prefix: '好久不见，',
+            back: '欢迎再次回来，',
+        },
+    },
+    covercolor: {
+        enable: false
+    },
+    comment: {"avatar":"https://gravatar.com/avatar","commentBarrage":true},
+    lightbox: 'mediumZoom',
+    right_menu: {"mode":{"dark":"深色模式","light":"浅色模式"},"img_error":"此图片无法复制与下载","music":{"start":"播放音乐","stop":"暂停音乐"},"barrage":{"open":"显示热评","close":"关闭热评"},"ctrlOriginalMenu":"按住Ctrl+右键可打开浏览器右键菜单"},
+    translate: false,
+    lure: {"jump":"去哪了？快回来～","back":"Ciallo～(∠・ω< )⌒★"},
+    expire: false,
+};
+const routeSwitchConfig = {"enable":true,"routes":[{"name":"Vercel 线路","url":"https://cx.nfasystem.top"},{"name":"GitHub Pages","url":"https://nfachenxi.nfasystem.top"},{"name":"腾讯云 EdgePage","url":"https://chenxi.nfasystem.top"},{"name":"私人服务器","url":"https://blog.nfasystem.top"}]};
+if (routeSwitchConfig) {
+    window.routeSwitchConfig = routeSwitchConfig;
+}</script><script id="config-diff">var PAGE_CONFIG = {
+    is_post: true,
+    is_page: false,
+    is_home: false,
+    page: '',
+    toc: true,
+    comment: true,
+    ai_text: false,
+    color: false,
+}</script><meta name="generator" content="Hexo 8.1.1"></head><body id="body"><div><canvas id="universe"></canvas></div><div><div id="console"><div class="close-btn" onclick="sco.hideConsole()"><i class="solitude fas fa-xmark"></i></div><div class="console-card-group"><div class="console-card-group-left"><div class="console-card" id="card-newest-comments" onclick="sco.hideConsole()"><div class="card-content"><div class="author-content-item-tips">互动</div><div class="author-content-item-title">最新评论</div></div><div class="console_recentcomments"><script pjax>(async () => {
+    document.querySelector('.console-card .console_recentcomments').textContent = `加载中...`
+    const emojiReg = /<img class="tk-owo-emotion" [^>]+>/g
+    let cache = utils.saveToLocal.get('twikoo-recent-comments-console')
+    if (cache) {
+        setHtml(document.querySelector('.console-card .console_recentcomments'), cache)
+        return
+    }
+    let ls = []
+
+    await fetch('https://comment.nfasystem.top', {
+        method: "POST",
+        body: JSON.stringify({
+            "event": "GET_RECENT_COMMENTS",
+            "includeReply": true,
+            "pageSize": 6
+        }),
+        headers: {'Content-Type': 'application/json'}
+    }).then(res => res.json()).then(async ({data}) => {
+        for (const i of data) {
+            if (i.avatar === undefined) i.avatar = 'https://gravatar.com/avatar/avatar/d615d5793929e8c7d70eab5f00f7f5f1?d=mp'
+            let title = ''
+            if (i.url) {
+                await fetch(i.url).then(res => res.text()).then(html => {
+                    const parser = new DOMParser()
+                    const doc = parser.parseFromString(html, 'text/html')
+                    title = doc.querySelector('title').innerText
+                }).catch(() => {
+                    title = i.url
+                })
+            }
+            if (title.indexOf('|') > 0) {
+                title = title.split('|')[0]
+            }
+            ls.push({
+                avatar: i.avatar,
+                nick: i.nick,
+                title: title,
+                content: i.comment,
+                url: i.url + '#' + i.id,
+                time: i.created
+            })
+        }
+        setHtml(document.querySelector('.console-card .console_recentcomments'), ls)
+        utils.saveToLocal.set('twikoo-recent-comments-console', ls, 0.2)
+    });
+
+    function setHtml(el, data) {
+        el.innerHTML = data.length !== 0 ? data.map(i => `
+            <div class="comment-card" title="${i.title}" onclick="pjax.loadUrl('${i.url}')">
+                <div class="comment-info">
+                    <img src="${i.avatar}" class="nolazyload" alt="${i.nick}">
+                    <div>
+                        <span class="comment-user">${i.nick}</span>
+                    </div>
+                    <time class="comment-time" datetime="${new Date(i.time)}"></time>
+                </div>
+                <div class="comment-content">${formatContent(i.content)}</div>
+                <div class="comment-title">
+                <i class="solitude fas fa-comment"></i>
+                ${i.title}</div>
+            </div>
+        `).join('') : `暂无评论...`
+        if (typeof utils !== 'undefined') utils.diffDateFormat(document.querySelectorAll('.comment-time'))
+        else {
+            document.addEventListener('pjax:complete', () => utils.diffDateFormat(document.querySelectorAll('.comment-time')))
+            document.addEventListener('DOMContentLoaded', () => utils.diffDateFormat(document.querySelectorAll('.comment-time')))
+        }
+    }
+
+    function formatContent(content) {
+        content = content.replace(emojiReg, '表情')
+        content = content.replace(/<\/*br>|[\s\uFEFF\xA0]+/g, '');
+        content = content.replace(/<img.*?>/g, '[图片]');
+        content = content.replace(/<a.*?>.*?<\/a>/g, '[链接]');
+        content = content.replace(/<pre.*?>.*?<\/pre>/g, '[代码]');
+        content = content.replace(/<.*?>/g, '');
+        return content
+    }
+})()</script></div></div></div><div class="console-card-group-right"><div class="console-card tags" onclick="sco.hideConsole()"><div class="card-content"><div class="author-content-item-tips">标签</div><div class="author-content-item-title">寻找感兴趣的领域</div></div><div class="card-tag-cloud"><a href="/tags/Unity/">Unity<sup>6</sup></a><a href="/tags/Scroll-View/">Scroll-View<sup>1</sup></a><a href="/tags/Fire/">Fire<sup>1</sup></a><a href="/tags/%E7%AE%97%E6%B3%95/">算法<sup>9</sup></a><a href="/tags/%E5%8A%9B%E6%89%A3/">力扣<sup>9</sup></a><a href="/tags/%E5%B0%8F%E8%AF%B4/">小说<sup>1</sup></a><a href="/tags/%E7%BB%88%E6%9C%AB%E4%B9%8B%E6%97%85/">终末之旅<sup>1</sup></a></div></div><div class="console-card history" onclick="sco.hideConsole()"><ul class="card-archive-list"><li class="item"><a href="/archives/2025/11/"><span class="date">2025/11</span><div class="count-group"><span class="count">1</span><span class="unit">篇</span></div></a></li><li class="item"><a href="/archives/2025/08/"><span class="date">2025/08</span><div class="count-group"><span class="count">4</span><span class="unit">篇</span></div></a></li><li class="item"><a href="/archives/2025/07/"><span class="date">2025/07</span><div class="count-group"><span class="count">11</span><span class="unit">篇</span></div></a></li><li class="item"><a href="/archives/"><span class="date">全部文章</span><div class="count-group"><span class="count">16</span><span class="unit">篇</span></div></a></li></ul></div></div></div><div class="button-group"><div class="console-btn-item"><span class="darkmode_switchbutton" onclick="sco.switchDarkMode()" title="昼夜切换"><i class="solitude fas fa-circle-half-stroke"></i></span></div><div class="console-btn-item" id="consoleHideAside"><span class="asideSwitch" onclick="sco.switchHideAside()" title="边栏显示控制"><i class="solitude fas fa-arrows-left-right-to-line"></i></span></div><div class="console-btn-item" id="consoleMusic" onclick="sco.musicToggle()"><span class="music-switch" title="音乐开关"><i class="solitude fas fa-compact-disc"></i></span></div><div class="console-btn-item on" id="consoleCommentBarrage" onclick="sco.switchCommentBarrage()"><span class="commentBarrage"><i class="solitude fas fa-comment"></i></span></div></div><div class="console-mask" onclick="sco.hideConsole()"></div></div></div><div id="sidebar" style="zoom: 1;"><div id="menu-mask" style="display: none;"></div><div id="sidebar-menus"><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">16</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">7</div></a></div></div></div><span class="sidebar-menu-item-title">功能</span><div class="sidebar-menu-item"><span class="darkmode_switchbutton menu-child" onclick="sco.switchDarkMode()"><i class="solitude fas fa-circle-half-stroke"></i><span>显示模式</span></span></div><div class="back-menu-list-groups"><div class="back-menu-list-group"><div class="back-menu-list-title">我的项目</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://github.com/nfachenxi" title="我的Github主页"><img class="nolazyload back-menu-item-icon" src="/img/github.png" alt="我的Github主页"><span class="back-menu-item-text">我的Github主页</span></a></div></div></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><span>首页</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span>文库</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="solitude  fas fa-folder-closed"></i><span>全部文章</span></a></li><li><a class="site-page child" href="/categories/"><i class="solitude  fas fa-clone"></i><span>全部分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="solitude  fas fa-tags"></i><span>全部标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span>友链</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/links/"><i class="solitude  fas fa-user-group"></i><span>友情链接</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span>关于</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/about/"><i class="solitude  fas fa-user-circle"></i><span>关于我</span></a></li><li><a class="site-page child" href="/music/"><i class="solitude  fas fa-music"></i><span>音乐馆</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/message/"><span>留言板</span></a></div><div class="menus_item"><a class="site-page" href="/gallery/"><span>画廊</span></a></div></div><span class="sidebar-menu-item-title">标签</span><div class="card-tags"><div class="card-tag-cloud"><a href="/tags/Unity/">Unity<sup>6</sup></a><a href="/tags/Scroll-View/">Scroll-View<sup>1</sup></a><a href="/tags/Fire/">Fire<sup>1</sup></a><a href="/tags/%E7%AE%97%E6%B3%95/">算法<sup>9</sup></a><a href="/tags/%E5%8A%9B%E6%89%A3/">力扣<sup>9</sup></a><a href="/tags/%E5%B0%8F%E8%AF%B4/">小说<sup>1</sup></a><a href="/tags/%E7%BB%88%E6%9C%AB%E4%B9%8B%E6%97%85/">终末之旅<sup>1</sup></a></div></div><span class="sidebar-menu-item-title">网站信息</span><div class="webinfo"><div class="webinfo-item"><div class="item-name">全站字数 :</div><div class="item-count">58.6k</div></div></div></div></div><div><div class="needEndHide" id="rightside"><div class="rs_hide"><button class="mode" type="button" title="显示模式切换" onclick="sco.switchDarkMode()"><i class="fas fa-circle-half-stroke"></i></button><button class="aside pc" type="button" title="侧边栏" onclick="sco.switchHideAside()"><i class="fas fa-arrows-alt-h"></i></button></div><div class="rs_show"><button class="config" type="button" title="扩展" onclick="document.querySelector(&quot;.rs_hide&quot;).classList.toggle(&quot;show&quot;)"><i class="fas fa-gear fa-spin"></i></button><button class="mobile toc" type="button" title="目录" onclick="document.querySelector('#card-toc').classList.toggle('open')"><i class="fas fa-list"></i></button><button class="comment" type="button" title="评论" onclick="sco.scrollTo('post-comment')"><i class="fas fa-comment"></i></button><button class="barrage pc" type="button" title="弹" onclick="sco.switchCommentBarrage()"><span>弹</span></button><button class="top" type="button" title="返回顶部" onclick="sco.toTop()"><i class="fas fa-arrow-up"></i><span id="percent">0</span></button></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav class="show" id="nav"><div id="nav-group"><div id="blog_name"><div class="back-home-button" tabindex="-1"><i class="solitude fas fa-bars-progress"></i><div class="back-menu-list-groups"><div class="back-menu-list-group"><div class="back-menu-list-title">我的项目</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://github.com/nfachenxi" title="我的Github主页"><img class="nolazyload back-menu-item-icon" src="/img/github.png" alt="我的Github主页"><span class="back-menu-item-text">我的Github主页</span></a></div></div></div></div><a href="/" title="返回博客主页" id="site-name"><span class="title">晨曦の小站</span><i class="solitude fas fa-home"></i></a></div><div id="page-name-mask"><div id="page-name"><a id="page-name-text" onclick="sco.toTop()">力扣刷题日常(7-8)</a></div></div><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><span>首页</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span>文库</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="solitude  fas fa-folder-closed"></i><span>全部文章</span></a></li><li><a class="site-page child" href="/categories/"><i class="solitude  fas fa-clone"></i><span>全部分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="solitude  fas fa-tags"></i><span>全部标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span>友链</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/links/"><i class="solitude  fas fa-user-group"></i><span>友情链接</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span>关于</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/about/"><i class="solitude  fas fa-user-circle"></i><span>关于我</span></a></li><li><a class="site-page child" href="/music/"><i class="solitude  fas fa-music"></i><span>音乐馆</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/message/"><span>留言板</span></a></div><div class="menus_item"><a class="site-page" href="/gallery/"><span>画廊</span></a></div></div></div><div id="nav-left"></div><div id="nav-right"><div class="nav-button" id="travellings_button"><a class="site-page" target="_blank" rel="noopener" href="https://www.travellings.cn/go.html" title=""><i class="solitude fas fa-train"></i></a></div><div class="nav-button" id="randomPost_button"><a class="site-page" onclick="toRandomPost()" title="随机一篇文章" href="javascript:void(0);"><i class="solitude fas fa-dice-d6"></i></a></div><div class="nav-button" id="search-button"><a class="site-page social-icon search" href="javascript:void(0);" title="搜索"><i class="solitude fas fa-magnifying-glass"></i></a></div><div class="nav-button" id="nav-console"><a class="console_switchbutton" onclick="sco.showConsole()" title="中控台" href="javascript:void(0);"><label><i class="left"></i><i class="center"></i><i class="right"></i></label></a></div><div id="toggle-menu"><a class="site-page"><i class="solitude fas fa-bars"></i></a></div></div></div></nav><div class="coverdiv" id="coverdiv"><img class="nolazyload" id="post-cover" src="https://image.nfasystem.top/img-nfa/LK7-8.webp" alt="力扣刷题日常(7-8)"></div><div id="post-info"><div id="post-firstinfo"><div class="meta-firstline"><a class="post-meta-original" title="该文章为原创文章，注意版权协议">原创</a><span class="post-meta-categories"><a class="post-meta-categories" href="/categories/%E5%8A%9B%E6%89%A3%E5%88%B7%E9%A2%98/">力扣刷题</a></span><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E7%AE%97%E6%B3%95/"><span class="tags-name tags-punctuation"><i class="solitude fas fa-hashtag"></i>算法</span></a><a class="post-meta__tags" href="/tags/%E5%8A%9B%E6%89%A3/"><span class="tags-name tags-punctuation"><i class="solitude fas fa-hashtag"></i>力扣</span></a></div></div></div></div><h1 class="post-title">力扣刷题日常(7-8)</h1><div id="post-meta"><div class="meta-secondline"><span class="post-meta-date" title="发布于 2025-07-30 15:05:29"><i class="post-meta-icon solitude fas fa-calendar-days"></i><time datetime="2025-07-30T07:05:29.000Z">2025-07-30T07:05:29.000Z</time></span><span class="post-meta-date" title="最后更新于 2026-07-04 17:11:03"><i class="post-meta-icon solitude fas fa-arrows-rotate"></i><time datetime="2026-07-04T09:11:03.513Z">2026-07-04T09:11:03.513Z</time></span><span class="post-meta-wordcount"><i class="post-meta-icon solitude fas fa-file-word" title="文章字数"></i><span class="word-count">8k</span><span class="post-meta-separator"></span><i class="post-meta-icon solitude fas fa-clock" title="阅读耗时"></i><span>30 分钟</span></span></div></div></div><div class="post-radius-bottom"></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content article-container"><h1>力扣刷题日常(7-8)</h1>
+<h2 id="第7题-整数反转-难度-中等">第7题: 整数反转(难度: 中等)</h2>
+<h3 id="原题">原题:</h3>
+<p>给你一个 32 位的有符号整数 <code>x</code> ,返回将 <code>x</code> 中的数字部分反转后的结果.</p>
+<p>如果反转后整数超过 32 位的有符号整数的范围 <code>[−231, 231 − 1]</code> ,就返回 0.</p>
+<p><strong>假设环境不允许存储 64 位整数（有符号或无符号）.</strong></p>
+<p><strong>示例 1:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入:x = 123</span><br><span class="line">输出:321</span><br></pre></td></tr></table></figure>
+<p><strong>示例 2:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入:x = -123</span><br><span class="line">输出:-321</span><br></pre></td></tr></table></figure>
+<p><strong>示例 3:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入:x = 120</span><br><span class="line">输出:21</span><br></pre></td></tr></table></figure>
+<p><strong>示例 4:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入:x = 0</span><br><span class="line">输出:0</span><br></pre></td></tr></table></figure>
+<p><strong>提示:</strong></p>
+<ul>
+<li><code>-231 &lt;= x &lt;= 231 - 1</code></li>
+</ul>
+<hr>
+<h3 id="开始解题">开始解题:</h3>
+<p>首先,这道题虽然是中等难度,但它考察的重点——整数溢出处理,是编程中一个非常重要且实用的概念.</p>
+<p>我们先来分析这道题的实现逻辑</p>
+<h4 id="算法实现逻辑">算法实现逻辑</h4>
+<p>我们先从数学的角度思考,如何把一个数字 <code>123</code> ,颠倒过来变成 <code>321</code>?</p>
+<p>核心思想是<strong>数学方法</strong>,通过循环不断&quot;<strong>剥离</strong>&quot;原数字的末尾,然后&quot;<strong>构建</strong>&quot;新数字的开头</p>
+<p>我们以 <code>123</code> 为栗子,来走一步这个流程</p>
+<ol>
+<li>
+<p><strong>初始化:</strong> 我们需要一个变量来存储反转后的结果,命名为 <code>reversed_x</code> ,初始时 <code>reversed_x = 0</code></p>
+</li>
+<li>
+<p><strong>第一轮循环:</strong></p>
+<ul>
+<li>取末位: 如何得到最后一位呢----取余(%)运算. <code>123 % 10</code> 的结果就是 <code>3</code> .我们将这个数字定为 <code>dight</code>.</li>
+<li>构建新数: 把这个 <code>dight</code> 添加到 <code>reversed_x</code> 中. <code>reversed_x = reversed_x * 10 + dight</code>. 经过计算,现在 <code>reversed_x</code> 的值为 <code>0 * 10 + 3 = 3</code></li>
+<li>&quot;砍掉&quot;原数的末位: 如何砍掉原数的末位呢----整除(/)运算. <code>123 / 10</code> 的结果就是 <code>12</code> .现在 <code>x</code> 变成了 <code>12</code>.</li>
+</ul>
+</li>
+<li>
+<p><strong>第二轮循环</strong>:</p>
+<ul>
+<li>
+<p>此时 <code>x = 12</code>,<code>reversed_x = 3</code>.</p>
+</li>
+<li>
+<p><strong>取末位</strong>: <code>12 % 10</code> 得到 <code>2</code>.(<code>digit = 2</code>)</p>
+</li>
+<li>
+<p><strong>构建新数</strong>: <code>reversed_x = 3 * 10 + 2</code>,结果为 <code>32</code>.</p>
+</li>
+<li>
+<p><strong>“砍掉”原数的末位</strong>: <code>12 / 10</code> 得到 <code>1</code>.现在 <code>x</code> 变成了 <code>1</code>.</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>第三轮循环</strong>:</p>
+<ul>
+<li>
+<p>此时 <code>x = 1</code>,<code>reversed_x = 32</code>.</p>
+</li>
+<li>
+<p><strong>取末位</strong>: <code>1 % 10</code> 得到 <code>1</code>.(<code>digit = 1</code>)</p>
+</li>
+<li>
+<p><strong>构建新数</strong>: <code>reversed_x = 32 * 10 + 1</code>,结果为 <code>321</code>.</p>
+</li>
+<li>
+<p><strong>“砍掉”原数的末位</strong>: <code>1 / 10</code> 得到 <code>0</code>.现在 <code>x</code> 变成了 <code>0</code>.</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>循环结束</strong>: 我们的循环条件是 <code>x != 0</code>.现在 <code>x</code> 已经是 <code>0</code> 了,所以循环停止.最终的结果 <code>reversed_x</code> 就是 <code>321</code>.</p>
+</li>
+</ol>
+<h4 id="如何处理特殊情况">如何处理特殊情况?</h4>
+<ul>
+<li><strong>负数 (如 -123)</strong>: 这个数学方法同样适用
+<ul>
+<li><code>-123 % 10</code> 结果是 <code>-3</code>.</li>
+<li><code>-123 / 10</code> 结果是 <code>-12</code>.</li>
+<li>整个过程下来,符号会被自然而然地保留,最终得到 <code>-321</code>.</li>
+</ul>
+</li>
+<li><strong>末尾是0 (如 120)</strong>:
+<ul>
+<li>第一轮,<code>120 % 10</code> 得到 <code>0</code>,<code>reversed_x</code> 变成 <code>0</code>.<code>x</code> 变成 <code>12</code>.</li>
+<li>后续步骤和 <code>12</code> 的反转一样,最终得到 <code>21</code>.前导零被自动消除了.</li>
+</ul>
+</li>
+</ul>
+<h4 id="本题最大的难点-处理整数溢出">本题最大的难点: 处理整数溢出</h4>
+<p>题目要求环境是32位有符号整数,范围是 <code>[-2^31, 2^31 - 1]</code>,也就是 <code>[-2147483648, 2147483647]</code>.</p>
+<p>在我们的核心步骤 <code>reversed_x = reversed_x * 10 + digit</code> 中,<code>reversed_x * 10</code> 的结果可能会超出这个范围.由于题目<strong>不允许使用64位整数（long）<strong>来临时存储,我们不能等溢出发生了再去判断.我们必须在它发生</strong>之前</strong>就预判到.</p>
+<p><strong>如何进行预判:</strong></p>
+<p>我们来分析一下正数溢出的情况.溢出即将发生在 <code>reversed_x</code> 乘以 10 的过程中</p>
+<p><code>int</code> 的最大值为 <code>int.MaxValue</code> (即 <code>2147483647</code>)</p>
+<ol>
+<li><strong>一个粗略的检查:</strong> 如果 <code>reversed_x</code> 大于 <code>int.MaxValue / 10</code> (即 <code>214748364</code>),那么它再乘以10,无论 <code>digit</code> 是多少,都<strong>必然</strong>会溢出.</li>
+<li><strong>一个精确的检查:</strong> 如果 <code>reversed_x</code> 正好等于 <code>int.MaxValue / 10</code> (即 <code>214748364</code>),那么能否溢出就取决于 <code>digit</code> 了.
+<ul>
+<li><code>int.MaxValue</code> 的末尾是 <code>7</code>.</li>
+<li>如果 <code>digit</code> 大于 <code>7</code>,那么 <code>214748364 * 10 + digit</code> 就会大于 <code>2147483647</code>,导致溢出.</li>
+<li>如果 <code>digit</code> 小于等于 <code>7</code>,就不会溢出.</li>
+</ul>
+</li>
+</ol>
+<p>所以,正数溢出的完整判断条件是:</p>
+<p><code>if (reversed_x &gt; int.MaxValue / 10 || (reversed_x == int.MaxValue / 10 &amp;&amp; digit &gt; 7))</code></p>
+<p>同理,负数溢出的判断条件（<code>int.MinValue</code> 是 <code>-2147483648</code>）:<br>
+<code>if (reversed_x &lt; int.MinValue / 10 || (reversed_x == int.MinValue / 10 &amp;&amp; digit &lt; -8))</code></p>
+<p>一旦检测到即将溢出,我们就按题目要求返回 <code>0</code>.</p>
+<h4 id="简单总结">简单总结:</h4>
+<ol>
+<li>初始化 <code>reversed_x = 0</code>.</li>
+<li>使用 <code>while</code> 循环,条件是 <code>x != 0</code>.</li>
+<li>在循环内部:<br>
+a.  通过 <code>x % 10</code> 取出 <code>x</code> 的末位数字 <code>digit</code>.<br>
+b.  <strong>在执行乘法前,进行溢出检查</strong>.如果检查到即将溢出,立即 <code>return 0</code>.<br>
+c.  如果安全,则更新 <code>reversed_x = reversed_x * 10 + digit</code>.<br>
+d.  通过 <code>x / 10</code> “砍掉” <code>x</code> 的末位.</li>
+<li>循环结束后,返回 <code>reversed_x</code>.</li>
+</ol>
+<hr>
+<h3 id="算法代码">算法代码:</h3>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Solution</span> </span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">int</span> <span class="title">Reverse</span>(<span class="params"><span class="built_in">int</span> x</span>)</span> </span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// 用于存储反转后的结果</span></span><br><span class="line">        <span class="built_in">int</span> reversed = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 循环直到x的所有位都被处理</span></span><br><span class="line">        <span class="keyword">while</span> (x != <span class="number">0</span>) </span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">// 1. 取出x的末尾数字</span></span><br><span class="line">            <span class="comment">// C#的取余(%)运算会自动处理符号,例如 -123 % 10 的结果是 -3</span></span><br><span class="line">            <span class="built_in">int</span> digit = x % <span class="number">10</span>;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 2. “砍掉”x的末尾数字</span></span><br><span class="line">            <span class="comment">// C#的整除(/)运算同样会自动处理符号,例如 -123 / 10 的结果是 -12</span></span><br><span class="line">            x /= <span class="number">10</span>;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 3. 【核心】在构建新数之前,检查是否会溢出</span></span><br><span class="line">            <span class="comment">// 检查正数溢出:</span></span><br><span class="line">            <span class="comment">// a) reversed &gt; 214748364 (int.MaxValue / 10)</span></span><br><span class="line">            <span class="comment">//    如果成立,那么 reversed * 10 必然大于 int.MaxValue,溢出.</span></span><br><span class="line">            <span class="comment">// b) reversed == 214748364 &amp;&amp; digit &gt; 7</span></span><br><span class="line">            <span class="comment">//    如果成立,那么 reversed * 10 + digit 必然大于 2147483647,溢出.</span></span><br><span class="line">            <span class="keyword">if</span> (reversed &gt; <span class="built_in">int</span>.MaxValue / <span class="number">10</span> || (reversed == <span class="built_in">int</span>.MaxValue / <span class="number">10</span> &amp;&amp; digit &gt; <span class="number">7</span>)) </span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="number">0</span>; <span class="comment">// 发生正向溢出,返回0</span></span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 检查负数溢出:</span></span><br><span class="line">            <span class="comment">// a) reversed &lt; -214748364 (int.MinValue / 10)</span></span><br><span class="line">            <span class="comment">//    如果成立,那么 reversed * 10 必然小于 int.MinValue,溢出.</span></span><br><span class="line">            <span class="comment">// b) reversed == -214748364 &amp;&amp; digit &lt; -8</span></span><br><span class="line">            <span class="comment">//    如果成立,那么 reversed * 10 + digit 必然小于 -2147483648,溢出.</span></span><br><span class="line">            <span class="keyword">if</span> (reversed &lt; <span class="built_in">int</span>.MinValue / <span class="number">10</span> || (reversed == <span class="built_in">int</span>.MinValue / <span class="number">10</span> &amp;&amp; digit &lt; <span class="number">-8</span>)) </span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="number">0</span>; <span class="comment">// 发生负向溢出,返回0</span></span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 4. 安全,构建新数</span></span><br><span class="line">            <span class="comment">// 将取出的末位数字拼接到reversed的末尾</span></span><br><span class="line">            reversed = reversed * <span class="number">10</span> + digit;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 循环结束,返回最终结果</span></span><br><span class="line">        <span class="keyword">return</span> reversed;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="知识点总结">知识点总结:</h3>
+<ol>
+<li>
+<p><strong>数值溢出:一个“沉默的杀手”</strong></p>
+<ul>
+<li><strong>核心思想</strong>:任何有固定大小的数据类型（如 <code>byte</code>, <code>short</code>, <code>int</code>, <code>long</code>）都有其表示范围.当计算结果超出这个范围时,就会发生“溢出”.在C#中,整数溢出默认是<strong>不抛出异常</strong>的,它会“环绕”（wrap around）,例如 <code>int.MaxValue + 1</code> 会变成 <code>int.MinValue</code>.这种不报错的错误行为非常隐蔽,是很多逻辑bug的根源.</li>
+<li><strong>通用原则</strong>:在进行任何可能导致结果急剧增大的运算（尤其是乘法和累加）时,都要有意识地思考:“我的结果会超出数据类型的边界吗？”</li>
+</ul>
+</li>
+<li>
+<p><strong>防御性编程:在错误发生前预判</strong></p>
+<ul>
+<li><strong>核心思想</strong>:不要等到溢出发生后再去处理（因为你可能根本察觉不到）,而是在执行运算<strong>之前</strong>,就检查这次运算是否安全.</li>
+<li><strong>本题范例</strong>:<code>if (reversed &gt; int.MaxValue / 10 ...)</code> 就是一个完美的防御性编程范例.我们通过逆向思维（从 <code>int.MaxValue</code> 反推）,为即将执行的 <code>reversed * 10</code> 操作建立了一个“安全护栏”.</li>
+<li><strong>通用原则</strong>:对于关键运算,先检查其操作数是否在安全范围内,再执行运算.这比“事后补救”要健壮得多.</li>
+</ul>
+</li>
+<li>
+<p><strong>数学方法处理数字:高效且独立</strong></p>
+<ul>
+<li><strong>核心思想</strong>:使用取余 (<code>%</code>) 和整除 (<code>/</code>) 是一套“组合拳”,可以逐位拆解任何整数,而无需将其转换为字符串.</li>
+<li><strong>优点</strong>:这种纯数学处理通常比字符串转换和操作（如 <code>ToString()</code>, <code>ToCharArray()</code>, <code>int.Parse()</code>）的性能要高得多,并且不产生额外的内存分配（GC）,这在对性能敏感的Unity <code>Update</code> 循环中尤其重要.</li>
+<li><strong>通用原则</strong>:当需要处理数字的各个位时,优先考虑 <code>%</code> 和 <code>/</code> 的数学方法.</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="练习题">练习题:</h3>
+<h4 id="选择题"><strong>选择题</strong></h4>
+<p><strong>1. 在本题的溢出判断 <code>if (reversed &gt; int.MaxValue / 10 || ...)</code> 中,为什么我们用 <code>int.MaxValue / 10</code> 进行比较,而不是直接写 <code>if (reversed * 10 &gt; int.MaxValue)</code>？</strong></p>
+<p>A. 因为 <code>reversed * 10</code> 可能会先于比较操作发生溢出,导致 <code>if</code> 判断的条件本身就是基于一个错误（已环绕）的值,从而判断失效.<br>
+B. 这是一种性能优化,除法比乘法快.<br>
+C. 因为 <code>int.MaxValue</code> 不能被10整除,所以必须先做除法.<br>
+D. 为了让代码更易读.</p>
+<p><strong>2. 如果你需要获取一个正整数 <code>n</code> (例如 <code>n = 54321</code>) 的百位数（也就是 <code>3</code>）,以下哪个表达式是正确的？</strong></p>
+<p>A. <code>n % 100</code><br>
+B. <code>n / 100</code><br>
+C. <code>(n / 100) % 10</code><br>
+D. <code>n % 1000 / 100</code></p>
+<hr>
+<h4 id="简答题"><strong>简答题</strong></h4>
+<p><strong>3. 假设你需要反转一个 <code>short</code> 类型的整数（范围: -32768 到 32767）.请参照本题的思路,写出针对 <code>short</code> 类型的正数溢出检查的 <code>if</code> 条件语句.</strong></p>
+<hr>
+<h4 id="参考答案">参考答案:</h4>
+<h5 id="选择题答案"><strong>选择题答案</strong></h5>
+<p><strong>1. 在本题的溢出判断 <code>if (reversed &gt; int.MaxValue / 10 || ...)</code> 中,为什么我们用 <code>int.MaxValue / 10</code> 进行比较,而不是直接写 <code>if (reversed * 10 &gt; int.MaxValue)</code>？</strong></p>
+<p><strong>正确答案:A</strong></p>
+<p><strong>解析:</strong></p>
+<ul>
+<li><strong>A. 因为 <code>reversed * 10</code> 可能会先于比较操作发生溢出,导致 <code>if</code> 判断的条件本身就是基于一个错误（已环绕）的值,从而判断失效.</strong>
+<ul>
+<li>这是最关键的原因.在C#中,<code>if (A &gt; B)</code> 这个表达式会先计算 <code>A</code> 的值,再计算 <code>B</code> 的值,最后进行比较.如果 <code>reversed</code> 的值已经很大（例如 <code>300000000</code>）,那么在执行 <code>reversed * 10</code> 时,结果就已经超出了 <code>int</code> 的最大值,发生了溢出并“环绕”成了一个负数.此时,<code>if</code> 语句就变成了 <code>if (一个负数 &gt; int.MaxValue)</code>,这个条件永远是 <code>false</code>,导致我们错过了真正的溢出,程序会继续使用这个错误的负数进行计算.而 <code>reversed &gt; int.MaxValue / 10</code> 这种写法,将运算转移到了不易溢出的一侧,从而安全地预判了风险.</li>
+</ul>
+</li>
+<li>B. 这是一种性能优化,除法比乘法快.
+<ul>
+<li>这个说法是错误的.在大多数现代处理器上,整数乘法通常比整数除法要快.</li>
+</ul>
+</li>
+<li>C. 因为 <code>int.MaxValue</code> 不能被10整除,所以必须先做除法.
+<ul>
+<li><code>int.MaxValue</code> 能否被10整除与判断逻辑的正确性无关.</li>
+</ul>
+</li>
+<li>D. 为了让代码更易读.
+<ul>
+<li>虽然代码可读性很重要,但在这里,最主要的原因是<strong>为了保证逻辑的正确性</strong>,防止因运算顺序导致溢出,从而使判断失效.</li>
+</ul>
+</li>
+</ul>
+<p><strong>2. 如果你需要获取一个正整数 <code>n</code> (例如 <code>n = 54321</code>) 的百位数（也就是 <code>3</code>）,以下哪个表达式是正确的？</strong></p>
+<p><strong>正确答案:C</strong> (选项 D 在数学上也是正确的,但 C 是更通用和标准的方法)</p>
+<p><strong>解析:</strong></p>
+<ul>
+<li>我们的目标是隔离出百位上的 <code>3</code>.</li>
+<li><strong>第一步:去掉百位右边的所有数字.</strong> 我们可以通过整除 <code>100</code> 来实现.<br>
+<code>54321 / 100</code> 的结果是 <code>543</code>.现在,我们想要的目标数字 <code>3</code> 成为了结果的个位数.</li>
+<li><strong>第二步:从新结果中取出个位数.</strong> 我们可以通过对 <code>10</code> 取余来实现.<br>
+<code>543 % 10</code> 的结果是 <code>3</code>.</li>
+<li>所以,组合起来就是 <code>(n / 100) % 10</code>.</li>
+<li><strong>为什么 D <code>n % 1000 / 100</code> 也可以？</strong>
+<ul>
+<li><code>54321 % 1000</code> 的结果是 <code>321</code>（取出了后三位）.</li>
+<li><code>321 / 100</code> 的结果是 <code>3</code>（对后三位数取百位）.</li>
+<li>虽然结果正确,但选项 C 的思路（“移位”再“取末位”）更具有普适性.例如,要取任意第 <code>k</code> 位的数字,通用的公式就是 <code>(n / 10^k) % 10</code>.</li>
+</ul>
+</li>
+</ul>
+<h5 id="简答题答案">简答题答案:</h5>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// short.MaxValue 是 32767</span></span><br><span class="line"><span class="comment">// short.MaxValue / 10 是 3276</span></span><br><span class="line"><span class="comment">// short.MaxValue % 10 是 7</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">// 假设 digit 是当前取出的末位数,rev 是 short 类型的反转结果</span></span><br><span class="line"><span class="keyword">if</span> (rev &gt; <span class="built_in">short</span>.MaxValue / <span class="number">10</span> || (rev == <span class="built_in">short</span>.MaxValue / <span class="number">10</span> &amp;&amp; digit &gt; <span class="number">7</span>))</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// 即将发生正向溢出</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="实际应用场景">实际应用场景:</h3>
+<ol>
+<li>
+<p><strong>游戏经济系统（金币、资源）</strong></p>
+<ul>
+<li><strong>场景</strong>:玩家的货币数量通常用 <code>int</code> 或 <code>long</code> 存储.如果一个玩家拥有接近 <code>int.MaxValue</code> 的金币,此时他完成一个任务获得了少量金币,若不检查溢出,他的金币数可能会瞬间从一个巨大的正数变成负数,导致经济系统崩溃.</li>
+<li><strong>应用</strong>:在增加玩家货币的函数中,必须加入溢出检查.例如 <code>if (playerGold &gt; int.MaxValue - rewardAmount)</code>,如果成立,则直接将玩家金币设为 <code>int.MaxValue</code>,而不是执行加法.</li>
+</ul>
+</li>
+<li>
+<p><strong>计分与伤害计算</strong></p>
+<ul>
+<li><strong>场景</strong>:在一个伤害可以无限叠加的“割草”游戏中,或者一个分数可以滚得极高的街机游戏中,总伤害或总分数很容易超过 <code>int</code> 的上限.</li>
+<li><strong>应用</strong>:使用 <code>long</code> 类型来存储分数/伤害值.或者,在每次累加伤害前,进行防御性检查,防止数值环绕.</li>
+</ul>
+</li>
+<li>
+<p><strong>UI显示和格式化</strong></p>
+<ul>
+<li><strong>场景</strong>:你需要将一个分数 <code>12345</code> 显示成带有闪烁效果的单个数字 <code>1</code>, <code>2</code>, <code>3</code>, <code>4</code>, <code>5</code>.</li>
+<li><strong>应用</strong>:可以使用 <code>%</code> 和 <code>/</code> 的技巧,循环取出每个数字,然后为每个数字实例化一个UI组件并应用动画,而无需进行字符串操作.</li>
+</ul>
+</li>
+<li>
+<p><strong>程序化生成（Procedural Generation）</strong></p>
+<ul>
+<li><strong>场景</strong>:使用一个整数种子（Seed）来生成关卡.你可以通过拆解这个种子的各位数字来决定不同的生成规则.</li>
+<li><strong>应用</strong>:例如,<code>seed % 10</code> 的结果决定地图主题（0=森林, 1=沙漠…）,<code>(seed / 10) % 10</code> 的结果决定敌人密度,以此类推.这让一个简单的整数种子可以控制多个生成维度.</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="第8题-字符串转换整数-atoi-难度-中等">第8题: 字符串转换整数 (atoi) (难度: 中等)</h2>
+<h3 id="原题-这部分粘贴存在问题-可自行去力扣查看">原题(这部分粘贴存在问题,可自行去力扣查看):</h3>
+<p>请你来实现一个 <code>myAtoi(string s)</code> 函数,使其能将字符串转换成一个 32 位有符号整数.</p>
+<p>函数 <code>myAtoi(string s)</code> 的算法如下:</p>
+<ol>
+<li>**空格:**读入字符串并丢弃无用的前导空格（<code>&quot; &quot;</code>）</li>
+<li>**符号:**检查下一个字符（假设还未到字符末尾）为 <code>'-'</code> 还是 <code>'+'</code>.如果两者都不存在,则假定结果为正.</li>
+<li>**转换:**通过跳过前置零来读取该整数,直到遇到非数字字符或到达字符串的结尾.如果没有读取数字,则结果为0.</li>
+<li>**舍入:**如果整数数超过 32 位有符号整数范围 <code>[−231, 231 − 1]</code> ,需要截断这个整数,使其保持在这个范围内.具体来说,小于 <code>−231</code> 的整数应该被舍入为 <code>−231</code> ,大于 <code>231 − 1</code> 的整数应该被舍入为 <code>231 − 1</code> .</li>
+</ol>
+<p>返回整数作为最终结果.</p>
+<p><strong>示例 1:</strong></p>
+<p>**输入:**s = “42”</p>
+<p>**输出:**42</p>
+<p>**解释:**加粗的字符串为已经读入的字符,插入符号是当前读取的字符.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">带下划线线的字符是所读的内容,插入符号是当前读入位置.</span><br><span class="line">第 1 步:&quot;42&quot;（当前没有读入字符,因为没有前导空格）</span><br><span class="line">         ^</span><br><span class="line">第 2 步:&quot;42&quot;（当前没有读入字符,因为这里不存在 &#x27;-&#x27; 或者 &#x27;+&#x27;）</span><br><span class="line">         ^</span><br><span class="line">第 3 步:&quot;42&quot;（读入 &quot;42&quot;）</span><br><span class="line">           ^</span><br></pre></td></tr></table></figure>
+<p><strong>示例 2:</strong></p>
+<p>**输入:**s = &quot; -042&quot;</p>
+<p><strong>输出:</strong>-42</p>
+<p><strong>解释:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">第 1 步:&quot;   -042&quot;（读入前导空格,但忽视掉）</span><br><span class="line">            ^</span><br><span class="line">第 2 步:&quot;   -042&quot;（读入 &#x27;-&#x27; 字符,所以结果应该是负数）</span><br><span class="line">             ^</span><br><span class="line">第 3 步:&quot;   -042&quot;（读入 &quot;042&quot;,在结果中忽略前导零）</span><br><span class="line">               ^</span><br></pre></td></tr></table></figure>
+<p><strong>示例 3:</strong></p>
+<p>**输入:**s = “1337c0d3”</p>
+<p>**输出:**1337</p>
+<p><strong>解释:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">第 1 步:&quot;1337c0d3&quot;（当前没有读入字符,因为没有前导空格）</span><br><span class="line">         ^</span><br><span class="line">第 2 步:&quot;1337c0d3&quot;（当前没有读入字符,因为这里不存在 &#x27;-&#x27; 或者 &#x27;+&#x27;）</span><br><span class="line">         ^</span><br><span class="line">第 3 步:&quot;1337c0d3&quot;（读入 &quot;1337&quot;；由于下一个字符不是一个数字,所以读入停止）</span><br><span class="line">             ^</span><br></pre></td></tr></table></figure>
+<p><strong>示例 4:</strong></p>
+<p>**输入:**s = “0-1”</p>
+<p>**输出:**0</p>
+<p><strong>解释:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">第 1 步:&quot;0-1&quot; (当前没有读入字符,因为没有前导空格)</span><br><span class="line">         ^</span><br><span class="line">第 2 步:&quot;0-1&quot; (当前没有读入字符,因为这里不存在 &#x27;-&#x27; 或者 &#x27;+&#x27;)</span><br><span class="line">         ^</span><br><span class="line">第 3 步:&quot;0-1&quot; (读入 &quot;0&quot;；由于下一个字符不是一个数字,所以读入停止)</span><br><span class="line">          ^</span><br></pre></td></tr></table></figure>
+<p><strong>示例 5:</strong></p>
+<p>**输入:**s = “words and 987”</p>
+<p>**输出:**0</p>
+<p><strong>解释:</strong></p>
+<p>读取在第一个非数字字符“w”处停止.</p>
+<p><strong>提示:</strong></p>
+<ul>
+<li><code>0 &lt;= s.length &lt;= 200</code></li>
+<li><code>s</code> 由英文字母（大写和小写）、数字（<code>0-9</code>）、<code>' '</code>、<code>'+'</code>、<code>'-'</code> 和 <code>'.'</code> 组成</li>
+</ul>
+<hr>
+<h3 id="开始解题-2">开始解题:</h3>
+<p>那么这道题的本质是<strong>模拟一个字符串解析器</strong>. 我们可以把它想象成一个机器人,它会从左到右扫描一个字符串,并根据一套严格的规定来决定自己该做什么.如果我们将这个过程分解,就会发现它非常符合逻辑,就像在Unity中编写一个角色的AI状态机一样.</p>
+<p>我们可以把整个过程分为几个连续的<strong>状态</strong>或步骤:</p>
+<h4 id="第一步-初始状态-寻找数字-状态">第一步: 初始状态 -&gt; &quot;寻找数字&quot;状态</h4>
+<p>目标: 跳过所有无关紧要的前导空格.</p>
+<ul>
+<li><strong>机器人行为:</strong> 我们的机器人从字符串的第一个字符(索引 <code>0</code>)开始.它会问自己:“这个字符是空格吗?”
+<ul>
+<li>如果是,它会简单的向前走一步(索引 <code>+1</code>),然后继续问同样的问题.</li>
+<li>如果不是,或者已经走到了字符串的尽头,这个阶段就结束了.</li>
+</ul>
+</li>
+<li><strong>关键点:</strong> 这个阶段是&quot;清理&quot;阶段,为后续真正的解析做准备.如果整个字符串都是空格,那么机器人走到头也找不到任何有用的东西,最终就应该返回 <code>0</code>.</li>
+</ul>
+<h4 id="第二步-寻找数字-状态-确认符号-状态">第二步: &quot;寻找数字&quot;状态 -&gt; &quot;确认符号&quot;状态</h4>
+<p><strong>目标:</strong> 在找到第一个非空格字符后,判断数字的正负.</p>
+<ul>
+<li>
+<p><strong>机器人行为:</strong> 机器人停在了第一个非空格字符上.它会检查这个字符:</p>
+<ul>
+<li>是 <code>'-'</code> 吗?如果是,它就在自己的小本本上记下“这是个负数”,然后向前走一步,准备读取数字.</li>
+<li>是 <code>'+'</code> 吗?如果是,它记下“这是个正数”（或者什么都不记,因为默认就是正数）,然后也向前走一步.</li>
+<li>如果既不是 <code>'-'</code> 也不是 <code>'+'</code>,机器人就认为这是一个正数,并且<strong>停在原地不动</strong>,因为这个字符可能就是数字本身.</li>
+</ul>
+</li>
+<li>
+<p><strong>关键点:</strong> 符号只在数字的最前面出现才有效.例如,对于 <code>&quot;  -42&quot;</code>,这个阶段会记录负号；但对于 <code>&quot;  4-2&quot;</code>,这个阶段会认为数字是正数,因为第一个非空格字符是 <code>'4'</code>.</p>
+</li>
+</ul>
+<h4 id="第三步-确认符号-状态-转换数字-状态">第三步: &quot;确认符号&quot;状态 -&gt; &quot;转换数字&quot;状态</h4>
+<p><strong>目标:</strong> 连续读取所有数字字符,并将它们组合成一个整数.</p>
+<ul>
+<li>
+<p><strong>机器人行为:</strong> 现在机器人已经准备好读取核心数字了.它会继续向前扫描:</p>
+<ul>
+<li>“当前字符是数字（<code>'0'</code> 到 <code>'9'</code>）吗?”</li>
+<li>如果是,它就执行一个核心操作:<strong><code>当前结果 = 当前结果 * 10 + 这个数字的值</code></strong>.
+<ul>
+<li>例如,如果当前结果是 <code>4</code>,读到了新数字 <code>'2'</code>,那么新结果就是 <code>4 * 10 + 2 = 42</code>.</li>
+<li>如果当前结果是 <code>42</code>,读到了新数字 <code>'3'</code>,那么新结果就是 <code>42 * 10 + 3 = 423</code>.</li>
+</ul>
+</li>
+<li>如果当前字符<strong>不是</strong>数字,或者走到了字符串的尽头,这个阶段就立刻结束.</li>
+</ul>
+</li>
+<li>
+<p><strong>一个巨大的陷阱（核心难点）:整数溢出</strong>(第7题)</p>
+<ul>
+<li>C# 的 <code>int</code> 类型有范围限制,即 <code>[-2147483648, 2147483647]</code>.</li>
+<li>在执行 <code>当前结果 = 当前结果 * 10 + 这个数字的值</code> 之前,我们必须<strong>预判</strong>这次计算是否会导致结果超出范围.</li>
+<li><strong>如何预判?</strong>
+<ul>
+<li>假设我们正在构建一个正数.<code>int</code> 的最大值是 <code>2147483647</code>.</li>
+<li>在乘以10之前,如果 <code>当前结果</code> 已经大于 <code>int.MaxValue / 10</code> (即 <code>214748364</code>),那么再乘以10必然溢出.</li>
+<li>或者,如果 <code>当前结果</code> 正好等于 <code>int.MaxValue / 10</code> (即 <code>214748364</code>),那么我们就要看下一个数字了.如果这个数字大于 <code>int.MaxValue % 10</code> (即 <code>7</code>),那么加法操作就会导致溢出.</li>
+</ul>
+</li>
+<li>如果预判到会溢出,就不能再继续计算了,必须立即停止并返回该方向的极值（正数返回 <code>int.MaxValue</code>,负数返回 <code>int.MinValue</code>）.</li>
+</ul>
+</li>
+</ul>
+<h4 id="第四步-转换数字-状态-最终返回-状态">第四步: &quot;转换数字&quot;状态 -&gt; &quot;最终返回&quot;状态</h4>
+<p><strong>目标:</strong> 结合符号和计算出的数值,得到最终结果.</p>
+<ul>
+<li>
+<p><strong>机器人行为:</strong> 数字读取循环结束后,我们得到了一个数值（在计算过程中我们一直把它当作正数处理）.</p>
+<ul>
+<li>现在,机器人拿出它的小本本,看看在第二步记录的符号是什么.</li>
+<li>如果是“负数”,就把计算出的数值乘以 <code>-1</code>.</li>
+<li>如果是“正数”,就保持原样.</li>
+<li>最后,返回这个最终的整数.</li>
+</ul>
+</li>
+<li>
+<p><strong>特殊情况:</strong> 如果从头到尾都没有读到任何一个数字（例如 <code>&quot;words and 987&quot;</code> 或者 <code>&quot;  -abc&quot;</code>）,那么“转换数字”这个阶段根本就不会执行,我们计算出的数值会保持初始值 <code>0</code>.最终返回 <code>0</code>,完全符合题意.</p>
+</li>
+</ul>
+<h4 id="总结一下逻辑">总结一下逻辑:</h4>
+<p><code>开始</code> -&gt; <code>循环跳过空格</code> -&gt; <code>判断并记录符号</code> -&gt; <code>循环读取数字并处理溢出</code> -&gt; <code>结合符号返回结果</code></p>
+<hr>
+<h3 id="代码与讲解">代码与讲解:</h3>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Solution</span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">int</span> <span class="title">MyAtoi</span>(<span class="params"><span class="built_in">string</span> s</span>)</span> &#123;</span><br><span class="line">        <span class="comment">// 1. 初始化变量</span></span><br><span class="line">        <span class="built_in">int</span> i = <span class="number">0</span>; <span class="comment">// 我们的“机器人”或指针,从字符串开头出发</span></span><br><span class="line">        <span class="built_in">int</span> sign = <span class="number">1</span>; <span class="comment">// 符号,默认为正</span></span><br><span class="line">        <span class="built_in">long</span> result = <span class="number">0</span>; <span class="comment">// 使用 long 类型来存储中间结果,方便检测溢出</span></span><br><span class="line">        <span class="built_in">int</span> n = s.Length;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 2. 步骤一:丢弃前导空格</span></span><br><span class="line">        <span class="keyword">while</span> (i &lt; n &amp;&amp; s[i] == <span class="string">&#x27; &#x27;</span>) &#123;</span><br><span class="line">            i++;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 3. 步骤二:检查符号</span></span><br><span class="line">        <span class="keyword">if</span> (i &lt; n &amp;&amp; (s[i] == <span class="string">&#x27;+&#x27;</span> || s[i] == <span class="string">&#x27;-&#x27;</span>)) &#123;</span><br><span class="line">            sign = (s[i] == <span class="string">&#x27;-&#x27;</span>) ? <span class="number">-1</span> : <span class="number">1</span>;</span><br><span class="line">            i++;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 4. 步骤三:转换数字并处理溢出</span></span><br><span class="line">        <span class="keyword">while</span> (i &lt; n &amp;&amp; <span class="built_in">char</span>.IsDigit(s[i])) &#123;</span><br><span class="line">            <span class="comment">// 将字符转换为数字</span></span><br><span class="line">            <span class="built_in">int</span> digit = s[i] - <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 核心:构建数字</span></span><br><span class="line">            result = result * <span class="number">10</span> + digit;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 核心:在构建过程中检查是否溢出</span></span><br><span class="line">            <span class="keyword">if</span> (sign * result &gt; <span class="built_in">int</span>.MaxValue) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="built_in">int</span>.MaxValue;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (sign * result &lt; <span class="built_in">int</span>.MinValue) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="built_in">int</span>.MinValue;</span><br><span class="line">            &#125;</span><br><span class="line">          </span><br><span class="line">            i++;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 5. 步骤四:结合符号并返回最终结果</span></span><br><span class="line">        <span class="comment">// 将 long 类型的结果乘以符号,并强制转换为 int</span></span><br><span class="line">        <span class="keyword">return</span> (<span class="built_in">int</span>)(sign * result);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="代码讲解">代码讲解:</h4>
+<ol>
+<li>
+<p><strong><code>long</code> 数据类型</strong></p>
+<ul>
+<li><strong>是什么:</strong> <code>long</code> 是一个64位有符号整数类型,它的范围比32位的 <code>int</code> 大得多（大约是 -9 x 10^18 到 9 x 10^18）.</li>
+<li><strong>为什么用在这里:</strong> 这是处理整数溢出问题的一个绝佳技巧.题目要求我们检测结果是否会超出 <code>int</code> 的范围.如果我们直接用 <code>int</code> 来累加,一旦溢出,它就会变成一个意想不到的负数（或正数）,我们就丢失了溢出前的信息.通过使用 <code>long</code> 这个“更大的容器”来存放计算结果,我们可以安全地进行 <code>result = result * 10 + digit</code> 操作.然后,在每一步都检查这个 <code>long</code> 类型的结果是否已经超出了 <code>int</code> 的范围.这让溢出判断变得非常简单和清晰.</li>
+</ul>
+</li>
+<li>
+<p>*<strong><code>int.MaxValue</code> 和 <code>int.MinValue</code></strong></p>
+<ul>
+<li><strong>是什么:</strong> 它们是 <code>System.Int32</code> 结构体中定义的两个公共静态常量（<code>public static const</code>）.<code>int.MaxValue</code> 的值是 <code>2,147,483,647</code>,<code>int.MinValue</code> 的值是 <code>-2,147,483,648</code>.</li>
+<li><strong>如何使用:</strong> 它们为我们提供了 <code>int</code> 类型的精确边界,是进行范围判断和“截断”（Clamping）操作的权威标准.在代码中,我们用 <code>if (sign * result &gt; int.MaxValue)</code> 来判断是否超过了正数边界.这比自己手写 <code>2147483647</code> 要更具可读性,也更不容易出错.在Unity中,我们常用 <code>Mathf.Infinity</code>,这与 <code>int.MaxValue</code> 在概念上是类似的,都代表了某种类型的边界.</li>
+</ul>
+</li>
+<li>
+<p><strong><code>char.IsDigit(char c)</code></strong></p>
+<ul>
+<li><strong>是什么:</strong> 这是一个非常方便的静态方法,用于判断一个给定的字符是否是十进制数字（‘0’ 到 ‘9’）.</li>
+<li><strong>为什么用它:</strong> 在C#中,我们当然可以写 <code>s[i] &gt;= '0' &amp;&amp; s[i] &lt;= '9'</code>.但这有几个小缺点:可读性稍差,且它隐含了字符编码是连续的假设（虽然对于数字来说总是如此）.使用 <code>char.IsDigit()</code> 是更推荐的“C#风格”写法,它意图明确,代码更干净.</li>
+</ul>
+</li>
+<li>
+<p><strong>字符的算术运算:<code>s[i] - '0'</code></strong></p>
+<ul>
+<li><strong>是什么:</strong> 这是C#（以及C/C++/Java）中一个非常经典和高效的技巧.在内部,<code>char</code> 类型实际上是存储为一个数字（其Unicode编码值）.幸运的是,所有数字字符 <code>'0', '1', '2', ... '9'</code> 的编码是连续的.</li>
+<li><strong>如何工作:</strong> 因此,用一个数字字符的编码值减去 <code>'0'</code> 的编码值,得到的结果恰好就是这个数字的整数值.例如,<code>'5' - '0'</code> 的结果就是整数 <code>5</code>.这比 <code>int.Parse(s[i].ToString())</code> 这种先转成字符串再解析的方式要快得多,是性能敏感场景下的首选.</li>
+</ul>
+</li>
+<li>
+<p><strong>三元运算符:<code>condition ? value_if_true : value_if_false</code></strong></p>
+<ul>
+<li>
+<p><strong>是什么:</strong> 这是一个紧凑的 <code>if-else</code> 语句的简写形式.</p>
+</li>
+<li>
+<p><strong>在代码中的应用:</strong> <code>sign = (s[i] == '-') ? -1 : 1;</code> 这行代码等价于:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (s[i] == <span class="string">&#x27;-&#x27;</span>) &#123;</span><br><span class="line">    sign = <span class="number">-1</span>;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    sign = <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>对于这种简单的赋值逻辑,三元运算符能让代码更简洁.</p>
+</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="知识点总结-2">知识点总结:</h3>
+<h4 id="1-边界条件与防御性编程">1. 边界条件与防御性编程</h4>
+<ul>
+<li><strong>核心思想:</strong> 永远不要相信输入.一个健壮的程序必须能处理各种预料之外的、不规范的、甚至是恶意的输入.</li>
+<li><strong>在本题中的体现:</strong>
+<ul>
+<li><strong>空字符串或纯空格:</strong> <code>s = &quot;&quot;</code> 或 <code>s = &quot;   &quot;</code>.</li>
+<li><strong>非数字开头:</strong> <code>s = &quot;words and 987&quot;</code>.</li>
+<li><strong>符号位置不正确:</strong> <code>s = &quot;  + 42&quot;</code> vs <code>s = &quot;42+&quot;</code>.</li>
+<li><strong>溢出:</strong> <code>s = &quot;2147483648&quot;</code> (比 <code>int.MaxValue</code> 大1).</li>
+<li><strong>混合输入:</strong> <code>s = &quot;   -042a123&quot;</code>.</li>
+</ul>
+</li>
+<li><strong>通用启示:</strong> 在编写任何函数或方法时,都要先思考:“最坏的输入情况是什么？”.在函数开头处理这些边缘情况（如检查 <code>null</code> 或空集合）,可以让我们的主逻辑更清晰、更安全.</li>
+</ul>
+<h4 id="2-使用“更大”的数据类型处理溢出">2. 使用“更大”的数据类型处理溢出</h4>
+<ul>
+<li><strong>核心思想:</strong> 当一个计算过程有可能超出某个数值类型的范围时,使用一个范围更大的类型作为“临时计算器”是一种简单而有效的策略.</li>
+<li><strong>在本题中的体现:</strong> 我们使用 <code>long</code> (64位) 来计算一个最终要存入 <code>int</code> (32位) 的结果.这使得我们可以在不丢失信息的情况下,轻松地将中间结果与 <code>int.MaxValue</code> 和 <code>int.MinValue</code> 进行比较.</li>
+<li><strong>通用启示:</strong> 这个技巧不限于 <code>int</code> 和 <code>long</code>.例如,在处理需要高精度的小数运算时,我们可能会选择使用 <code>decimal</code> 类型而不是 <code>float</code> 或 <code>double</code> 来避免精度损失.在处理图形学或物理计算时,有时为了中间步骤的精度,会使用 <code>double</code> 进行计算,最后再将结果转回 <code>float</code>.</li>
+</ul>
+<h4 id="3-状态机思想-State-Machine">3. 状态机思想 (State Machine)</h4>
+<ul>
+<li><strong>核心思想:</strong> 将一个复杂的过程分解为一系列离散的、定义清晰的“状态”,以及在这些状态之间转换的“规则”.</li>
+<li><strong>在本题中的体现:</strong> 我们的解析过程可以看作一个简单的状态机:
+<ol>
+<li><code>State_Skipping_Whitespace</code> (跳过空格状态)</li>
+<li><code>State_Determining_Sign</code> (确定符号状态)</li>
+<li><code>State_Reading_Digits</code> (读取数字状态)</li>
+<li><code>State_Finished</code> (完成状态)<br>
+程序根据当前字符,从一个状态转换到下一个状态.</li>
+</ol>
+</li>
+<li><strong>通用启示:</strong> 状态机是解决许多问题的强大模型,尤其是在游戏开发中.角色的AI（站立、行走、攻击、防御）、UI的交互流程（主菜单、设置、游戏中）、网络协议的握手过程等,都可以用状态机来清晰地建模和实现.</li>
+</ul>
+<hr>
+<h3 id="练习题-2">练习题:</h3>
+<h4 id="选择题-2">选择题</h4>
+<p><strong>1. 在一个需要返回 <code>int</code> 的函数中,你正在累加一个可能很大的数字.为了防止计算过程中发生溢出,以下哪个是最佳实践？</strong></p>
+<p>A. 在每次加法后,检查结果是否变成了负数,如果是,说明溢出了.<br>
+B. 使用 <code>try-catch</code> 块包裹加法运算,捕捉 <code>OverflowException</code> 异常.<br>
+C. 将累加器变量声明为 <code>long</code> 类型,每次累加后,检查该 <code>long</code> 值是否超出了 <code>int</code> 的范围.<br>
+D. 在进行加法前,使用 <code>int.MaxValue - currentValue &lt; numberToAdd</code> 的方式进行预判.</p>
+<h4 id="简答题-2">简答题</h4>
+<p><strong>2. 假设你需要编写一个函数 <code>ParseVector2(string s)</code>,它能将形如 <code>&quot;(1.5, -2.0)&quot;</code> 的字符串解析为一个 Unity 的 <code>Vector2</code> 对象.请简要描述你会如何运用“状态机”的思想来设计这个函数的解析逻辑？（不需要写代码,描述步骤即可）</strong></p>
+<hr>
+<h4 id="参考答案-2">参考答案</h4>
+<ol>
+<li>
+<p><strong>答案:C 或 D 都是优秀的实践,但 C 更为通用和简单.</strong><br>
+<strong>解析:</strong></p>
+<ul>
+<li>A 是不可靠的.对于正数溢出,结果会变成负数,但对于负数下溢,结果可能变成正数,逻辑复杂且容易出错.</li>
+<li>B 在默认的 C# 编译设置下是行不通的.整数溢出默认不会抛出异常（为了性能）.你需要使用 <code>checked</code> 关键字才能让它抛出异常,这在性能敏感的循环中可能不是最佳选择.</li>
+<li><strong>C (本题解法)</strong> 是最直观和简单的方法.它将问题从“如何检测溢出”转变为“如何比较大小”,逻辑清晰.</li>
+<li><strong>D (预判法)</strong> 也是一种非常好的、不依赖更大类型的方法,性能很高.它直接在操作前判断本次操作是否会导致溢出.在某些不能使用更大类型的场景下,这是标准做法.</li>
+</ul>
+</li>
+<li>
+<p><strong>答案:</strong><br>
+我们可以将解析过程设计为以下几个状态:</p>
+<ol>
+<li><strong>寻找左括号状态:</strong> 从头开始,跳过所有空格,直到找到第一个 <code>'('</code>.如果没找到,则格式错误.</li>
+<li><strong>解析X值状态:</strong> 从 <code>'('</code> 之后开始,解析一个浮点数（这本身就可以复用 atoi 的逻辑,但要处理小数点）.直到遇到 <code>','</code> 字符.将解析出的值存为 X.</li>
+<li><strong>寻找逗号状态:</strong> 在解析完 X 后,跳过可能的空格,寻找 <code>','</code>.如果没找到,则格式错误.</li>
+<li><strong>解析Y值状态:</strong> 从 <code>','</code> 之后开始,用与解析 X 值相同的方法解析第二个浮点数.直到遇到 <code>')'</code> 字符.将解析出的值存为 Y.</li>
+<li><strong>寻找右括号状态:</strong> 在解析完 Y 后,跳过可能的空格,寻找 <code>')'</code>.如果没找到,则格式错误.</li>
+<li><strong>完成状态:</strong> 成功找到所有部分,用解析出的 X 和 Y 构建并返回 <code>new Vector2(x, y)</code>.</li>
+</ol>
+<p>在任何一步失败（比如找不到预期的字符,或数字格式错误）,函数都应立即停止并返回一个错误或默认值.</p>
+</li>
+</ol>
+<hr>
+<h3 id="可能的实际应用">可能的实际应用:</h3>
+<ol>
+<li>
+<p><strong>配置文件解析:</strong> 游戏中的配置文件（<code>.ini</code>, <code>.txt</code>, <code>.json</code>, <code>.xml</code>）经常包含需要被读取为数值的设置,如音量大小、图形质量等级、玩家初始生命值等.一个健壮的解析器是读取这些配置的基础.</p>
+</li>
+<li>
+<p><strong>自定义编辑器工具:</strong> 在Unity Editor中,我们可能会创建一些工具窗口,让策划或美术在输入框里填写数值（例如,批量修改一堆怪物的血量）.我们需要将输入框中的字符串安全地转换为整数或浮点数,<code>atoi</code> 的逻辑是这个过程的核心.</p>
+</li>
+<li>
+<p><strong>网络通信:</strong> 从服务器接收的数据包可能是以文本协议（如HTTP）传输的.解析协议头或消息体中的数字字段时,就需要用到类似 <code>atoi</code> 的健壮的字符串到数字的转换逻辑.</p>
+</li>
+<li>
+<p><strong>调试控制台/GM命令:</strong> 游戏内通常会有一个调试控制台,允许开发者输入命令,如 <code>set_player_hp 1000</code>.解析这个命令中的参数 <code>1000</code>,就需要一个能处理各种输入的 <code>atoi</code> 函数.</p>
+</li>
+</ol>
+</article><div class="post-copyright"><div class="post-copyright__author_group"><div class="post-copyright__author_img"><img class="post-copyright__author_img_front" src="/img/avatar.png"></div><div class="post-copyright__author_name">NFA晨曦</div><div class="post-copyright__author_desc">记录与分享</div></div><div class="post-tools" id="post-tools"><div class="post-tools-left"><div id="quit-box" onclick="RemoveRewardMask()"></div><div class="post-reward"><div class="reward-button" title="赞赏作者" onclick="AddRewardMask()"><i class="solitude fas fa-heart"></i>赞赏作者</div><div class="reward-main"><ul class="reward-all"><span class="reward-title">感谢您的赞赏</span><ul class="reward-group"><li class="reward-item"><a href="https://blog.nfasystem.top/img/wechat.jpg"><img class="post-qr-code-img nolazyload" src="/img/wechat.jpg" alt="微信赞赏码" style="border-color: var(--efu-black)"></a><div class="post-qr-code-desc">微信赞赏码</div></li></ul><a class="reward-main-btn" href="/about/"><div class="reward-text">赞赏名单</div><div class="reward-dec"></div></a></ul></div></div><script>function RemoveRewardMask() {
+    let rewardMainElements = document.querySelectorAll(".reward-main");
+    let quitBoxElement = document.querySelector("#quit-box");
+
+    rewardMainElements.forEach(element => {
+        element.style.display = "none";
+    });
+
+    if (quitBoxElement) {
+        quitBoxElement.style.display = "none";
+    }
+}
+
+function AddRewardMask() {
+    let rewardMainElements = document.querySelectorAll(".reward-main");
+    let quitBoxElement = document.querySelector("#quit-box");
+
+    rewardMainElements.forEach(element => {
+        element.style.display = "flex";
+    });
+
+    if (quitBoxElement) {
+        quitBoxElement.style.display = "flex";
+    }
+}</script></div></div><div class="post-copyright__notice"><span class="post-copyright-info">本文是原创文章，采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans">CC BY-NC-SA 4.0</a>协议，完整转载请注明来自<a href="/">晨曦の小站</a></span></div></div><div class="post-tools-right"><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E7%AE%97%E6%B3%95/"><span class="tags-punctuation"><i class="solitude fas fa-hashtag"></i>算法<span class="tagsPageCount">9</span></span></a><a class="post-meta__tags" href="/tags/%E5%8A%9B%E6%89%A3/"><span class="tags-punctuation"><i class="solitude fas fa-hashtag"></i>力扣<span class="tagsPageCount">9</span></span></a></div></div></div><nav class="needEndHide pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/9cf22d8b/"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">力扣刷题日常(9-10)</div></div></a></div><div class="next-post pull-right"><a href="/posts/95bdd374/"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">力扣刷题日常(5-6)</div></div></a></div></nav>
+        <div class="relatedPosts">
+            <div class="headline">
+                <i class="solitude fas fa-star"></i>
+                <span>喜欢这篇的人也看了</span>
+                <div class="relatedPosts-link">
+                    <a onclick="event.preventDefault(); toRandomPost();" href="javascript:void(0);" rel="external nofollow" data-pjax-state="">随便逛逛</a>
+                </div>
+            </div>
+            <div class="relatedPosts-list">
+            <div>
+                <a href="/posts/6491732a/" title="力扣刷题日常(17-18)">
+                    <img class="cover" src= "" data-lazy-src="https://image.nfasystem.top/img-nfa/LK17-18.webp" alt="cover">
+                    <div class="content is-center">
+                        <div class="title">力扣刷题日常(17-18)</div>
+                    </div>
+                </a>
+            </div>
+            <div>
+                <a href="/posts/80d20dc4/" title="力扣刷题日常(15-16)">
+                    <img class="cover" src= "" data-lazy-src="https://image.nfasystem.top/img-nfa/LK15-16.webp" alt="cover">
+                    <div class="content is-center">
+                        <div class="title">力扣刷题日常(15-16)</div>
+                    </div>
+                </a>
+            </div>
+            </div>
+        </div><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="solitude fas fa-comment"></i><span> 评论</span><span class="count"> (<span class="twikoo-count"><i class="solitude fas fa-spinner fa-spin"></i></span>)</span></div></div><div class="comment-wrap"><div id="twikoo-wrap"></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-content"><div class="card-info-avatar is-center"><div class="top-group"><div class="sayhi" id="sayhi" onclick="sco.changeWittyWord()"></div></div></div><div class="avatar"><img alt="头像" src="/img/avatar.png"></div><div class="description">这是晨曦の博客，专注于分享，由第四领域——晨曦负责与维护。</div><div class="bottom-group"><span class="left"><div class="name">NFA晨曦</div><div class="desc">只有迎风，风筝才能飞得更高。</div></span><div class="social-icons is-center"><a class="social-icon" target="_blank" rel="noopener" href="https://github.com/nfachenxi" title="Github"><i class="solitude  fab fa-github"></i></a><a class="social-icon" target="_blank" rel="noopener" href="https://space.bilibili.com/316806831" title="Bilibili"><i class="solitude  fab fa-bilibili"></i></a></div></div></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="solitude fas fa-bars"></i><span>文章目录</span></div><div class="toc-content" id="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">力扣刷题日常(7-8)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC7%E9%A2%98-%E6%95%B4%E6%95%B0%E5%8F%8D%E8%BD%AC-%E9%9A%BE%E5%BA%A6-%E4%B8%AD%E7%AD%89"><span class="toc-text">第7题: 整数反转(难度: 中等)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%9F%E9%A2%98"><span class="toc-text">原题:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%80%E5%A7%8B%E8%A7%A3%E9%A2%98"><span class="toc-text">开始解题:</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AE%97%E6%B3%95%E5%AE%9E%E7%8E%B0%E9%80%BB%E8%BE%91"><span class="toc-text">算法实现逻辑</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86%E7%89%B9%E6%AE%8A%E6%83%85%E5%86%B5"><span class="toc-text">如何处理特殊情况?</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9C%AC%E9%A2%98%E6%9C%80%E5%A4%A7%E7%9A%84%E9%9A%BE%E7%82%B9-%E5%A4%84%E7%90%86%E6%95%B4%E6%95%B0%E6%BA%A2%E5%87%BA"><span class="toc-text">本题最大的难点: 处理整数溢出</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AE%80%E5%8D%95%E6%80%BB%E7%BB%93"><span class="toc-text">简单总结:</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%97%E6%B3%95%E4%BB%A3%E7%A0%81"><span class="toc-text">算法代码:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93"><span class="toc-text">知识点总结:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%83%E4%B9%A0%E9%A2%98"><span class="toc-text">练习题:</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%89%E6%8B%A9%E9%A2%98"><span class="toc-text">选择题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AE%80%E7%AD%94%E9%A2%98"><span class="toc-text">简答题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E7%AD%94%E6%A1%88"><span class="toc-text">参考答案:</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%80%89%E6%8B%A9%E9%A2%98%E7%AD%94%E6%A1%88"><span class="toc-text">选择题答案</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%AE%80%E7%AD%94%E9%A2%98%E7%AD%94%E6%A1%88"><span class="toc-text">简答题答案:</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-text">实际应用场景:</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC8%E9%A2%98-%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BD%AC%E6%8D%A2%E6%95%B4%E6%95%B0-atoi-%E9%9A%BE%E5%BA%A6-%E4%B8%AD%E7%AD%89"><span class="toc-text">第8题: 字符串转换整数 (atoi) (难度: 中等)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%9F%E9%A2%98-%E8%BF%99%E9%83%A8%E5%88%86%E7%B2%98%E8%B4%B4%E5%AD%98%E5%9C%A8%E9%97%AE%E9%A2%98-%E5%8F%AF%E8%87%AA%E8%A1%8C%E5%8E%BB%E5%8A%9B%E6%89%A3%E6%9F%A5%E7%9C%8B"><span class="toc-text">原题(这部分粘贴存在问题,可自行去力扣查看):</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%80%E5%A7%8B%E8%A7%A3%E9%A2%98-2"><span class="toc-text">开始解题:</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5-%E5%88%9D%E5%A7%8B%E7%8A%B6%E6%80%81-%E5%AF%BB%E6%89%BE%E6%95%B0%E5%AD%97-%E7%8A%B6%E6%80%81"><span class="toc-text">第一步: 初始状态 -&gt; &quot;寻找数字&quot;状态</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5-%E5%AF%BB%E6%89%BE%E6%95%B0%E5%AD%97-%E7%8A%B6%E6%80%81-%E7%A1%AE%E8%AE%A4%E7%AC%A6%E5%8F%B7-%E7%8A%B6%E6%80%81"><span class="toc-text">第二步: &quot;寻找数字&quot;状态 -&gt; &quot;确认符号&quot;状态</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E6%AD%A5-%E7%A1%AE%E8%AE%A4%E7%AC%A6%E5%8F%B7-%E7%8A%B6%E6%80%81-%E8%BD%AC%E6%8D%A2%E6%95%B0%E5%AD%97-%E7%8A%B6%E6%80%81"><span class="toc-text">第三步: &quot;确认符号&quot;状态 -&gt; &quot;转换数字&quot;状态</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AC%AC%E5%9B%9B%E6%AD%A5-%E8%BD%AC%E6%8D%A2%E6%95%B0%E5%AD%97-%E7%8A%B6%E6%80%81-%E6%9C%80%E7%BB%88%E8%BF%94%E5%9B%9E-%E7%8A%B6%E6%80%81"><span class="toc-text">第四步: &quot;转换数字&quot;状态 -&gt; &quot;最终返回&quot;状态</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B%E9%80%BB%E8%BE%91"><span class="toc-text">总结一下逻辑:</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E4%B8%8E%E8%AE%B2%E8%A7%A3"><span class="toc-text">代码与讲解:</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E8%AE%B2%E8%A7%A3"><span class="toc-text">代码讲解:</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93-2"><span class="toc-text">知识点总结:</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E8%BE%B9%E7%95%8C%E6%9D%A1%E4%BB%B6%E4%B8%8E%E9%98%B2%E5%BE%A1%E6%80%A7%E7%BC%96%E7%A8%8B"><span class="toc-text">1. 边界条件与防御性编程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E4%BD%BF%E7%94%A8%E2%80%9C%E6%9B%B4%E5%A4%A7%E2%80%9D%E7%9A%84%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E5%A4%84%E7%90%86%E6%BA%A2%E5%87%BA"><span class="toc-text">2. 使用“更大”的数据类型处理溢出</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E7%8A%B6%E6%80%81%E6%9C%BA%E6%80%9D%E6%83%B3-State-Machine"><span class="toc-text">3. 状态机思想 (State Machine)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%83%E4%B9%A0%E9%A2%98-2"><span class="toc-text">练习题:</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%89%E6%8B%A9%E9%A2%98-2"><span class="toc-text">选择题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AE%80%E7%AD%94%E9%A2%98-2"><span class="toc-text">简答题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E7%AD%94%E6%A1%88-2"><span class="toc-text">参考答案</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%AF%E8%83%BD%E7%9A%84%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8"><span class="toc-text">可能的实际应用:</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="solitude fas fa-map"></i><span>最近发布</span></div><div class="aside-list"><a class="aside-list-item" href="/posts/81s2cdc0/" title="序章"><div class="thumbnail"><img alt="序章" src="/img/deb5.webp"></div><div class="content"><span class="title" href="/posts/81s2cdc0/" title="序章">序章</span><span class="categories" href="/posts/81s2cdc0/">小说</span></div></a><a class="aside-list-item" href="/posts/6491732a/" title="力扣刷题日常(17-18)"><div class="thumbnail"><img alt="力扣刷题日常(17-18)" src="https://image.nfasystem.top/img-nfa/LK17-18.webp"></div><div class="content"><span class="title" href="/posts/6491732a/" title="力扣刷题日常(17-18)">力扣刷题日常(17-18)</span><span class="categories" href="/posts/6491732a/">力扣刷题</span></div></a><a class="aside-list-item" href="/posts/80d20dc4/" title="力扣刷题日常(15-16)"><div class="thumbnail"><img alt="力扣刷题日常(15-16)" src="https://image.nfasystem.top/img-nfa/LK15-16.webp"></div><div class="content"><span class="title" href="/posts/80d20dc4/" title="力扣刷题日常(15-16)">力扣刷题日常(15-16)</span><span class="categories" href="/posts/80d20dc4/">力扣刷题</span></div></a><a class="aside-list-item" href="/posts/3da49ae6/" title="力扣刷题日常(13-14)"><div class="thumbnail"><img alt="力扣刷题日常(13-14)" src="https://image.nfasystem.top/img-nfa/LK13-14.webp"></div><div class="content"><span class="title" href="/posts/3da49ae6/" title="力扣刷题日常(13-14)">力扣刷题日常(13-14)</span><span class="categories" href="/posts/3da49ae6/">力扣刷题</span></div></a><a class="aside-list-item" href="/posts/113e6e00/" title="力扣刷题日常(11-12)"><div class="thumbnail"><img alt="力扣刷题日常(11-12)" src="https://image.nfasystem.top/img-nfa/LK11-12.webp"></div><div class="content"><span class="title" href="/posts/113e6e00/" title="力扣刷题日常(11-12)">力扣刷题日常(11-12)</span><span class="categories" href="/posts/113e6e00/">力扣刷题</span></div></a></div></div><div class="card-widget card-route-switch"><div class="card-content"><div class="item-headline"><i class="fas fa-route"></i><span>线路切换</span></div><div class="route-list" id="route-list"><div class="route-item" data-url="https://cx.nfasystem.top" data-name="Vercel 线路"><div class="route-name">Vercel 线路</div><div class="route-right"><div class="route-ping"><span class="ping-value">--</span><span class="ping-unit">ms</span></div><div class="route-status"><i class="fas fa-circle-notch fa-spin"></i></div></div></div><div class="route-item" data-url="https://nfachenxi.nfasystem.top" data-name="GitHub Pages"><div class="route-name">GitHub Pages</div><div class="route-right"><div class="route-ping"><span class="ping-value">--</span><span class="ping-unit">ms</span></div><div class="route-status"><i class="fas fa-circle-notch fa-spin"></i></div></div></div><div class="route-item" data-url="https://chenxi.nfasystem.top" data-name="腾讯云 EdgePage"><div class="route-name">腾讯云 EdgePage</div><div class="route-right"><div class="route-ping"><span class="ping-value">--</span><span class="ping-unit">ms</span></div><div class="route-status"><i class="fas fa-circle-notch fa-spin"></i></div></div></div><div class="route-item" data-url="https://blog.nfasystem.top" data-name="私人服务器"><div class="route-name">私人服务器</div><div class="route-right"><div class="route-ping"><span class="ping-value">--</span><span class="ping-unit">ms</span></div><div class="route-status"><i class="fas fa-circle-notch fa-spin"></i></div></div></div></div></div></div></div></div></main><footer id="footer"><div id="st-footer-bar"><div class="footer-logo"><span>晨曦の小站</span></div><div class="footer-bar-description">文章来自第四领域晨曦</div><div><a class="footer-bar-link" href="/about/" title="了解更多">了解更多</a></div></div><div id="footer_deal"><a class="deal_link" target="_blank" rel="noopener" href="https://github.com/nfachenxi" title="Github"><i class="solitude  fab fa-github"></i></a><a class="deal_link" href="mailto:nfachenxi@163.com" title="邮箱"><i class="solitude  far fa-envelope"></i></a><div><div class="nolazyload footer_mini_logo" id="footer_mini_logo" title="返回顶部" onclick="sco.toTop()"><img src= "" data-lazy-src="/img/avatar.png" alt="返回顶部"></div></div><a class="deal_link" target="_blank" rel="noopener" href="https://space.bilibili.com/316806831" title="Bilibili"><i class="solitude  fab fa-bilibili"></i></a><a class="deal_link" target="_blank" rel="noopener" href="https://v.douyin.com/dvJIjrxxf6c/" title="抖音"><i class="solitude  fab fa-tiktok"></i></a></div><div><div id="st-footer"><div class="footer-group"><h3 class="footer-title">导航</h3><div class="footer-links"><a class="footer-item" href="/archives/" title="归档">归档</a><a class="footer-item" href="/categories/" title="分类">分类</a></div></div><div class="footer-group"><h3 class="footer-title">关于本站</h3><div class="footer-links"><a class="footer-item" href="/privacy/" title="隐私策略">隐私策略</a><a class="footer-item" href="/copyright/" title="版权声明">版权声明</a></div></div></div></div><div id="footer-bar"><div class="footer-bar-links"><div class="footer-bar-left"><div class="copyright">© 2025 - 2026 By<a class="footer-bar-link" href="/" title="NFA晨曦">NFA晨曦</a></div><div class="beian-group"><div><a class="footer-bar-link" target="_blank" rel="noopener" href="https://beian.mps.gov.cn/#/query/webSearch" title="鲁公网安备37028502240668号"><div><img class="beian-icon" src= "" data-lazy-src="https://beian.mps.gov.cn/img/logo01.dd7ff50e.png" alt="鲁公网安备37028502240668号"></div><span class="beian-name">鲁公网安备37028502240668号</span></a><a class="footer-bar-link" target="_blank" rel="noopener" href="https://beian.miit.gov.cn/" title="鲁ICP备2023032296号-1"><span class="beian-name">鲁ICP备2023032296号-1</span></a></div><a class="footer-bar-link" target="_blank" rel="noopener" href="https://hexo.io/" title="框架：Hexo">框架：Hexo</a><a class="footer-bar-link" target="_blank" rel="noopener" href="https://github.com/everfu/hexo-theme-solitude" title="主题：Solitude">主题：Solitude</a></div></div><div class="footer-bar-right"></div></div></div><div><div class="comment-barrage needEndHide"></div></div></footer></div><div><div id="rightMenu"><div class="rightMenu-group rightMenu-small"><div class="rightMenu-item" id="menu-backward"><i class="solitude fas fa-arrow-left"></i></div><div class="rightMenu-item" id="menu-forward"><i class="solitude fas fa-arrow-right"></i></div><div class="rightMenu-item" id="menu-refresh"><i class="solitude fas fa-arrows-rotate"></i></div><div class="rightMenu-item" id="menu-top"><i class="solitude fas fa-arrow-up"></i></div></div><div class="rightMenu-group rightMenu-line rightMenuPlugin"><div class="rightMenu-item" id="menu-copytext"><i class="solitude fas fa-clone"></i><span>复制选中文本</span></div><div class="rightMenu-item" id="menu-pastetext"><i class="solitude fas fa-clipboard"></i><span>粘贴文本</span></div><div class="rightMenu-item" id="menu-commenttext"><i class="solitude fas fa-comment-medical"></i><span>引用到评论</span></div><div class="rightMenu-item" id="menu-newwindow"><i class="solitude far fa-window-maximize"></i><span>新窗口打开</span></div><div class="rightMenu-item" id="menu-copylink"><i class="solitude fas fa-link"></i><span>复制链接地址</span></div><div class="rightMenu-item" id="menu-copyimg"><i class="solitude fas fa-clone"></i><span>复制此图片</span></div><div class="rightMenu-item" id="menu-downloadimg"><i class="solitude fas fa-cloud-arrow-down"></i><span>下载此图片</span></div><div class="rightMenu-item" id="menu-search"><i class="solitude fas fa-magnifying-glass"></i><span>站内搜索</span></div><div class="rightMenu-item" id="menu-music-toggle"><i class="solitude fas fa-play"></i><span>播放音乐</span></div><div class="rightMenu-item" id="menu-music-back"><i class="solitude fas fa-backward"></i><span>切换到上一首</span></div><div class="rightMenu-item" id="menu-music-forward"><i class="solitude fas fa-forward"></i><span>切换到下一首</span></div><div class="rightMenu-item" id="menu-music-copyMusicName"><i class="solitude fas fa-clone"></i><span>复制歌名</span></div></div><div class="rightMenu-group rightMenu-line rightMenuOther"><div class="rightMenu-item" id="menu-randomPost" onclick="toRandomPost()||rm.hideRightMenu()"><i class="solitude fas fa-tower-broadcast"></i><span>随机文章</span></div><div class="rightMenu-item" onclick="pjax.loadUrl('/categories/')||rm.hideRightMenu()"><i class="solitude fas fa-clone"></i><span>全部分类</span></div><div class="rightMenu-item" onclick="pjax.loadUrl('/tags/')||rm.hideRightMenu()"><i class="solitude fas fa-tags"></i><span>全部标签</span></div></div><div class="rightMenu-group rightMenu-line rightMenuOther"><div class="rightMenu-item" id="menu-darkmode" onclick="sco.switchDarkMode()"><i class="solitude fas fa-circle-half-stroke"></i><span class="menu-darkmode-text">深色模式</span></div></div></div><div id="rightmenu-mask"></div></div><div><!-- Critical scripts loaded synchronously--><script src="/js/utils.js?v=3.0.21"></script><script src="/js/main.js?v=3.0.21"></script><!-- Non-critical scripts loaded asynchronously--><script async src="/js/third_party/waterfall.min.js?v=3.0.21"></script><script src="https://fastly.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js"></script><!-- Feature-specific scripts loaded asynchronously--><script defer src="https://image.nfasystem.top/CDN/mermaid.min.js"></script><script defer src="/js/chart.umd.min.js"></script><script defer src="https://fastly.jsdelivr.net/npm/typeit@8.8.7/dist/index.umd.min.js"></script><script defer src="/js/third_party/universe.min.js?v=3.0.21"></script><script>document.addEventListener('DOMContentLoaded', () => {
+  if (typeof dark === 'function') dark();
+});
+</script><!-- UI enhancement scripts--><script src="/js/lazyload.iife.min.js"></script><script defer src="/js/snackbar.min.js"></script><script src="/js/medium-zoom.min.js"></script><script src="/js/swiper-bundle.min.js"></script><!-- Music player scripts--><script>var meting_api = 'https://meting.qjqq.cn/?server=:server&type=:type&id=:id&auth=:auth&r=:r';</script><script defer src="/js/APlayer.min.js"></script><script defer src="/js/Meting.min.js"></script><!-- Cover color processing scripts--><script>window.paceOptions = {
+  restartOnPushState: false
+}
+
+utils.addGlobalFn('pjaxSend', () => {
+  Pace.restart()
+}, 'pace_restart')
+</script><script src="/js/pace.min.js"></script><!-- Search functionality--><!-- Right menu functionality--><script defer src="/js/right_menu.js?v=3.0.21"></script><!-- Route switch functionality--><script defer src="/js/route-switch.js"></script><div class="js-pjax"><script>(() => {
+    const getCount = () => {
+        const ele = document.querySelectorAll('.twikoo-count')
+        if (!ele) return
+        twikoo.getCommentsCount({
+            envId: 'https://comment.nfasystem.top',
+            region: '',
+            urls: [window.location.pathname],
+            includeReply: false
+        }).then(res => {
+            ele.forEach(item => item.textContent = res[0].count)
+        }).catch(err => {
+            console.error(err)
+        })
+    }
+    const init = () => {
+        twikoo.init(Object.assign({
+            el: '#twikoo-wrap',
+            envId: 'https://comment.nfasystem.top',
+            region: '',
+            path: window.location.pathname,
+            onCommentLoaded: () => {
+                GLOBAL_CONFIG.lightbox && utils.lightbox(document.querySelectorAll('#twikoo .tk-content img:not(.tk-owo-emotion)'))
+            }
+        }, null))
+
+         && getCount()
+        sco.owoBig({
+            body: '.OwO-body',
+            item: '.OwO-items li'
+        })
+
+        true && barrageTwikoo()
+    }
+
+    const loadTwikoo = () => {
+        if (typeof twikoo === 'object') setTimeout(init,0)
+        else utils.getScript('/js/twikoo.all.min.js').then(init)
+    }
+
+    if ('Twikoo' === 'Twikoo' || true) {
+        if (true) utils.loadComment(document.getElementById('twikoo-wrap'), loadTwikoo)
+        else loadTwikoo()
+    } else {
+        window.loadTwoComment = loadTwikoo
+    }
+})()
+</script><script>async function barrageTwikoo() {
+    await fetch("https://comment.nfasystem.top", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            event: "COMMENT_GET",
+            accessToken: "",
+            url: window.location.pathname
+        })
+    }).then(async res => {
+        if (!res.ok) throw new Error("HTTP error! status: " + res.status)
+        const data = await res.json();
+        const init = () => {
+            initializeCommentBarrage((data.data).map(item => Object.assign({
+                content: item.comment,
+                nick: item.nick,
+                mailMd5: item.mailMd5,
+                id: item.id
+            })))
+        }
+        if (typeof initializeCommentBarrage === "undefined") await utils.getScript('/js/third_party/barrage.min.js?v=3.0.21').then(init)
+        else init()
+    }).catch(error => console.error("An error occurred while fetching comments: ", error))
+}</script><script>mermaid.run();
+</script></div></div><!-- pjax--><script>let pjax = null;
+
+function initPjax() {
+    if (typeof Pjax === 'undefined') {
+        console.warn('Pjax is not loaded yet, retrying...');
+        setTimeout(initPjax, 100);
+        return;
+    }
+
+    pjax = new Pjax({
+        elements: 'a:not([target="_blank"])',
+        selectors: ["title","#body-wrap","#site-config","meta[name=\"description\"]",".js-pjax","meta[property^=\"og:\"]","#config-diff",".rs_show",".rs_hide"],
+        cacheBust: false,
+        analytics: false,
+        scrollRestoration: false
+    })
+
+    // 将 pjax 实例挂载到全局
+    window.pjax = pjax;
+
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+        const newScript = document.createElement('script')
+        const content = item.text || item.textContent || item.innerHTML || ""
+        Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+        newScript.appendChild(document.createTextNode(content))
+        item.parentNode.replaceChild(newScript, item)
+    })
+
+    document.addEventListener('pjax:complete', () => {
+        window.refreshFn()
+
+        document.querySelectorAll('script[data-pjax]').forEach(item => {
+            const newScript = document.createElement('script')
+            const content = item.text || item.textContent || item.innerHTML || ""
+            Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+            newScript.appendChild(document.createTextNode(content))
+            item.parentNode.replaceChild(newScript, item)
+        })
+
+        GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+    })
+
+    document.addEventListener('pjax:error', (e) => {
+        if (e.request.status === 404) {
+            pjax.loadUrl('/404.html')
+        }
+    })
+}
+
+// 初始化 Pjax
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initPjax);
+} else {
+    initPjax();
+}</script><!-- google adsense--><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><button class="search-close-button"><i class="solitude fas fa-xmark"></i></button></nav><div class="search-wrap"><div class="search-box"><input class="search-box-input" id="search-input" type="text" autocomplete="off" spellcheck="false" autocorrect="off" autocapitalize="off" placeholder="输入关键词快速查找"></div><div id="search-results"><div id="search-hits"><a class="tag-list" href="javascript:void(0);" onclick="pjax.loadUrl('/tags/Unity/')">Unity</a><a class="tag-list" href="javascript:void(0);" onclick="pjax.loadUrl('/tags/%E7%AE%97%E6%B3%95/')">算法</a></div></div><div id="search-pagination"></div><div id="search-tips"></div></div></div><div id="search-mask"></div></div><script src="/js/search/local.js?v=3.0.21"></script><div><div class="needEndHide" id="nav-music"><div id="nav-music-hoverTips"><i class="music-control-btn fas fa-backward-step" id="music-prev" onclick="sco.musicSkipBack()"></i><i class="music-control-btn fas fa-pause" id="music-pause" onclick="sco.musicToggle()"></i><i class="music-control-btn fas fa-play" id="music-play" onclick="sco.musicToggle()"></i><i class="music-control-btn fas fa-forward-step" id="music-next" onclick="sco.musicSkipForward()"></i></div><meting-js id="13944001327" server="netease" type="playlist" mutex="true" preload="none" theme="var(--efu-main)" data-lrctype="0" order="random" volume="0.5"></meting-js></div></div></body></html>
+        <script>
+            const posts = ["posts/81s2cdc0/","posts/6491732a/","posts/80d20dc4/","posts/3da49ae6/","posts/113e6e00/","posts/9cf22d8b/","posts/a1373671/","posts/95bdd374/","posts/82e0ee2a/","posts/7eb38127/","posts/ec87c3ca/","posts/fc4aea50/","posts/a266d19c/","posts/878304ff/","posts/8596feee/","posts/efdc60b2/"];
+            function toRandomPost() {
+                const randomPost = posts[Math.floor(Math.random() * posts.length)];
+                pjax.loadUrl(GLOBAL_CONFIG.root + randomPost);
+            }
+        </script>

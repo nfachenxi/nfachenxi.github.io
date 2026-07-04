@@ -1,0 +1,648 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><title>力扣刷题日常(13-14) | 晨曦の小站</title><noscript>开启JavaScript才能访问本站哦~</noscript><link rel="icon" href="/img/nfa_icon.jpg"><link rel="stylesheet" href="/css/index.css?v=3.0.21"><link rel="canonical" href="https://blog.nfasystem.top/posts/3da49ae6/index.html"><link rel="stylesheet" href="/libs/fontawesome/css/all.min.css"><!-- Feature-specific CSS--><!-- aplayer--><link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css"><!-- swiper--><link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/swiper@11.0.5/swiper-bundle.min.css"><!-- fancybox ui--><!-- katex--><link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"><!-- Open Graph--><meta name="description" content="力扣刷题日常(13-14) 第13题: 罗马数字转整数 (难度:简单) 原题: 罗马数字包含以下七种字符: I， V， X， L，C，D 和 M。 12345678字符 数值I 1V 5X 10L"><!-- pwa--><meta name="apple-mobile-web-app-capable" content="晨曦の小站"><meta name="theme-color" content="var(--efu-main)"><meta name="apple-mobile-web-app-status-bar-style" content="var(--efu-main)"><link rel="bookmark" href="/img/nfa_icon.jpg"><link rel="apple-touch-icon" href="/img/nfa_icon.jpg" sizes="180x180"><script>console.log(' %c Solitude %c ' + '3.0.21' + ' %c https://github.com/everfu/hexo-theme-solitude',
+    'background:#35495e ; padding: 1px; border-radius: 3px 0 0 3px;  color: #fff',
+    'background:#ff9a9a ; padding: 1px; border-radius: 0 3px 3px 0;  color: #fff',
+    'background:unset ; padding: 1px; border-radius: 0 3px 3px 0;  color: #fff')
+</script><script>let mdate = "7-7,9-18,12-13";
+mdate = (mdate.split(","));
+let ndate = new Date();
+for (let i of mdate) {
+    if (i === (ndate.getMonth()+1) + "-" + (ndate.getDate())) {
+        document.documentElement.classList.add('memorial');
+    }
+}
+</script><script>(()=>{
+        const saveToLocal = {
+            set: function setWithExpiry(key, value, ttl) {
+                if (ttl === 0)
+                    return
+                const now = new Date()
+                const expiryDay = ttl * 86400000
+                const item = {
+                    value: value,
+                    expiry: now.getTime() + expiryDay
+                }
+                localStorage.setItem(key, JSON.stringify(item))
+            },
+            get: function getWithExpiry(key) {
+                const itemStr = localStorage.getItem(key)
+
+                if (!itemStr) {
+                    return undefined
+                }
+                const item = JSON.parse(itemStr)
+                const now = new Date()
+
+                if (now.getTime() > item.expiry) {
+                    localStorage.removeItem(key)
+                    return undefined
+                }
+                return item.value
+            }
+        };
+        window.utils = {
+            saveToLocal: saveToLocal,
+            getCSS: (url, id = false) => new Promise((resolve, reject) => {
+              const link = document.createElement('link')
+              link.rel = 'stylesheet'
+              link.href = url
+              if (id) link.id = id
+              link.onerror = reject
+              link.onload = link.onreadystatechange = function() {
+                const loadState = this.readyState
+                if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+                link.onload = link.onreadystatechange = null
+                resolve()
+              }
+              document.head.appendChild(link)
+            }),
+            getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+              const script = document.createElement('script')
+              script.src = url
+              script.async = true
+              script.onerror = reject
+              script.onload = script.onreadystatechange = function() {
+                const loadState = this.readyState
+                if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+                script.onload = script.onreadystatechange = null
+                resolve()
+              }
+
+              Object.keys(attr).forEach(key => {
+                script.setAttribute(key, attr[key])
+              })
+
+              document.head.appendChild(script)
+            }),
+            addGlobalFn: (key, fn, name = false, parent = window) => {
+                const globalFn = parent.globalFn || {}
+                const keyObj = globalFn[key] || {}
+
+                if (name && keyObj[name]) return
+
+                name = name || Object.keys(keyObj).length
+                keyObj[name] = fn
+                globalFn[key] = keyObj
+                parent.globalFn = globalFn
+            },
+            addEventListenerPjax: (ele, event, fn, option = false) => {
+              ele.addEventListener(event, fn, option)
+              utils.addGlobalFn('pjax', () => {
+                  ele.removeEventListener(event, fn, option)
+              })
+            },
+            diffDateFormat: (selector) => {
+                selector.forEach(item => {
+                    const date = new Date(item.getAttribute('datetime') || item.textContent);
+                    item.textContent = (date.getMonth() + 1).toString()+'/'+date.getDate().toString();
+                });
+            },
+        }
+    })()</script><!-- theme--><script>initTheme = () => {
+    let isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const cachedMode = utils.saveToLocal.get('theme');
+    if (cachedMode === undefined) {
+        const nowMode =
+            isDarkMode ? 'dark' : 'light'
+        document.documentElement.setAttribute('data-theme', nowMode);
+    } else {
+        document.documentElement.setAttribute('data-theme', cachedMode);
+    }
+    typeof rm === 'object' && rm.mode(cachedMode === 'dark' && isDarkMode)
+}
+initTheme()</script><script>const GLOBAL_CONFIG = {
+    root: '/',
+    algolia: undefined,
+    localsearch: {"preload":false,"path":"/search.xml"},
+    runtime: '2025-07-10 00:00:00',
+    lazyload: {
+        enable: true,
+        error: '/img/error_load.avif'
+    },
+    copyright: {"limit":100,"author":"作者: NFA晨曦","link":"链接: ","source":"来源: 晨曦の小站","info":"著作权归作者所有。 商业转载请联系作者获得授权，非商业转载请注明出处。"},
+    highlight: {"limit":200,"expand":true,"copy":true,"syntax":"highlight.js"},
+    randomlink: false,
+    lang: {"theme":{"dark":"已切换至深色模式","light":"已切换至浅色模式"},"copy":{"success":"复制成功","error":"复制失败"},"backtop":"返回顶部","time":{"day":"天前","hour":"小时前","just":"刚刚","min":"分钟前","month":"个月前"},"day":" 天","f12":"开发者模式已打开，请遵循GPL协议。","totalk":"无需删除空行，直接输入评论即可","search":{"empty":"找不到你查询的内容：${query}","hit":"找到 ${hits} 条结果，用时 ${time} 毫秒","placeholder":"输入关键词快速查找","count":"共 <b>${count}</b> 条结果。","loading":"搜索中..."},"barrage":{"title":"热评"}},
+    aside: {
+        state: {
+            morning: "✨ 早上好，新的一天开始了",
+            noon: "🍲 午餐时间",
+            afternoon: "🌞 下午好",
+            night: "早点休息",
+            goodnight: "晚安 😴",
+        },
+        witty_words: ["你可以的","你一定可以的","祝你好运，陌生人"],
+        witty_comment: {
+            prefix: '好久不见，',
+            back: '欢迎再次回来，',
+        },
+    },
+    covercolor: {
+        enable: false
+    },
+    comment: {"avatar":"https://gravatar.com/avatar","commentBarrage":true},
+    lightbox: 'mediumZoom',
+    right_menu: {"mode":{"dark":"深色模式","light":"浅色模式"},"img_error":"此图片无法复制与下载","music":{"start":"播放音乐","stop":"暂停音乐"},"barrage":{"open":"显示热评","close":"关闭热评"},"ctrlOriginalMenu":"按住Ctrl+右键可打开浏览器右键菜单"},
+    translate: false,
+    lure: {"jump":"去哪了？快回来～","back":"Ciallo～(∠・ω< )⌒★"},
+    expire: false,
+};
+const routeSwitchConfig = {"enable":true,"routes":[{"name":"Vercel 线路","url":"https://cx.nfasystem.top"},{"name":"GitHub Pages","url":"https://nfachenxi.nfasystem.top"},{"name":"腾讯云 EdgePage","url":"https://chenxi.nfasystem.top"},{"name":"私人服务器","url":"https://blog.nfasystem.top"}]};
+if (routeSwitchConfig) {
+    window.routeSwitchConfig = routeSwitchConfig;
+}</script><script id="config-diff">var PAGE_CONFIG = {
+    is_post: true,
+    is_page: false,
+    is_home: false,
+    page: '',
+    toc: true,
+    comment: true,
+    ai_text: false,
+    color: false,
+}</script><meta name="generator" content="Hexo 8.1.1"></head><body id="body"><div><canvas id="universe"></canvas></div><div><div id="console"><div class="close-btn" onclick="sco.hideConsole()"><i class="solitude fas fa-xmark"></i></div><div class="console-card-group"><div class="console-card-group-left"><div class="console-card" id="card-newest-comments" onclick="sco.hideConsole()"><div class="card-content"><div class="author-content-item-tips">互动</div><div class="author-content-item-title">最新评论</div></div><div class="console_recentcomments"><script pjax>(async () => {
+    document.querySelector('.console-card .console_recentcomments').textContent = `加载中...`
+    const emojiReg = /<img class="tk-owo-emotion" [^>]+>/g
+    let cache = utils.saveToLocal.get('twikoo-recent-comments-console')
+    if (cache) {
+        setHtml(document.querySelector('.console-card .console_recentcomments'), cache)
+        return
+    }
+    let ls = []
+
+    await fetch('https://comment.nfasystem.top', {
+        method: "POST",
+        body: JSON.stringify({
+            "event": "GET_RECENT_COMMENTS",
+            "includeReply": true,
+            "pageSize": 6
+        }),
+        headers: {'Content-Type': 'application/json'}
+    }).then(res => res.json()).then(async ({data}) => {
+        for (const i of data) {
+            if (i.avatar === undefined) i.avatar = 'https://gravatar.com/avatar/avatar/d615d5793929e8c7d70eab5f00f7f5f1?d=mp'
+            let title = ''
+            if (i.url) {
+                await fetch(i.url).then(res => res.text()).then(html => {
+                    const parser = new DOMParser()
+                    const doc = parser.parseFromString(html, 'text/html')
+                    title = doc.querySelector('title').innerText
+                }).catch(() => {
+                    title = i.url
+                })
+            }
+            if (title.indexOf('|') > 0) {
+                title = title.split('|')[0]
+            }
+            ls.push({
+                avatar: i.avatar,
+                nick: i.nick,
+                title: title,
+                content: i.comment,
+                url: i.url + '#' + i.id,
+                time: i.created
+            })
+        }
+        setHtml(document.querySelector('.console-card .console_recentcomments'), ls)
+        utils.saveToLocal.set('twikoo-recent-comments-console', ls, 0.2)
+    });
+
+    function setHtml(el, data) {
+        el.innerHTML = data.length !== 0 ? data.map(i => `
+            <div class="comment-card" title="${i.title}" onclick="pjax.loadUrl('${i.url}')">
+                <div class="comment-info">
+                    <img src="${i.avatar}" class="nolazyload" alt="${i.nick}">
+                    <div>
+                        <span class="comment-user">${i.nick}</span>
+                    </div>
+                    <time class="comment-time" datetime="${new Date(i.time)}"></time>
+                </div>
+                <div class="comment-content">${formatContent(i.content)}</div>
+                <div class="comment-title">
+                <i class="solitude fas fa-comment"></i>
+                ${i.title}</div>
+            </div>
+        `).join('') : `暂无评论...`
+        if (typeof utils !== 'undefined') utils.diffDateFormat(document.querySelectorAll('.comment-time'))
+        else {
+            document.addEventListener('pjax:complete', () => utils.diffDateFormat(document.querySelectorAll('.comment-time')))
+            document.addEventListener('DOMContentLoaded', () => utils.diffDateFormat(document.querySelectorAll('.comment-time')))
+        }
+    }
+
+    function formatContent(content) {
+        content = content.replace(emojiReg, '表情')
+        content = content.replace(/<\/*br>|[\s\uFEFF\xA0]+/g, '');
+        content = content.replace(/<img.*?>/g, '[图片]');
+        content = content.replace(/<a.*?>.*?<\/a>/g, '[链接]');
+        content = content.replace(/<pre.*?>.*?<\/pre>/g, '[代码]');
+        content = content.replace(/<.*?>/g, '');
+        return content
+    }
+})()</script></div></div></div><div class="console-card-group-right"><div class="console-card tags" onclick="sco.hideConsole()"><div class="card-content"><div class="author-content-item-tips">标签</div><div class="author-content-item-title">寻找感兴趣的领域</div></div><div class="card-tag-cloud"><a href="/tags/Unity/">Unity<sup>6</sup></a><a href="/tags/Scroll-View/">Scroll-View<sup>1</sup></a><a href="/tags/Fire/">Fire<sup>1</sup></a><a href="/tags/%E7%AE%97%E6%B3%95/">算法<sup>9</sup></a><a href="/tags/%E5%8A%9B%E6%89%A3/">力扣<sup>9</sup></a><a href="/tags/%E5%B0%8F%E8%AF%B4/">小说<sup>1</sup></a><a href="/tags/%E7%BB%88%E6%9C%AB%E4%B9%8B%E6%97%85/">终末之旅<sup>1</sup></a></div></div><div class="console-card history" onclick="sco.hideConsole()"><ul class="card-archive-list"><li class="item"><a href="/archives/2025/11/"><span class="date">2025/11</span><div class="count-group"><span class="count">1</span><span class="unit">篇</span></div></a></li><li class="item"><a href="/archives/2025/08/"><span class="date">2025/08</span><div class="count-group"><span class="count">4</span><span class="unit">篇</span></div></a></li><li class="item"><a href="/archives/2025/07/"><span class="date">2025/07</span><div class="count-group"><span class="count">11</span><span class="unit">篇</span></div></a></li><li class="item"><a href="/archives/"><span class="date">全部文章</span><div class="count-group"><span class="count">16</span><span class="unit">篇</span></div></a></li></ul></div></div></div><div class="button-group"><div class="console-btn-item"><span class="darkmode_switchbutton" onclick="sco.switchDarkMode()" title="昼夜切换"><i class="solitude fas fa-circle-half-stroke"></i></span></div><div class="console-btn-item" id="consoleHideAside"><span class="asideSwitch" onclick="sco.switchHideAside()" title="边栏显示控制"><i class="solitude fas fa-arrows-left-right-to-line"></i></span></div><div class="console-btn-item" id="consoleMusic" onclick="sco.musicToggle()"><span class="music-switch" title="音乐开关"><i class="solitude fas fa-compact-disc"></i></span></div><div class="console-btn-item on" id="consoleCommentBarrage" onclick="sco.switchCommentBarrage()"><span class="commentBarrage"><i class="solitude fas fa-comment"></i></span></div></div><div class="console-mask" onclick="sco.hideConsole()"></div></div></div><div id="sidebar" style="zoom: 1;"><div id="menu-mask" style="display: none;"></div><div id="sidebar-menus"><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">16</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">7</div></a></div></div></div><span class="sidebar-menu-item-title">功能</span><div class="sidebar-menu-item"><span class="darkmode_switchbutton menu-child" onclick="sco.switchDarkMode()"><i class="solitude fas fa-circle-half-stroke"></i><span>显示模式</span></span></div><div class="back-menu-list-groups"><div class="back-menu-list-group"><div class="back-menu-list-title">我的项目</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://github.com/nfachenxi" title="我的Github主页"><img class="nolazyload back-menu-item-icon" src="/img/github.png" alt="我的Github主页"><span class="back-menu-item-text">我的Github主页</span></a></div></div></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><span>首页</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span>文库</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="solitude  fas fa-folder-closed"></i><span>全部文章</span></a></li><li><a class="site-page child" href="/categories/"><i class="solitude  fas fa-clone"></i><span>全部分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="solitude  fas fa-tags"></i><span>全部标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span>友链</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/links/"><i class="solitude  fas fa-user-group"></i><span>友情链接</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span>关于</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/about/"><i class="solitude  fas fa-user-circle"></i><span>关于我</span></a></li><li><a class="site-page child" href="/music/"><i class="solitude  fas fa-music"></i><span>音乐馆</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/message/"><span>留言板</span></a></div><div class="menus_item"><a class="site-page" href="/gallery/"><span>画廊</span></a></div></div><span class="sidebar-menu-item-title">标签</span><div class="card-tags"><div class="card-tag-cloud"><a href="/tags/Unity/">Unity<sup>6</sup></a><a href="/tags/Scroll-View/">Scroll-View<sup>1</sup></a><a href="/tags/Fire/">Fire<sup>1</sup></a><a href="/tags/%E7%AE%97%E6%B3%95/">算法<sup>9</sup></a><a href="/tags/%E5%8A%9B%E6%89%A3/">力扣<sup>9</sup></a><a href="/tags/%E5%B0%8F%E8%AF%B4/">小说<sup>1</sup></a><a href="/tags/%E7%BB%88%E6%9C%AB%E4%B9%8B%E6%97%85/">终末之旅<sup>1</sup></a></div></div><span class="sidebar-menu-item-title">网站信息</span><div class="webinfo"><div class="webinfo-item"><div class="item-name">全站字数 :</div><div class="item-count">58.6k</div></div></div></div></div><div><div class="needEndHide" id="rightside"><div class="rs_hide"><button class="mode" type="button" title="显示模式切换" onclick="sco.switchDarkMode()"><i class="fas fa-circle-half-stroke"></i></button><button class="aside pc" type="button" title="侧边栏" onclick="sco.switchHideAside()"><i class="fas fa-arrows-alt-h"></i></button></div><div class="rs_show"><button class="config" type="button" title="扩展" onclick="document.querySelector(&quot;.rs_hide&quot;).classList.toggle(&quot;show&quot;)"><i class="fas fa-gear fa-spin"></i></button><button class="mobile toc" type="button" title="目录" onclick="document.querySelector('#card-toc').classList.toggle('open')"><i class="fas fa-list"></i></button><button class="comment" type="button" title="评论" onclick="sco.scrollTo('post-comment')"><i class="fas fa-comment"></i></button><button class="barrage pc" type="button" title="弹" onclick="sco.switchCommentBarrage()"><span>弹</span></button><button class="top" type="button" title="返回顶部" onclick="sco.toTop()"><i class="fas fa-arrow-up"></i><span id="percent">0</span></button></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav class="show" id="nav"><div id="nav-group"><div id="blog_name"><div class="back-home-button" tabindex="-1"><i class="solitude fas fa-bars-progress"></i><div class="back-menu-list-groups"><div class="back-menu-list-group"><div class="back-menu-list-title">我的项目</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://github.com/nfachenxi" title="我的Github主页"><img class="nolazyload back-menu-item-icon" src="/img/github.png" alt="我的Github主页"><span class="back-menu-item-text">我的Github主页</span></a></div></div></div></div><a href="/" title="返回博客主页" id="site-name"><span class="title">晨曦の小站</span><i class="solitude fas fa-home"></i></a></div><div id="page-name-mask"><div id="page-name"><a id="page-name-text" onclick="sco.toTop()">力扣刷题日常(13-14)</a></div></div><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><span>首页</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span>文库</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="solitude  fas fa-folder-closed"></i><span>全部文章</span></a></li><li><a class="site-page child" href="/categories/"><i class="solitude  fas fa-clone"></i><span>全部分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="solitude  fas fa-tags"></i><span>全部标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span>友链</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/links/"><i class="solitude  fas fa-user-group"></i><span>友情链接</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span>关于</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/about/"><i class="solitude  fas fa-user-circle"></i><span>关于我</span></a></li><li><a class="site-page child" href="/music/"><i class="solitude  fas fa-music"></i><span>音乐馆</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/message/"><span>留言板</span></a></div><div class="menus_item"><a class="site-page" href="/gallery/"><span>画廊</span></a></div></div></div><div id="nav-left"></div><div id="nav-right"><div class="nav-button" id="travellings_button"><a class="site-page" target="_blank" rel="noopener" href="https://www.travellings.cn/go.html" title=""><i class="solitude fas fa-train"></i></a></div><div class="nav-button" id="randomPost_button"><a class="site-page" onclick="toRandomPost()" title="随机一篇文章" href="javascript:void(0);"><i class="solitude fas fa-dice-d6"></i></a></div><div class="nav-button" id="search-button"><a class="site-page social-icon search" href="javascript:void(0);" title="搜索"><i class="solitude fas fa-magnifying-glass"></i></a></div><div class="nav-button" id="nav-console"><a class="console_switchbutton" onclick="sco.showConsole()" title="中控台" href="javascript:void(0);"><label><i class="left"></i><i class="center"></i><i class="right"></i></label></a></div><div id="toggle-menu"><a class="site-page"><i class="solitude fas fa-bars"></i></a></div></div></div></nav><div class="coverdiv" id="coverdiv"><img class="nolazyload" id="post-cover" src="https://image.nfasystem.top/img-nfa/LK13-14.webp" alt="力扣刷题日常(13-14)"></div><div id="post-info"><div id="post-firstinfo"><div class="meta-firstline"><a class="post-meta-original" title="该文章为原创文章，注意版权协议">原创</a><span class="post-meta-categories"><a class="post-meta-categories" href="/categories/%E5%8A%9B%E6%89%A3%E5%88%B7%E9%A2%98/">力扣刷题</a></span><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E7%AE%97%E6%B3%95/"><span class="tags-name tags-punctuation"><i class="solitude fas fa-hashtag"></i>算法</span></a><a class="post-meta__tags" href="/tags/%E5%8A%9B%E6%89%A3/"><span class="tags-name tags-punctuation"><i class="solitude fas fa-hashtag"></i>力扣</span></a></div></div></div></div><h1 class="post-title">力扣刷题日常(13-14)</h1><div id="post-meta"><div class="meta-secondline"><span class="post-meta-date" title="发布于 2025-08-03 09:53:14"><i class="post-meta-icon solitude fas fa-calendar-days"></i><time datetime="2025-08-03T01:53:14.000Z">2025-08-03T01:53:14.000Z</time></span><span class="post-meta-date" title="最后更新于 2026-07-04 17:11:03"><i class="post-meta-icon solitude fas fa-arrows-rotate"></i><time datetime="2026-07-04T09:11:03.512Z">2026-07-04T09:11:03.512Z</time></span><span class="post-meta-wordcount"><i class="post-meta-icon solitude fas fa-file-word" title="文章字数"></i><span class="word-count">3.1k</span><span class="post-meta-separator"></span><i class="post-meta-icon solitude fas fa-clock" title="阅读耗时"></i><span>12 分钟</span></span></div></div></div><div class="post-radius-bottom"></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content article-container"><h1>力扣刷题日常(13-14)</h1>
+<h2 id="第13题-罗马数字转整数-难度-简单">第13题: 罗马数字转整数 (难度:简单)</h2>
+<h3 id="原题">原题:</h3>
+<p>罗马数字包含以下七种字符: <code>I</code>， <code>V</code>， <code>X</code>， <code>L</code>，<code>C</code>，<code>D</code> 和 <code>M</code>。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">字符          数值</span><br><span class="line">I             1</span><br><span class="line">V             5</span><br><span class="line">X             10</span><br><span class="line">L             50</span><br><span class="line">C             100</span><br><span class="line">D             500</span><br><span class="line">M             1000</span><br></pre></td></tr></table></figure>
+<p>例如， 罗马数字 <code>2</code> 写做 <code>II</code> ，即为两个并列的 1 。<code>12</code> 写做 <code>XII</code> ，即为 <code>X</code> + <code>II</code> 。 <code>27</code> 写做 <code>XXVII</code>, 即为 <code>XX</code> + <code>V</code> + <code>II</code> 。</p>
+<p>通常情况下，罗马数字中小的数字在大的数字的右边。但也存在特例，例如 4 不写做 <code>IIII</code>，而是 <code>IV</code>。数字 1 在数字 5 的左边，所表示的数等于大数 5 减小数 1 得到的数值 4 。同样地，数字 9 表示为 <code>IX</code>。这个特殊的规则只适用于以下六种情况：</p>
+<ul>
+<li><code>I</code> 可以放在 <code>V</code> (5) 和 <code>X</code> (10) 的左边，来表示 4 和 9。</li>
+<li><code>X</code> 可以放在 <code>L</code> (50) 和 <code>C</code> (100) 的左边，来表示 40 和 90。</li>
+<li><code>C</code> 可以放在 <code>D</code> (500) 和 <code>M</code> (1000) 的左边，来表示 400 和 900。</li>
+</ul>
+<p>给定一个罗马数字，将其转换成整数。</p>
+<p><strong>示例 1:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入: s = &quot;III&quot;</span><br><span class="line">输出: 3</span><br></pre></td></tr></table></figure>
+<p><strong>示例 2:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入: s = &quot;IV&quot;</span><br><span class="line">输出: 4</span><br></pre></td></tr></table></figure>
+<p><strong>示例 3:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入: s = &quot;IX&quot;</span><br><span class="line">输出: 9</span><br></pre></td></tr></table></figure>
+<p><strong>示例 4:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入: s = &quot;LVIII&quot;</span><br><span class="line">输出: 58</span><br><span class="line">解释: L = 50, V= 5, III = 3.</span><br></pre></td></tr></table></figure>
+<p><strong>示例 5:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入: s = &quot;MCMXCIV&quot;</span><br><span class="line">输出: 1994</span><br><span class="line">解释: M = 1000, CM = 900, XC = 90, IV = 4.</span><br></pre></td></tr></table></figure>
+<p><strong>提示：</strong></p>
+<ul>
+<li><code>1 &lt;= s.length &lt;= 15</code></li>
+<li><code>s</code> 仅含字符 <code>('I', 'V', 'X', 'L', 'C', 'D', 'M')</code></li>
+<li>题目数据保证 <code>s</code> 是一个有效的罗马数字，且表示整数在范围 <code>[1, 3999]</code> 内</li>
+<li>题目所给测试用例皆符合罗马数字书写规则，不会出现跨位等情况。</li>
+<li>IL 和 IM 这样的例子并不符合题目要求，49 应该写作 XLIX，999 应该写作 CMXCIX 。</li>
+<li>关于罗马数字的详尽书写规则，可以参考 <a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E7%BD%97%E9%A9%AC%E6%95%B0%E5%AD%97/772296">罗马数字 - 百度百科</a>。</li>
+</ul>
+<hr>
+<h3 id="开始解题">开始解题</h3>
+<p>那么这个题与昨天的12题十分相似,就是逆向操作</p>
+<p>那么将罗马数字转换为整数,核心在于如何处理那六种特殊的&quot;减法&quot;情况 (如 <code>IV</code> 是 4, <code>CM</code> 是 900). 如果没有这些特殊情况, 我们只需要把每个罗马字符代表的数字加起来就行了.</p>
+<p>一个非常巧妙且直观的思路是<strong>从右向左</strong>遍历这个罗马数字字符串. 为什么从右向左呢? 因为一个字符是应该被加还是被减, 取决于它<strong>右边</strong>的字符.</p>
+<p>让我们来构思一下这个从右到左的逻辑:</p>
+<ol>
+<li>
+<p><strong>建立映射</strong>: 首先, 我们需要一个能快速查询到每个罗马字符对应整数值的方法. 比如, 输入 ‘V’, 就能立刻得到 5. 在编程中, 这通常用一个<strong>哈希表 (Dictionary)</strong> 或一个 <code>switch</code> 语句来实现.</p>
+</li>
+<li>
+<p><strong>处理最后一个字符</strong>: 罗马数字最右边的那个字符, 它的右边没有其他字符了, 所以它永远代表的是<strong>加法</strong>. 我们可以用它的值作为我们计算的初始值.</p>
+</li>
+<li>
+<p><strong>从右向左遍历</strong>: 我们从字符串的<strong>倒数第二个</strong>字符开始, 一直遍历到第一个字符. 在每一步, 我们都将当前字符的值与它右边一个字符的值进行比较.</p>
+</li>
+<li>
+<p><strong>判断与操作</strong>: 假设我们当前遍历到的字符是 <code>current</code>, 它右边的字符是 <code>right</code>.</p>
+<ul>
+<li><strong>如果 <code>current</code> 的值大于或等于 <code>right</code> 的值</strong>: 这说明是一个正常的, 从大到小的排列 (例如 <code>VI</code> 中的 ‘V’, <code>XI</code> 中的 ‘X’). 这种情况下, 我们就将 <code>current</code> 的值<strong>加上</strong>去.</li>
+<li><strong>如果 <code>current</code> 的值小于 <code>right</code> 的值</strong>: 这就命中了我们的特殊&quot;减法&quot;规则 (例如 <code>IV</code> 中的 ‘I’, <code>IX</code> 中的 ‘I’). 这种情况下, 我们就将 <code>current</code> 的值<strong>减掉</strong>.</li>
+</ul>
+</li>
+</ol>
+<p>让我们用 “MCMXCIV” 这个例子来走一遍这个流程:</p>
+<ul>
+<li><strong>输入</strong>: “MCMXCIV”</li>
+<li><strong>1. 初始化</strong>: 先看最右边的 ‘V’. 它的值是 5. 我们的总和 <code>result</code> 初始化为 5.</li>
+<li><strong>2. 向左移动</strong>: 看 ‘V’ 左边的 ‘I’.
+<ul>
+<li>‘I’ 的值是 1. 它右边 ‘V’ 的值是 5.</li>
+<li>因为 <code>1 &lt; 5</code>, 所以执行减法. <code>result = 5 - 1 = 4</code>.</li>
+</ul>
+</li>
+<li><strong>3. 向左移动</strong>: 看 ‘I’ 左边的 ‘C’.
+<ul>
+<li>‘C’ 的值是 100. 它右边 ‘I’ 的值是 1.</li>
+<li>因为 <code>100 &gt; 1</code>, 所以执行加法. <code>result = 4 + 100 = 104</code>.</li>
+</ul>
+</li>
+<li><strong>4. 向左移动</strong>: 看 ‘C’ 左边的 ‘X’.
+<ul>
+<li>‘X’ 的值是 10. 它右边 ‘C’ 的值是 100.</li>
+<li>因为 <code>10 &lt; 100</code>, 所以执行减法. <code>result = 104 - 10 = 94</code>.</li>
+</ul>
+</li>
+<li><strong>5. 向左移动</strong>: 看 ‘X’ 左边的 ‘M’.
+<ul>
+<li>‘M’ 的值是 1000. 它右边 ‘X’ 的值是 10.</li>
+<li>因为 <code>1000 &gt; 10</code>, 所以执行加法. <code>result = 94 + 1000 = 1094</code>.</li>
+</ul>
+</li>
+<li><strong>6. 向左移动</strong>: 看 ‘M’ 左边的 ‘C’.
+<ul>
+<li>‘C’ 的值是 100. 它右边 ‘M’ 的值是 1000.</li>
+<li>因为 <code>100 &lt; 1000</code>, 所以执行减法. <code>result = 1094 - 100 = 994</code>.</li>
+</ul>
+</li>
+<li><strong>7. 向左移动</strong>: 看 ‘C’ 左边的 ‘M’.
+<ul>
+<li>‘M’ 的值是 1000. 它右边 ‘C’ 的值是 100.</li>
+<li>因为 <code>1000 &gt; 100</code>, 所以执行加法. <code>result = 994 + 1000 = 1994</code>.</li>
+</ul>
+</li>
+<li><strong>8. 结束</strong>: 遍历完成, 最终结果是 1994.</li>
+</ul>
+<hr>
+<h3 id="代码">代码:</h3>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Solution</span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">int</span> <span class="title">RomanToInt</span>(<span class="params"><span class="built_in">string</span> s</span>)</span> &#123;</span><br><span class="line">        <span class="comment">// 1. 使用 Dictionary 建立字符到数值的映射</span></span><br><span class="line">        Dictionary&lt;<span class="built_in">char</span>,<span class="built_in">int</span>&gt; rome = <span class="keyword">new</span> Dictionary&lt;<span class="built_in">char</span>,<span class="built_in">int</span>&gt;</span><br><span class="line">        &#123;</span><br><span class="line">            &#123;<span class="string">&#x27;I&#x27;</span>, <span class="number">1</span>&#125;,</span><br><span class="line">            &#123;<span class="string">&#x27;V&#x27;</span>, <span class="number">5</span>&#125;,</span><br><span class="line">            &#123;<span class="string">&#x27;X&#x27;</span>, <span class="number">10</span>&#125;,</span><br><span class="line">            &#123;<span class="string">&#x27;L&#x27;</span>, <span class="number">50</span>&#125;,</span><br><span class="line">            &#123;<span class="string">&#x27;C&#x27;</span>, <span class="number">100</span>&#125;,</span><br><span class="line">            &#123;<span class="string">&#x27;D&#x27;</span>, <span class="number">500</span>&#125;,</span><br><span class="line">            &#123;<span class="string">&#x27;M&#x27;</span>, <span class="number">1000</span>&#125;</span><br><span class="line">        &#125;;</span><br><span class="line">      </span><br><span class="line">        <span class="built_in">int</span> result = <span class="number">0</span>;</span><br><span class="line">        <span class="comment">// 2. 从右向左遍历, 先处理最右边的值</span></span><br><span class="line">        <span class="built_in">char</span> rightChar = s[s.Length - <span class="number">1</span>];</span><br><span class="line">        <span class="built_in">int</span> rightValue = rome[rightChar];</span><br><span class="line">        result = rightValue;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 3. 从倒数第二个字符开始向左循环</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="built_in">int</span> i = s.Length - <span class="number">2</span>; i &gt;= <span class="number">0</span>; i --)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">char</span> currentChar = s[i];</span><br><span class="line">            <span class="built_in">int</span> currentValue = rome[currentChar];</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 4. 核心逻辑: 与右边的值比较</span></span><br><span class="line">            <span class="keyword">if</span>(currentValue &lt; rightValue)</span><br><span class="line">            &#123;</span><br><span class="line">                result -= currentValue; <span class="comment">// 小于则减</span></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                result += currentValue; <span class="comment">// 大于或等于则加</span></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 5. 更新 rightValue, 为下一次循环做准备</span></span><br><span class="line">            rightValue = currentValue;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="可能的实际应用">可能的实际应用:</h3>
+<ol>
+<li><strong><code>Dictionary</code> / <code>switch</code> (键值映射):</strong>
+<ul>
+<li><strong>输入系统:</strong> 在Unity中, 我们可以使用 <code>Dictionary&lt;KeyCode, System.Action&gt;</code> 来构建一个灵活的按键绑定系统, 按下某个键时, 执行对应的委托(Action).</li>
+<li><strong>本地化:</strong> 游戏需要支持多国语言时, 可以用 <code>Dictionary&lt;string, string&gt;</code> 来存储文本的键(如 “MENU_START”)和对应语言的值(如 “开始游戏”).</li>
+<li><strong>对象池:</strong> 使用 <code>Dictionary&lt;string, Queue&lt;GameObject&gt;&gt;</code> 来管理不同种类的预制体对象池, 通过预制体的名字(string)来获取对应的对象队列.</li>
+</ul>
+</li>
+<li><strong>循环逻辑 (从右到左 vs. 向前看):</strong>
+<ul>
+<li><strong>UI布局:</strong> 在实现一个从右向左排列的UI元素列表(比如阿拉伯语国家的UI)时, 我们就需要使用反向循环来计算每个元素的位置.</li>
+<li><strong>状态效果结算:</strong> 在一个回合制游戏中, 结算玩家身上的Buff/Debuff时, 某些效果的计算可能依赖于它后面的效果(比如一个&quot;伤害加深&quot;的debuff需要先于伤害技能结算). 这时就需要精心设计遍历和结算的顺序.</li>
+</ul>
+</li>
+<li><strong>代码权衡 (可读性 vs. 效率):</strong>
+<ul>
+<li><strong>Shader编写:</strong> 在写Shader时, 这是一个非常经典的权衡. 我们可以使用一些数学技巧让光照计算更快, 但这会让Shader代码非常难懂.</li>
+<li><strong>ECS (Entity Component System):</strong> 在Unity的DOTS中, 我们写的System代码非常注重性能, 因为它会处理成千上万个实体. 在这种场景下, 性能的优先级会高于常规代码的可读性. 但即便如此, 良好的命名和注释依然至关重要.</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="第14题-最长公共前缀-难度-简单">第14题: 最长公共前缀 (难度:简单)</h2>
+<h3 id="原题-2">原题:</h3>
+<p>编写一个函数来查找字符串数组中的最长公共前缀。</p>
+<p>如果不存在公共前缀，返回空字符串 <code>&quot;&quot;</code>。</p>
+<p><strong>示例 1：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：strs = [&quot;flower&quot;,&quot;flow&quot;,&quot;flight&quot;]</span><br><span class="line">输出：&quot;fl&quot;</span><br></pre></td></tr></table></figure>
+<p><strong>示例 2：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：strs = [&quot;dog&quot;,&quot;racecar&quot;,&quot;car&quot;]</span><br><span class="line">输出：&quot;&quot;</span><br><span class="line">解释：输入不存在公共前缀。</span><br></pre></td></tr></table></figure>
+<p><strong>提示：</strong></p>
+<ul>
+<li><code>1 &lt;= strs.length &lt;= 200</code></li>
+<li><code>0 &lt;= strs[i].length &lt;= 200</code></li>
+<li><code>strs[i]</code> 如果非空，则仅由小写英文字母组成</li>
+</ul>
+<hr>
+<h3 id="开始解题-2">开始解题:</h3>
+<h4 id="算法实现逻辑-纵向扫描">算法实现逻辑: 纵向扫描</h4>
+<p>这个方法非常直观, 就像我们用眼睛逐列对比文本一样. 它的核心思想是:</p>
+<ol>
+<li>
+<p><strong>选定一个基准:</strong> 我们不需要两两比较所有字符串, 这样太复杂了. 我们可以直接选择数组中的第一个字符串 (例如 <code>strs[0]</code>) 作为我们的 “基准” 或者 “模板”. 最终的最长公共前缀, 长度绝对不可能超过这个基准字符串的长度.</p>
+</li>
+<li>
+<p><strong>逐个字符进行纵向对比:</strong> 我们从基准字符串的第一个字符开始 (索引为0), 然后拿着这个字符去和数组中 <em>所有其他</em> 字符串在 <em>相同位置</em> 的字符做比较.</p>
+<ul>
+<li>如果所有字符串在当前位置的字符都和基准字符相同, 那么说明这个字符是公共前缀的一部分. 我们就继续去检查下一个位置的字符.</li>
+<li>如果在这个过程中, 遇到了任何一个字符串在当前位置的字符与基准字符不同, 或者某个字符串的长度已经不够长了(比如我们要检查第5个字符, 但某个字符串总共只有4个字符), 那么比较就此终止.</li>
+</ul>
+</li>
+<li>
+<p><strong>确定最终结果:</strong></p>
+<ul>
+<li>一旦比较终止, 那么最长公共前缀就是基准字符串从开头到 <em>上一个</em> 成功比较的位置的子串.</li>
+<li>如果整个基准字符串的所有字符都被成功比较完了, 那么说明整个基准字符串本身就是最长公共前缀.</li>
+</ul>
+</li>
+</ol>
+<h4 id="让我们用示例-flower-flow-flight-来走一遍流程">让我们用示例 <code>[&quot;flower&quot;, &quot;flow&quot;, &quot;flight&quot;]</code> 来走一遍流程:</h4>
+<ol>
+<li>
+<p><strong>选择基准:</strong> 我们选择 <code>&quot;flower&quot;</code> 作为基准.</p>
+</li>
+<li>
+<p><strong>开始纵向扫描:</strong></p>
+<ul>
+<li>
+<p><strong>第1列 (索引 0):</strong></p>
+<ul>
+<li>基准字符是 <code>'f'</code>.</li>
+<li>检查 <code>&quot;flow&quot;</code> 的第1个字符, 是 <code>'f'</code>. 匹配.</li>
+<li>检查 <code>&quot;flight&quot;</code> 的第1个字符, 是 <code>'f'</code>. 匹配.</li>
+<li>结论: 所有字符串的第一列都是 <code>'f'</code>, <code>'f'</code> 是公共前缀的一部分. 继续.</li>
+</ul>
+</li>
+<li>
+<p><strong>第2列 (索引 1):</strong></p>
+<ul>
+<li>基准字符是 <code>'l'</code>.</li>
+<li>检查 <code>&quot;flow&quot;</code> 的第2个字符, 是 <code>'l'</code>. 匹配.</li>
+<li>检查 <code>&quot;flight&quot;</code> 的第2个字符, 是 <code>'l'</code>. 匹配.</li>
+<li>结论: 所有字符串的第二列都是 <code>'l'</code>, <code>'l'</code> 是公共前缀的一部分. 继续.</li>
+</ul>
+</li>
+<li>
+<p><strong>第3列 (索引 2):</strong></p>
+<ul>
+<li>基准字符是 <code>'o'</code>.</li>
+<li>检查 <code>&quot;flow&quot;</code> 的第3个字符, 是 <code>'o'</code>. 匹配.</li>
+<li>检查 <code>&quot;flight&quot;</code> 的第3个字符, 是 <code>'i'</code>. <strong>不匹配!</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>得出结果:</strong></p>
+<ul>
+<li>我们在索引为 <code>2</code> 的位置发现了不匹配. 这意味着最长公共前缀的长度就是 <code>2</code>.</li>
+<li>我们截取基准字符串 <code>&quot;flower&quot;</code> 从索引 <code>0</code> 开始, 长度为 <code>2</code> 的部分.</li>
+<li>结果就是 <code>&quot;fl&quot;</code>.</li>
+</ul>
+</li>
+</ol>
+<p>这个方法的优点是, 一旦发现不匹配, 算法会立刻终止并返回结果, 在公共前缀很短的情况下效率非常高.</p>
+<hr>
+<h3 id="代码-2">代码:</h3>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Solution</span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">string</span> <span class="title">LongestCommonPrefix</span>(<span class="params"><span class="built_in">string</span>[] strs</span>)</span> &#123;</span><br><span class="line">        <span class="comment">// 1. 处理边界情况: 如果数组为null或为空, 直接返回空字符串.实际上题目的条件已经给出范围了.</span></span><br><span class="line">        <span class="keyword">if</span> (strs == <span class="literal">null</span> || strs.Length == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&quot;&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 2. 外层循环遍历第一个字符串(基准)的每一个字符.</span></span><br><span class="line">        <span class="comment">// i 代表当前正在比较的字符列的索引.</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; strs[<span class="number">0</span>].Length; i++) &#123;</span><br><span class="line">            <span class="comment">// 3. 取出基准字符串在当前列的字符.</span></span><br><span class="line">            <span class="built_in">char</span> c = strs[<span class="number">0</span>][i];</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 4. 内层循环遍历数组中剩余的字符串(从第二个开始).</span></span><br><span class="line">            <span class="comment">// j 代表当前正在比较的字符串的索引.</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="built_in">int</span> j = <span class="number">1</span>; j &lt; strs.Length; j++) &#123;</span><br><span class="line">                <span class="comment">// 5. 检查两种失败情况:</span></span><br><span class="line">                <span class="comment">// a) 当前比较的字符串长度已经不够了 (i == strs[j].Length).</span></span><br><span class="line">                <span class="comment">// b) 当前列的字符不匹配 (strs[j][i] != c).</span></span><br><span class="line">                <span class="keyword">if</span> (i == strs[j].Length || strs[j][i] != c) &#123;</span><br><span class="line">                    <span class="comment">// 6. 一旦失败, 说明公共前缀到此为止.</span></span><br><span class="line">                    <span class="comment">// 截取基准字符串从0到i的部分并返回.</span></span><br><span class="line">                    <span class="keyword">return</span> strs[<span class="number">0</span>].Substring(<span class="number">0</span>, i);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 7. 如果所有循环都正常结束, 说明第一个字符串本身就是最长公共前缀.</span></span><br><span class="line">        <span class="keyword">return</span> strs[<span class="number">0</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+</article><div class="post-copyright"><div class="post-copyright__author_group"><div class="post-copyright__author_img"><img class="post-copyright__author_img_front" src="/img/avatar.png"></div><div class="post-copyright__author_name">NFA晨曦</div><div class="post-copyright__author_desc">记录与分享</div></div><div class="post-tools" id="post-tools"><div class="post-tools-left"><div id="quit-box" onclick="RemoveRewardMask()"></div><div class="post-reward"><div class="reward-button" title="赞赏作者" onclick="AddRewardMask()"><i class="solitude fas fa-heart"></i>赞赏作者</div><div class="reward-main"><ul class="reward-all"><span class="reward-title">感谢您的赞赏</span><ul class="reward-group"><li class="reward-item"><a href="https://blog.nfasystem.top/img/wechat.jpg"><img class="post-qr-code-img nolazyload" src="/img/wechat.jpg" alt="微信赞赏码" style="border-color: var(--efu-black)"></a><div class="post-qr-code-desc">微信赞赏码</div></li></ul><a class="reward-main-btn" href="/about/"><div class="reward-text">赞赏名单</div><div class="reward-dec"></div></a></ul></div></div><script>function RemoveRewardMask() {
+    let rewardMainElements = document.querySelectorAll(".reward-main");
+    let quitBoxElement = document.querySelector("#quit-box");
+
+    rewardMainElements.forEach(element => {
+        element.style.display = "none";
+    });
+
+    if (quitBoxElement) {
+        quitBoxElement.style.display = "none";
+    }
+}
+
+function AddRewardMask() {
+    let rewardMainElements = document.querySelectorAll(".reward-main");
+    let quitBoxElement = document.querySelector("#quit-box");
+
+    rewardMainElements.forEach(element => {
+        element.style.display = "flex";
+    });
+
+    if (quitBoxElement) {
+        quitBoxElement.style.display = "flex";
+    }
+}</script></div></div><div class="post-copyright__notice"><span class="post-copyright-info">本文是原创文章，采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans">CC BY-NC-SA 4.0</a>协议，完整转载请注明来自<a href="/">晨曦の小站</a></span></div></div><div class="post-tools-right"><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E7%AE%97%E6%B3%95/"><span class="tags-punctuation"><i class="solitude fas fa-hashtag"></i>算法<span class="tagsPageCount">9</span></span></a><a class="post-meta__tags" href="/tags/%E5%8A%9B%E6%89%A3/"><span class="tags-punctuation"><i class="solitude fas fa-hashtag"></i>力扣<span class="tagsPageCount">9</span></span></a></div></div></div><nav class="needEndHide pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/80d20dc4/"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">力扣刷题日常(15-16)</div></div></a></div><div class="next-post pull-right"><a href="/posts/113e6e00/"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">力扣刷题日常(11-12)</div></div></a></div></nav>
+        <div class="relatedPosts">
+            <div class="headline">
+                <i class="solitude fas fa-star"></i>
+                <span>喜欢这篇的人也看了</span>
+                <div class="relatedPosts-link">
+                    <a onclick="event.preventDefault(); toRandomPost();" href="javascript:void(0);" rel="external nofollow" data-pjax-state="">随便逛逛</a>
+                </div>
+            </div>
+            <div class="relatedPosts-list">
+            <div>
+                <a href="/posts/6491732a/" title="力扣刷题日常(17-18)">
+                    <img class="cover" src= "" data-lazy-src="https://image.nfasystem.top/img-nfa/LK17-18.webp" alt="cover">
+                    <div class="content is-center">
+                        <div class="title">力扣刷题日常(17-18)</div>
+                    </div>
+                </a>
+            </div>
+            <div>
+                <a href="/posts/80d20dc4/" title="力扣刷题日常(15-16)">
+                    <img class="cover" src= "" data-lazy-src="https://image.nfasystem.top/img-nfa/LK15-16.webp" alt="cover">
+                    <div class="content is-center">
+                        <div class="title">力扣刷题日常(15-16)</div>
+                    </div>
+                </a>
+            </div>
+            </div>
+        </div><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="solitude fas fa-comment"></i><span> 评论</span><span class="count"> (<span class="twikoo-count"><i class="solitude fas fa-spinner fa-spin"></i></span>)</span></div></div><div class="comment-wrap"><div id="twikoo-wrap"></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-content"><div class="card-info-avatar is-center"><div class="top-group"><div class="sayhi" id="sayhi" onclick="sco.changeWittyWord()"></div></div></div><div class="avatar"><img alt="头像" src="/img/avatar.png"></div><div class="description">这是晨曦の博客，专注于分享，由第四领域——晨曦负责与维护。</div><div class="bottom-group"><span class="left"><div class="name">NFA晨曦</div><div class="desc">只有迎风，风筝才能飞得更高。</div></span><div class="social-icons is-center"><a class="social-icon" target="_blank" rel="noopener" href="https://github.com/nfachenxi" title="Github"><i class="solitude  fab fa-github"></i></a><a class="social-icon" target="_blank" rel="noopener" href="https://space.bilibili.com/316806831" title="Bilibili"><i class="solitude  fab fa-bilibili"></i></a></div></div></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="solitude fas fa-bars"></i><span>文章目录</span></div><div class="toc-content" id="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">力扣刷题日常(13-14)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC13%E9%A2%98-%E7%BD%97%E9%A9%AC%E6%95%B0%E5%AD%97%E8%BD%AC%E6%95%B4%E6%95%B0-%E9%9A%BE%E5%BA%A6-%E7%AE%80%E5%8D%95"><span class="toc-text">第13题: 罗马数字转整数 (难度:简单)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%9F%E9%A2%98"><span class="toc-text">原题:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%80%E5%A7%8B%E8%A7%A3%E9%A2%98"><span class="toc-text">开始解题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81"><span class="toc-text">代码:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%AF%E8%83%BD%E7%9A%84%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8"><span class="toc-text">可能的实际应用:</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC14%E9%A2%98-%E6%9C%80%E9%95%BF%E5%85%AC%E5%85%B1%E5%89%8D%E7%BC%80-%E9%9A%BE%E5%BA%A6-%E7%AE%80%E5%8D%95"><span class="toc-text">第14题: 最长公共前缀 (难度:简单)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%9F%E9%A2%98-2"><span class="toc-text">原题:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%80%E5%A7%8B%E8%A7%A3%E9%A2%98-2"><span class="toc-text">开始解题:</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AE%97%E6%B3%95%E5%AE%9E%E7%8E%B0%E9%80%BB%E8%BE%91-%E7%BA%B5%E5%90%91%E6%89%AB%E6%8F%8F"><span class="toc-text">算法实现逻辑: 纵向扫描</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%A9%E6%88%91%E4%BB%AC%E7%94%A8%E7%A4%BA%E4%BE%8B-flower-flow-flight-%E6%9D%A5%E8%B5%B0%E4%B8%80%E9%81%8D%E6%B5%81%E7%A8%8B"><span class="toc-text">让我们用示例 [&quot;flower&quot;, &quot;flow&quot;, &quot;flight&quot;] 来走一遍流程:</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81-2"><span class="toc-text">代码:</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="solitude fas fa-map"></i><span>最近发布</span></div><div class="aside-list"><a class="aside-list-item" href="/posts/81s2cdc0/" title="序章"><div class="thumbnail"><img alt="序章" src="/img/deb5.webp"></div><div class="content"><span class="title" href="/posts/81s2cdc0/" title="序章">序章</span><span class="categories" href="/posts/81s2cdc0/">小说</span></div></a><a class="aside-list-item" href="/posts/6491732a/" title="力扣刷题日常(17-18)"><div class="thumbnail"><img alt="力扣刷题日常(17-18)" src="https://image.nfasystem.top/img-nfa/LK17-18.webp"></div><div class="content"><span class="title" href="/posts/6491732a/" title="力扣刷题日常(17-18)">力扣刷题日常(17-18)</span><span class="categories" href="/posts/6491732a/">力扣刷题</span></div></a><a class="aside-list-item" href="/posts/80d20dc4/" title="力扣刷题日常(15-16)"><div class="thumbnail"><img alt="力扣刷题日常(15-16)" src="https://image.nfasystem.top/img-nfa/LK15-16.webp"></div><div class="content"><span class="title" href="/posts/80d20dc4/" title="力扣刷题日常(15-16)">力扣刷题日常(15-16)</span><span class="categories" href="/posts/80d20dc4/">力扣刷题</span></div></a><a class="aside-list-item" href="/posts/3da49ae6/" title="力扣刷题日常(13-14)"><div class="thumbnail"><img alt="力扣刷题日常(13-14)" src="https://image.nfasystem.top/img-nfa/LK13-14.webp"></div><div class="content"><span class="title" href="/posts/3da49ae6/" title="力扣刷题日常(13-14)">力扣刷题日常(13-14)</span><span class="categories" href="/posts/3da49ae6/">力扣刷题</span></div></a><a class="aside-list-item" href="/posts/113e6e00/" title="力扣刷题日常(11-12)"><div class="thumbnail"><img alt="力扣刷题日常(11-12)" src="https://image.nfasystem.top/img-nfa/LK11-12.webp"></div><div class="content"><span class="title" href="/posts/113e6e00/" title="力扣刷题日常(11-12)">力扣刷题日常(11-12)</span><span class="categories" href="/posts/113e6e00/">力扣刷题</span></div></a></div></div><div class="card-widget card-route-switch"><div class="card-content"><div class="item-headline"><i class="fas fa-route"></i><span>线路切换</span></div><div class="route-list" id="route-list"><div class="route-item" data-url="https://cx.nfasystem.top" data-name="Vercel 线路"><div class="route-name">Vercel 线路</div><div class="route-right"><div class="route-ping"><span class="ping-value">--</span><span class="ping-unit">ms</span></div><div class="route-status"><i class="fas fa-circle-notch fa-spin"></i></div></div></div><div class="route-item" data-url="https://nfachenxi.nfasystem.top" data-name="GitHub Pages"><div class="route-name">GitHub Pages</div><div class="route-right"><div class="route-ping"><span class="ping-value">--</span><span class="ping-unit">ms</span></div><div class="route-status"><i class="fas fa-circle-notch fa-spin"></i></div></div></div><div class="route-item" data-url="https://chenxi.nfasystem.top" data-name="腾讯云 EdgePage"><div class="route-name">腾讯云 EdgePage</div><div class="route-right"><div class="route-ping"><span class="ping-value">--</span><span class="ping-unit">ms</span></div><div class="route-status"><i class="fas fa-circle-notch fa-spin"></i></div></div></div><div class="route-item" data-url="https://blog.nfasystem.top" data-name="私人服务器"><div class="route-name">私人服务器</div><div class="route-right"><div class="route-ping"><span class="ping-value">--</span><span class="ping-unit">ms</span></div><div class="route-status"><i class="fas fa-circle-notch fa-spin"></i></div></div></div></div></div></div></div></div></main><footer id="footer"><div id="st-footer-bar"><div class="footer-logo"><span>晨曦の小站</span></div><div class="footer-bar-description">文章来自第四领域晨曦</div><div><a class="footer-bar-link" href="/about/" title="了解更多">了解更多</a></div></div><div id="footer_deal"><a class="deal_link" target="_blank" rel="noopener" href="https://github.com/nfachenxi" title="Github"><i class="solitude  fab fa-github"></i></a><a class="deal_link" href="mailto:nfachenxi@163.com" title="邮箱"><i class="solitude  far fa-envelope"></i></a><div><div class="nolazyload footer_mini_logo" id="footer_mini_logo" title="返回顶部" onclick="sco.toTop()"><img src= "" data-lazy-src="/img/avatar.png" alt="返回顶部"></div></div><a class="deal_link" target="_blank" rel="noopener" href="https://space.bilibili.com/316806831" title="Bilibili"><i class="solitude  fab fa-bilibili"></i></a><a class="deal_link" target="_blank" rel="noopener" href="https://v.douyin.com/dvJIjrxxf6c/" title="抖音"><i class="solitude  fab fa-tiktok"></i></a></div><div><div id="st-footer"><div class="footer-group"><h3 class="footer-title">导航</h3><div class="footer-links"><a class="footer-item" href="/archives/" title="归档">归档</a><a class="footer-item" href="/categories/" title="分类">分类</a></div></div><div class="footer-group"><h3 class="footer-title">关于本站</h3><div class="footer-links"><a class="footer-item" href="/privacy/" title="隐私策略">隐私策略</a><a class="footer-item" href="/copyright/" title="版权声明">版权声明</a></div></div></div></div><div id="footer-bar"><div class="footer-bar-links"><div class="footer-bar-left"><div class="copyright">© 2025 - 2026 By<a class="footer-bar-link" href="/" title="NFA晨曦">NFA晨曦</a></div><div class="beian-group"><div><a class="footer-bar-link" target="_blank" rel="noopener" href="https://beian.mps.gov.cn/#/query/webSearch" title="鲁公网安备37028502240668号"><div><img class="beian-icon" src= "" data-lazy-src="https://beian.mps.gov.cn/img/logo01.dd7ff50e.png" alt="鲁公网安备37028502240668号"></div><span class="beian-name">鲁公网安备37028502240668号</span></a><a class="footer-bar-link" target="_blank" rel="noopener" href="https://beian.miit.gov.cn/" title="鲁ICP备2023032296号-1"><span class="beian-name">鲁ICP备2023032296号-1</span></a></div><a class="footer-bar-link" target="_blank" rel="noopener" href="https://hexo.io/" title="框架：Hexo">框架：Hexo</a><a class="footer-bar-link" target="_blank" rel="noopener" href="https://github.com/everfu/hexo-theme-solitude" title="主题：Solitude">主题：Solitude</a></div></div><div class="footer-bar-right"></div></div></div><div><div class="comment-barrage needEndHide"></div></div></footer></div><div><div id="rightMenu"><div class="rightMenu-group rightMenu-small"><div class="rightMenu-item" id="menu-backward"><i class="solitude fas fa-arrow-left"></i></div><div class="rightMenu-item" id="menu-forward"><i class="solitude fas fa-arrow-right"></i></div><div class="rightMenu-item" id="menu-refresh"><i class="solitude fas fa-arrows-rotate"></i></div><div class="rightMenu-item" id="menu-top"><i class="solitude fas fa-arrow-up"></i></div></div><div class="rightMenu-group rightMenu-line rightMenuPlugin"><div class="rightMenu-item" id="menu-copytext"><i class="solitude fas fa-clone"></i><span>复制选中文本</span></div><div class="rightMenu-item" id="menu-pastetext"><i class="solitude fas fa-clipboard"></i><span>粘贴文本</span></div><div class="rightMenu-item" id="menu-commenttext"><i class="solitude fas fa-comment-medical"></i><span>引用到评论</span></div><div class="rightMenu-item" id="menu-newwindow"><i class="solitude far fa-window-maximize"></i><span>新窗口打开</span></div><div class="rightMenu-item" id="menu-copylink"><i class="solitude fas fa-link"></i><span>复制链接地址</span></div><div class="rightMenu-item" id="menu-copyimg"><i class="solitude fas fa-clone"></i><span>复制此图片</span></div><div class="rightMenu-item" id="menu-downloadimg"><i class="solitude fas fa-cloud-arrow-down"></i><span>下载此图片</span></div><div class="rightMenu-item" id="menu-search"><i class="solitude fas fa-magnifying-glass"></i><span>站内搜索</span></div><div class="rightMenu-item" id="menu-music-toggle"><i class="solitude fas fa-play"></i><span>播放音乐</span></div><div class="rightMenu-item" id="menu-music-back"><i class="solitude fas fa-backward"></i><span>切换到上一首</span></div><div class="rightMenu-item" id="menu-music-forward"><i class="solitude fas fa-forward"></i><span>切换到下一首</span></div><div class="rightMenu-item" id="menu-music-copyMusicName"><i class="solitude fas fa-clone"></i><span>复制歌名</span></div></div><div class="rightMenu-group rightMenu-line rightMenuOther"><div class="rightMenu-item" id="menu-randomPost" onclick="toRandomPost()||rm.hideRightMenu()"><i class="solitude fas fa-tower-broadcast"></i><span>随机文章</span></div><div class="rightMenu-item" onclick="pjax.loadUrl('/categories/')||rm.hideRightMenu()"><i class="solitude fas fa-clone"></i><span>全部分类</span></div><div class="rightMenu-item" onclick="pjax.loadUrl('/tags/')||rm.hideRightMenu()"><i class="solitude fas fa-tags"></i><span>全部标签</span></div></div><div class="rightMenu-group rightMenu-line rightMenuOther"><div class="rightMenu-item" id="menu-darkmode" onclick="sco.switchDarkMode()"><i class="solitude fas fa-circle-half-stroke"></i><span class="menu-darkmode-text">深色模式</span></div></div></div><div id="rightmenu-mask"></div></div><div><!-- Critical scripts loaded synchronously--><script src="/js/utils.js?v=3.0.21"></script><script src="/js/main.js?v=3.0.21"></script><!-- Non-critical scripts loaded asynchronously--><script async src="/js/third_party/waterfall.min.js?v=3.0.21"></script><script src="https://fastly.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js"></script><!-- Feature-specific scripts loaded asynchronously--><script defer src="https://image.nfasystem.top/CDN/mermaid.min.js"></script><script defer src="/js/chart.umd.min.js"></script><script defer src="https://fastly.jsdelivr.net/npm/typeit@8.8.7/dist/index.umd.min.js"></script><script defer src="/js/third_party/universe.min.js?v=3.0.21"></script><script>document.addEventListener('DOMContentLoaded', () => {
+  if (typeof dark === 'function') dark();
+});
+</script><!-- UI enhancement scripts--><script src="/js/lazyload.iife.min.js"></script><script defer src="/js/snackbar.min.js"></script><script src="/js/medium-zoom.min.js"></script><script src="/js/swiper-bundle.min.js"></script><!-- Music player scripts--><script>var meting_api = 'https://meting.qjqq.cn/?server=:server&type=:type&id=:id&auth=:auth&r=:r';</script><script defer src="/js/APlayer.min.js"></script><script defer src="/js/Meting.min.js"></script><!-- Cover color processing scripts--><script>window.paceOptions = {
+  restartOnPushState: false
+}
+
+utils.addGlobalFn('pjaxSend', () => {
+  Pace.restart()
+}, 'pace_restart')
+</script><script src="/js/pace.min.js"></script><!-- Search functionality--><!-- Right menu functionality--><script defer src="/js/right_menu.js?v=3.0.21"></script><!-- Route switch functionality--><script defer src="/js/route-switch.js"></script><div class="js-pjax"><script>(() => {
+    const getCount = () => {
+        const ele = document.querySelectorAll('.twikoo-count')
+        if (!ele) return
+        twikoo.getCommentsCount({
+            envId: 'https://comment.nfasystem.top',
+            region: '',
+            urls: [window.location.pathname],
+            includeReply: false
+        }).then(res => {
+            ele.forEach(item => item.textContent = res[0].count)
+        }).catch(err => {
+            console.error(err)
+        })
+    }
+    const init = () => {
+        twikoo.init(Object.assign({
+            el: '#twikoo-wrap',
+            envId: 'https://comment.nfasystem.top',
+            region: '',
+            path: window.location.pathname,
+            onCommentLoaded: () => {
+                GLOBAL_CONFIG.lightbox && utils.lightbox(document.querySelectorAll('#twikoo .tk-content img:not(.tk-owo-emotion)'))
+            }
+        }, null))
+
+         && getCount()
+        sco.owoBig({
+            body: '.OwO-body',
+            item: '.OwO-items li'
+        })
+
+        true && barrageTwikoo()
+    }
+
+    const loadTwikoo = () => {
+        if (typeof twikoo === 'object') setTimeout(init,0)
+        else utils.getScript('/js/twikoo.all.min.js').then(init)
+    }
+
+    if ('Twikoo' === 'Twikoo' || true) {
+        if (true) utils.loadComment(document.getElementById('twikoo-wrap'), loadTwikoo)
+        else loadTwikoo()
+    } else {
+        window.loadTwoComment = loadTwikoo
+    }
+})()
+</script><script>async function barrageTwikoo() {
+    await fetch("https://comment.nfasystem.top", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            event: "COMMENT_GET",
+            accessToken: "",
+            url: window.location.pathname
+        })
+    }).then(async res => {
+        if (!res.ok) throw new Error("HTTP error! status: " + res.status)
+        const data = await res.json();
+        const init = () => {
+            initializeCommentBarrage((data.data).map(item => Object.assign({
+                content: item.comment,
+                nick: item.nick,
+                mailMd5: item.mailMd5,
+                id: item.id
+            })))
+        }
+        if (typeof initializeCommentBarrage === "undefined") await utils.getScript('/js/third_party/barrage.min.js?v=3.0.21').then(init)
+        else init()
+    }).catch(error => console.error("An error occurred while fetching comments: ", error))
+}</script><script>mermaid.run();
+</script></div></div><!-- pjax--><script>let pjax = null;
+
+function initPjax() {
+    if (typeof Pjax === 'undefined') {
+        console.warn('Pjax is not loaded yet, retrying...');
+        setTimeout(initPjax, 100);
+        return;
+    }
+
+    pjax = new Pjax({
+        elements: 'a:not([target="_blank"])',
+        selectors: ["title","#body-wrap","#site-config","meta[name=\"description\"]",".js-pjax","meta[property^=\"og:\"]","#config-diff",".rs_show",".rs_hide"],
+        cacheBust: false,
+        analytics: false,
+        scrollRestoration: false
+    })
+
+    // 将 pjax 实例挂载到全局
+    window.pjax = pjax;
+
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+        const newScript = document.createElement('script')
+        const content = item.text || item.textContent || item.innerHTML || ""
+        Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+        newScript.appendChild(document.createTextNode(content))
+        item.parentNode.replaceChild(newScript, item)
+    })
+
+    document.addEventListener('pjax:complete', () => {
+        window.refreshFn()
+
+        document.querySelectorAll('script[data-pjax]').forEach(item => {
+            const newScript = document.createElement('script')
+            const content = item.text || item.textContent || item.innerHTML || ""
+            Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+            newScript.appendChild(document.createTextNode(content))
+            item.parentNode.replaceChild(newScript, item)
+        })
+
+        GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+    })
+
+    document.addEventListener('pjax:error', (e) => {
+        if (e.request.status === 404) {
+            pjax.loadUrl('/404.html')
+        }
+    })
+}
+
+// 初始化 Pjax
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initPjax);
+} else {
+    initPjax();
+}</script><!-- google adsense--><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><button class="search-close-button"><i class="solitude fas fa-xmark"></i></button></nav><div class="search-wrap"><div class="search-box"><input class="search-box-input" id="search-input" type="text" autocomplete="off" spellcheck="false" autocorrect="off" autocapitalize="off" placeholder="输入关键词快速查找"></div><div id="search-results"><div id="search-hits"><a class="tag-list" href="javascript:void(0);" onclick="pjax.loadUrl('/tags/Unity/')">Unity</a><a class="tag-list" href="javascript:void(0);" onclick="pjax.loadUrl('/tags/%E7%AE%97%E6%B3%95/')">算法</a></div></div><div id="search-pagination"></div><div id="search-tips"></div></div></div><div id="search-mask"></div></div><script src="/js/search/local.js?v=3.0.21"></script><div><div class="needEndHide" id="nav-music"><div id="nav-music-hoverTips"><i class="music-control-btn fas fa-backward-step" id="music-prev" onclick="sco.musicSkipBack()"></i><i class="music-control-btn fas fa-pause" id="music-pause" onclick="sco.musicToggle()"></i><i class="music-control-btn fas fa-play" id="music-play" onclick="sco.musicToggle()"></i><i class="music-control-btn fas fa-forward-step" id="music-next" onclick="sco.musicSkipForward()"></i></div><meting-js id="13944001327" server="netease" type="playlist" mutex="true" preload="none" theme="var(--efu-main)" data-lrctype="0" order="random" volume="0.5"></meting-js></div></div></body></html>
+        <script>
+            const posts = ["posts/81s2cdc0/","posts/6491732a/","posts/80d20dc4/","posts/3da49ae6/","posts/113e6e00/","posts/9cf22d8b/","posts/a1373671/","posts/95bdd374/","posts/82e0ee2a/","posts/7eb38127/","posts/ec87c3ca/","posts/fc4aea50/","posts/a266d19c/","posts/878304ff/","posts/8596feee/","posts/efdc60b2/"];
+            function toRandomPost() {
+                const randomPost = posts[Math.floor(Math.random() * posts.length)];
+                pjax.loadUrl(GLOBAL_CONFIG.root + randomPost);
+            }
+        </script>

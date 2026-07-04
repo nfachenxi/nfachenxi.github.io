@@ -1,0 +1,93 @@
+---
+title: about
+date: 2025-07-08 13:31:13
+aside: true
+top_img: /img/about_bg.png
+---
+
+## 个人简单介绍
+
+你好啊，我是晨曦
+
+虚拟组织第四领域的创始人(~~虽然这个组织只有名字没有设定罢了~~)
+
+2004年生，山东人
+
+成分：米哈游忠实粉丝、米哈游玩家、**社区混沌人**、欢愉令使、寻猎令使
+
+在河北某大学就读，目前准高三，智能科学与技术专业
+
+自学游戏开发中，水平emmm，不咋地
+
+对各种系统开发，部署，一些小工具和服务感兴趣，除此之外还喜欢听歌和玩游戏
+
+**喜欢的游戏：** 米游全家桶（崩坏3、原神、崩坏:星穹铁道、绝区零）
+
+**最喜欢的游戏角色：** 崩坏:星穹铁道女主——**星**
+
+![alt text](https://image.nfasystem.top/img/star.jpg)
+
+---
+
+**个人目标：** 大学毕业后进一家比较好的游戏公司，薪资最好在15k左右，如果可以的话还是想进米哈游，但是难度还是太高了，只能说接着努力了
+
+**人际关系：** 目前有几个经常一起玩的好友，感觉差不多够了，我这人交友求精不求多，而且我奉行**道不同不相为谋**这一准则。
+
+最后来一段**个人描述**吧、
+晨曦————一个努力在代码、生活与人际间寻找完美平衡的探索者。
+
+- 目标驱动的思考者： 相信清晰的规划和深度学习是成长的基石。热衷于将脑中的蓝图（无论是代码还是人生规划）付诸实践。
+- 高质量社交爱好者： 我的社交电池由真诚的交流和共同的爱好充电。相比于无意义的喧嚣，我更爱与“对的人”深度连接。
+- “部落”归属感探寻者： 坚信找到“同类”的力量。无论是线上社群还是线下聚会，与志同道合的人在一起，能让我瞬间满血复活。
+- 环境感知敏锐者： 对周围的氛围有雷达般的感知力。一个安静高效的空间，或是一个积极温暖的场域，是我发挥最佳状态的必要条件。
+  
+欢迎你在这里，看到一个真实、成长中的我。
+
+
+---
+
+
+<!-- 时间进度条容器 -->
+<div class="time-progress-container" data-start-date="2023-09-01" data-end-date="2027-06-30">
+  <h4>大学四年</h4>
+  <div class="progress-track">
+    <div class="progress-bar"></div>
+  </div>
+  <div class="progress-info">
+    <!-- JavaScript会自动填充这里的内容 -->
+    正在计算进度...
+  </div>
+</div>
+
+---
+
+<!-- 时间轴容器 -->
+<div class="timeline">
+  <div class="timeline-item">
+    <div class="timeline-date">2025年7月</div>
+    <div class="timeline-marker"></div>
+    <div class="timeline-content">
+      <h3>开启新篇章：搭建个人博客</h3>
+      <p>基于Hexo和Butterfly主题，利用GitHub Actions实现自动化部署，成功上线了我的个人博客。</p>
+    </div>
+  </div>
+
+  <div class="timeline-item">
+    <div class="timeline-date">2024年8月</div>
+    <div class="timeline-marker"></div>
+    <div class="timeline-content">
+      <h3>定向游戏开发</h3>
+      <p>大一的这个暑假我确定了要走游戏开发就业的方向，并以此开始了学习之路</p>
+    </div>
+  </div>
+
+  <div class="timeline-item">
+    <div class="timeline-date">2023年9月</div>
+    <div class="timeline-marker"></div>
+    <div class="timeline-content">
+      <h3>进入大学</h3>
+      <p>毕业于青岛某高中，开启了我的大学生涯。</p>
+    </div>
+  </div>
+</div>
+

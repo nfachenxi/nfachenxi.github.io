@@ -1,0 +1,1049 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><title>力扣刷题日常(3-4) | 晨曦の小站</title><noscript>开启JavaScript才能访问本站哦~</noscript><link rel="icon" href="/img/nfa_icon.jpg"><link rel="stylesheet" href="/css/index.css?v=3.0.21"><link rel="canonical" href="https://blog.nfasystem.top/posts/82e0ee2a/index.html"><link rel="stylesheet" href="/libs/fontawesome/css/all.min.css"><!-- Feature-specific CSS--><!-- aplayer--><link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css"><!-- swiper--><link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/swiper@11.0.5/swiper-bundle.min.css"><!-- fancybox ui--><!-- katex--><link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"><!-- Open Graph--><meta name="description" content="力扣刷题日常(3-4) 第三题: 无重复字符的最长子串(难度: 中等) 原题: 给定一个字符串 s ,请你找出其中不含有重复字符的 最长 子串 的长度. 示例 1: 123输入: s &amp;#x3D; &amp;quot;abcabcbb&amp;quot;输出: 3 解释: 因为无重复字符的最长子串是 &amp;quot;abc&amp;amp;qu"><!-- pwa--><meta name="apple-mobile-web-app-capable" content="晨曦の小站"><meta name="theme-color" content="var(--efu-main)"><meta name="apple-mobile-web-app-status-bar-style" content="var(--efu-main)"><link rel="bookmark" href="/img/nfa_icon.jpg"><link rel="apple-touch-icon" href="/img/nfa_icon.jpg" sizes="180x180"><script>console.log(' %c Solitude %c ' + '3.0.21' + ' %c https://github.com/everfu/hexo-theme-solitude',
+    'background:#35495e ; padding: 1px; border-radius: 3px 0 0 3px;  color: #fff',
+    'background:#ff9a9a ; padding: 1px; border-radius: 0 3px 3px 0;  color: #fff',
+    'background:unset ; padding: 1px; border-radius: 0 3px 3px 0;  color: #fff')
+</script><script>let mdate = "7-7,9-18,12-13";
+mdate = (mdate.split(","));
+let ndate = new Date();
+for (let i of mdate) {
+    if (i === (ndate.getMonth()+1) + "-" + (ndate.getDate())) {
+        document.documentElement.classList.add('memorial');
+    }
+}
+</script><script>(()=>{
+        const saveToLocal = {
+            set: function setWithExpiry(key, value, ttl) {
+                if (ttl === 0)
+                    return
+                const now = new Date()
+                const expiryDay = ttl * 86400000
+                const item = {
+                    value: value,
+                    expiry: now.getTime() + expiryDay
+                }
+                localStorage.setItem(key, JSON.stringify(item))
+            },
+            get: function getWithExpiry(key) {
+                const itemStr = localStorage.getItem(key)
+
+                if (!itemStr) {
+                    return undefined
+                }
+                const item = JSON.parse(itemStr)
+                const now = new Date()
+
+                if (now.getTime() > item.expiry) {
+                    localStorage.removeItem(key)
+                    return undefined
+                }
+                return item.value
+            }
+        };
+        window.utils = {
+            saveToLocal: saveToLocal,
+            getCSS: (url, id = false) => new Promise((resolve, reject) => {
+              const link = document.createElement('link')
+              link.rel = 'stylesheet'
+              link.href = url
+              if (id) link.id = id
+              link.onerror = reject
+              link.onload = link.onreadystatechange = function() {
+                const loadState = this.readyState
+                if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+                link.onload = link.onreadystatechange = null
+                resolve()
+              }
+              document.head.appendChild(link)
+            }),
+            getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+              const script = document.createElement('script')
+              script.src = url
+              script.async = true
+              script.onerror = reject
+              script.onload = script.onreadystatechange = function() {
+                const loadState = this.readyState
+                if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+                script.onload = script.onreadystatechange = null
+                resolve()
+              }
+
+              Object.keys(attr).forEach(key => {
+                script.setAttribute(key, attr[key])
+              })
+
+              document.head.appendChild(script)
+            }),
+            addGlobalFn: (key, fn, name = false, parent = window) => {
+                const globalFn = parent.globalFn || {}
+                const keyObj = globalFn[key] || {}
+
+                if (name && keyObj[name]) return
+
+                name = name || Object.keys(keyObj).length
+                keyObj[name] = fn
+                globalFn[key] = keyObj
+                parent.globalFn = globalFn
+            },
+            addEventListenerPjax: (ele, event, fn, option = false) => {
+              ele.addEventListener(event, fn, option)
+              utils.addGlobalFn('pjax', () => {
+                  ele.removeEventListener(event, fn, option)
+              })
+            },
+            diffDateFormat: (selector) => {
+                selector.forEach(item => {
+                    const date = new Date(item.getAttribute('datetime') || item.textContent);
+                    item.textContent = (date.getMonth() + 1).toString()+'/'+date.getDate().toString();
+                });
+            },
+        }
+    })()</script><!-- theme--><script>initTheme = () => {
+    let isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const cachedMode = utils.saveToLocal.get('theme');
+    if (cachedMode === undefined) {
+        const nowMode =
+            isDarkMode ? 'dark' : 'light'
+        document.documentElement.setAttribute('data-theme', nowMode);
+    } else {
+        document.documentElement.setAttribute('data-theme', cachedMode);
+    }
+    typeof rm === 'object' && rm.mode(cachedMode === 'dark' && isDarkMode)
+}
+initTheme()</script><script>const GLOBAL_CONFIG = {
+    root: '/',
+    algolia: undefined,
+    localsearch: {"preload":false,"path":"/search.xml"},
+    runtime: '2025-07-10 00:00:00',
+    lazyload: {
+        enable: true,
+        error: '/img/error_load.avif'
+    },
+    copyright: {"limit":100,"author":"作者: NFA晨曦","link":"链接: ","source":"来源: 晨曦の小站","info":"著作权归作者所有。 商业转载请联系作者获得授权，非商业转载请注明出处。"},
+    highlight: {"limit":200,"expand":true,"copy":true,"syntax":"highlight.js"},
+    randomlink: false,
+    lang: {"theme":{"dark":"已切换至深色模式","light":"已切换至浅色模式"},"copy":{"success":"复制成功","error":"复制失败"},"backtop":"返回顶部","time":{"day":"天前","hour":"小时前","just":"刚刚","min":"分钟前","month":"个月前"},"day":" 天","f12":"开发者模式已打开，请遵循GPL协议。","totalk":"无需删除空行，直接输入评论即可","search":{"empty":"找不到你查询的内容：${query}","hit":"找到 ${hits} 条结果，用时 ${time} 毫秒","placeholder":"输入关键词快速查找","count":"共 <b>${count}</b> 条结果。","loading":"搜索中..."},"barrage":{"title":"热评"}},
+    aside: {
+        state: {
+            morning: "✨ 早上好，新的一天开始了",
+            noon: "🍲 午餐时间",
+            afternoon: "🌞 下午好",
+            night: "早点休息",
+            goodnight: "晚安 😴",
+        },
+        witty_words: ["你可以的","你一定可以的","祝你好运，陌生人"],
+        witty_comment: {
+            prefix: '好久不见，',
+            back: '欢迎再次回来，',
+        },
+    },
+    covercolor: {
+        enable: false
+    },
+    comment: {"avatar":"https://gravatar.com/avatar","commentBarrage":true},
+    lightbox: 'mediumZoom',
+    right_menu: {"mode":{"dark":"深色模式","light":"浅色模式"},"img_error":"此图片无法复制与下载","music":{"start":"播放音乐","stop":"暂停音乐"},"barrage":{"open":"显示热评","close":"关闭热评"},"ctrlOriginalMenu":"按住Ctrl+右键可打开浏览器右键菜单"},
+    translate: false,
+    lure: {"jump":"去哪了？快回来～","back":"Ciallo～(∠・ω< )⌒★"},
+    expire: false,
+};
+const routeSwitchConfig = {"enable":true,"routes":[{"name":"Vercel 线路","url":"https://cx.nfasystem.top"},{"name":"GitHub Pages","url":"https://nfachenxi.nfasystem.top"},{"name":"腾讯云 EdgePage","url":"https://chenxi.nfasystem.top"},{"name":"私人服务器","url":"https://blog.nfasystem.top"}]};
+if (routeSwitchConfig) {
+    window.routeSwitchConfig = routeSwitchConfig;
+}</script><script id="config-diff">var PAGE_CONFIG = {
+    is_post: true,
+    is_page: false,
+    is_home: false,
+    page: '',
+    toc: true,
+    comment: true,
+    ai_text: false,
+    color: false,
+}</script><meta name="generator" content="Hexo 8.1.1"></head><body id="body"><div><canvas id="universe"></canvas></div><div><div id="console"><div class="close-btn" onclick="sco.hideConsole()"><i class="solitude fas fa-xmark"></i></div><div class="console-card-group"><div class="console-card-group-left"><div class="console-card" id="card-newest-comments" onclick="sco.hideConsole()"><div class="card-content"><div class="author-content-item-tips">互动</div><div class="author-content-item-title">最新评论</div></div><div class="console_recentcomments"><script pjax>(async () => {
+    document.querySelector('.console-card .console_recentcomments').textContent = `加载中...`
+    const emojiReg = /<img class="tk-owo-emotion" [^>]+>/g
+    let cache = utils.saveToLocal.get('twikoo-recent-comments-console')
+    if (cache) {
+        setHtml(document.querySelector('.console-card .console_recentcomments'), cache)
+        return
+    }
+    let ls = []
+
+    await fetch('https://comment.nfasystem.top', {
+        method: "POST",
+        body: JSON.stringify({
+            "event": "GET_RECENT_COMMENTS",
+            "includeReply": true,
+            "pageSize": 6
+        }),
+        headers: {'Content-Type': 'application/json'}
+    }).then(res => res.json()).then(async ({data}) => {
+        for (const i of data) {
+            if (i.avatar === undefined) i.avatar = 'https://gravatar.com/avatar/avatar/d615d5793929e8c7d70eab5f00f7f5f1?d=mp'
+            let title = ''
+            if (i.url) {
+                await fetch(i.url).then(res => res.text()).then(html => {
+                    const parser = new DOMParser()
+                    const doc = parser.parseFromString(html, 'text/html')
+                    title = doc.querySelector('title').innerText
+                }).catch(() => {
+                    title = i.url
+                })
+            }
+            if (title.indexOf('|') > 0) {
+                title = title.split('|')[0]
+            }
+            ls.push({
+                avatar: i.avatar,
+                nick: i.nick,
+                title: title,
+                content: i.comment,
+                url: i.url + '#' + i.id,
+                time: i.created
+            })
+        }
+        setHtml(document.querySelector('.console-card .console_recentcomments'), ls)
+        utils.saveToLocal.set('twikoo-recent-comments-console', ls, 0.2)
+    });
+
+    function setHtml(el, data) {
+        el.innerHTML = data.length !== 0 ? data.map(i => `
+            <div class="comment-card" title="${i.title}" onclick="pjax.loadUrl('${i.url}')">
+                <div class="comment-info">
+                    <img src="${i.avatar}" class="nolazyload" alt="${i.nick}">
+                    <div>
+                        <span class="comment-user">${i.nick}</span>
+                    </div>
+                    <time class="comment-time" datetime="${new Date(i.time)}"></time>
+                </div>
+                <div class="comment-content">${formatContent(i.content)}</div>
+                <div class="comment-title">
+                <i class="solitude fas fa-comment"></i>
+                ${i.title}</div>
+            </div>
+        `).join('') : `暂无评论...`
+        if (typeof utils !== 'undefined') utils.diffDateFormat(document.querySelectorAll('.comment-time'))
+        else {
+            document.addEventListener('pjax:complete', () => utils.diffDateFormat(document.querySelectorAll('.comment-time')))
+            document.addEventListener('DOMContentLoaded', () => utils.diffDateFormat(document.querySelectorAll('.comment-time')))
+        }
+    }
+
+    function formatContent(content) {
+        content = content.replace(emojiReg, '表情')
+        content = content.replace(/<\/*br>|[\s\uFEFF\xA0]+/g, '');
+        content = content.replace(/<img.*?>/g, '[图片]');
+        content = content.replace(/<a.*?>.*?<\/a>/g, '[链接]');
+        content = content.replace(/<pre.*?>.*?<\/pre>/g, '[代码]');
+        content = content.replace(/<.*?>/g, '');
+        return content
+    }
+})()</script></div></div></div><div class="console-card-group-right"><div class="console-card tags" onclick="sco.hideConsole()"><div class="card-content"><div class="author-content-item-tips">标签</div><div class="author-content-item-title">寻找感兴趣的领域</div></div><div class="card-tag-cloud"><a href="/tags/Unity/">Unity<sup>6</sup></a><a href="/tags/Scroll-View/">Scroll-View<sup>1</sup></a><a href="/tags/Fire/">Fire<sup>1</sup></a><a href="/tags/%E7%AE%97%E6%B3%95/">算法<sup>9</sup></a><a href="/tags/%E5%8A%9B%E6%89%A3/">力扣<sup>9</sup></a><a href="/tags/%E5%B0%8F%E8%AF%B4/">小说<sup>1</sup></a><a href="/tags/%E7%BB%88%E6%9C%AB%E4%B9%8B%E6%97%85/">终末之旅<sup>1</sup></a></div></div><div class="console-card history" onclick="sco.hideConsole()"><ul class="card-archive-list"><li class="item"><a href="/archives/2025/11/"><span class="date">2025/11</span><div class="count-group"><span class="count">1</span><span class="unit">篇</span></div></a></li><li class="item"><a href="/archives/2025/08/"><span class="date">2025/08</span><div class="count-group"><span class="count">4</span><span class="unit">篇</span></div></a></li><li class="item"><a href="/archives/2025/07/"><span class="date">2025/07</span><div class="count-group"><span class="count">11</span><span class="unit">篇</span></div></a></li><li class="item"><a href="/archives/"><span class="date">全部文章</span><div class="count-group"><span class="count">16</span><span class="unit">篇</span></div></a></li></ul></div></div></div><div class="button-group"><div class="console-btn-item"><span class="darkmode_switchbutton" onclick="sco.switchDarkMode()" title="昼夜切换"><i class="solitude fas fa-circle-half-stroke"></i></span></div><div class="console-btn-item" id="consoleHideAside"><span class="asideSwitch" onclick="sco.switchHideAside()" title="边栏显示控制"><i class="solitude fas fa-arrows-left-right-to-line"></i></span></div><div class="console-btn-item" id="consoleMusic" onclick="sco.musicToggle()"><span class="music-switch" title="音乐开关"><i class="solitude fas fa-compact-disc"></i></span></div><div class="console-btn-item on" id="consoleCommentBarrage" onclick="sco.switchCommentBarrage()"><span class="commentBarrage"><i class="solitude fas fa-comment"></i></span></div></div><div class="console-mask" onclick="sco.hideConsole()"></div></div></div><div id="sidebar" style="zoom: 1;"><div id="menu-mask" style="display: none;"></div><div id="sidebar-menus"><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">16</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">7</div></a></div></div></div><span class="sidebar-menu-item-title">功能</span><div class="sidebar-menu-item"><span class="darkmode_switchbutton menu-child" onclick="sco.switchDarkMode()"><i class="solitude fas fa-circle-half-stroke"></i><span>显示模式</span></span></div><div class="back-menu-list-groups"><div class="back-menu-list-group"><div class="back-menu-list-title">我的项目</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://github.com/nfachenxi" title="我的Github主页"><img class="nolazyload back-menu-item-icon" src="/img/github.png" alt="我的Github主页"><span class="back-menu-item-text">我的Github主页</span></a></div></div></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><span>首页</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span>文库</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="solitude  fas fa-folder-closed"></i><span>全部文章</span></a></li><li><a class="site-page child" href="/categories/"><i class="solitude  fas fa-clone"></i><span>全部分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="solitude  fas fa-tags"></i><span>全部标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span>友链</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/links/"><i class="solitude  fas fa-user-group"></i><span>友情链接</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span>关于</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/about/"><i class="solitude  fas fa-user-circle"></i><span>关于我</span></a></li><li><a class="site-page child" href="/music/"><i class="solitude  fas fa-music"></i><span>音乐馆</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/message/"><span>留言板</span></a></div><div class="menus_item"><a class="site-page" href="/gallery/"><span>画廊</span></a></div></div><span class="sidebar-menu-item-title">标签</span><div class="card-tags"><div class="card-tag-cloud"><a href="/tags/Unity/">Unity<sup>6</sup></a><a href="/tags/Scroll-View/">Scroll-View<sup>1</sup></a><a href="/tags/Fire/">Fire<sup>1</sup></a><a href="/tags/%E7%AE%97%E6%B3%95/">算法<sup>9</sup></a><a href="/tags/%E5%8A%9B%E6%89%A3/">力扣<sup>9</sup></a><a href="/tags/%E5%B0%8F%E8%AF%B4/">小说<sup>1</sup></a><a href="/tags/%E7%BB%88%E6%9C%AB%E4%B9%8B%E6%97%85/">终末之旅<sup>1</sup></a></div></div><span class="sidebar-menu-item-title">网站信息</span><div class="webinfo"><div class="webinfo-item"><div class="item-name">全站字数 :</div><div class="item-count">58.6k</div></div></div></div></div><div><div class="needEndHide" id="rightside"><div class="rs_hide"><button class="mode" type="button" title="显示模式切换" onclick="sco.switchDarkMode()"><i class="fas fa-circle-half-stroke"></i></button><button class="aside pc" type="button" title="侧边栏" onclick="sco.switchHideAside()"><i class="fas fa-arrows-alt-h"></i></button></div><div class="rs_show"><button class="config" type="button" title="扩展" onclick="document.querySelector(&quot;.rs_hide&quot;).classList.toggle(&quot;show&quot;)"><i class="fas fa-gear fa-spin"></i></button><button class="mobile toc" type="button" title="目录" onclick="document.querySelector('#card-toc').classList.toggle('open')"><i class="fas fa-list"></i></button><button class="comment" type="button" title="评论" onclick="sco.scrollTo('post-comment')"><i class="fas fa-comment"></i></button><button class="barrage pc" type="button" title="弹" onclick="sco.switchCommentBarrage()"><span>弹</span></button><button class="top" type="button" title="返回顶部" onclick="sco.toTop()"><i class="fas fa-arrow-up"></i><span id="percent">0</span></button></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav class="show" id="nav"><div id="nav-group"><div id="blog_name"><div class="back-home-button" tabindex="-1"><i class="solitude fas fa-bars-progress"></i><div class="back-menu-list-groups"><div class="back-menu-list-group"><div class="back-menu-list-title">我的项目</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://github.com/nfachenxi" title="我的Github主页"><img class="nolazyload back-menu-item-icon" src="/img/github.png" alt="我的Github主页"><span class="back-menu-item-text">我的Github主页</span></a></div></div></div></div><a href="/" title="返回博客主页" id="site-name"><span class="title">晨曦の小站</span><i class="solitude fas fa-home"></i></a></div><div id="page-name-mask"><div id="page-name"><a id="page-name-text" onclick="sco.toTop()">力扣刷题日常(3-4)</a></div></div><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><span>首页</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span>文库</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="solitude  fas fa-folder-closed"></i><span>全部文章</span></a></li><li><a class="site-page child" href="/categories/"><i class="solitude  fas fa-clone"></i><span>全部分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="solitude  fas fa-tags"></i><span>全部标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span>友链</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/links/"><i class="solitude  fas fa-user-group"></i><span>友情链接</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span>关于</span></a><ul class="menus_item_child"><li><a class="site-page child" href="/about/"><i class="solitude  fas fa-user-circle"></i><span>关于我</span></a></li><li><a class="site-page child" href="/music/"><i class="solitude  fas fa-music"></i><span>音乐馆</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/message/"><span>留言板</span></a></div><div class="menus_item"><a class="site-page" href="/gallery/"><span>画廊</span></a></div></div></div><div id="nav-left"></div><div id="nav-right"><div class="nav-button" id="travellings_button"><a class="site-page" target="_blank" rel="noopener" href="https://www.travellings.cn/go.html" title=""><i class="solitude fas fa-train"></i></a></div><div class="nav-button" id="randomPost_button"><a class="site-page" onclick="toRandomPost()" title="随机一篇文章" href="javascript:void(0);"><i class="solitude fas fa-dice-d6"></i></a></div><div class="nav-button" id="search-button"><a class="site-page social-icon search" href="javascript:void(0);" title="搜索"><i class="solitude fas fa-magnifying-glass"></i></a></div><div class="nav-button" id="nav-console"><a class="console_switchbutton" onclick="sco.showConsole()" title="中控台" href="javascript:void(0);"><label><i class="left"></i><i class="center"></i><i class="right"></i></label></a></div><div id="toggle-menu"><a class="site-page"><i class="solitude fas fa-bars"></i></a></div></div></div></nav><div class="coverdiv" id="coverdiv"><img class="nolazyload" id="post-cover" src="https://image.nfasystem.top/img-nfa/LK3-4.webp" alt="力扣刷题日常(3-4)"></div><div id="post-info"><div id="post-firstinfo"><div class="meta-firstline"><a class="post-meta-original" title="该文章为原创文章，注意版权协议">原创</a><span class="post-meta-categories"><a class="post-meta-categories" href="/categories/%E5%8A%9B%E6%89%A3%E5%88%B7%E9%A2%98/">力扣刷题</a></span><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E7%AE%97%E6%B3%95/"><span class="tags-name tags-punctuation"><i class="solitude fas fa-hashtag"></i>算法</span></a><a class="post-meta__tags" href="/tags/%E5%8A%9B%E6%89%A3/"><span class="tags-name tags-punctuation"><i class="solitude fas fa-hashtag"></i>力扣</span></a></div></div></div></div><h1 class="post-title">力扣刷题日常(3-4)</h1><div id="post-meta"><div class="meta-secondline"><span class="post-meta-date" title="发布于 2025-07-28 07:37:30"><i class="post-meta-icon solitude fas fa-calendar-days"></i><time datetime="2025-07-27T23:37:30.000Z">2025-07-27T23:37:30.000Z</time></span><span class="post-meta-date" title="最后更新于 2026-07-04 17:11:03"><i class="post-meta-icon solitude fas fa-arrows-rotate"></i><time datetime="2026-07-04T09:11:03.512Z">2026-07-04T09:11:03.512Z</time></span><span class="post-meta-wordcount"><i class="post-meta-icon solitude fas fa-file-word" title="文章字数"></i><span class="word-count">9.7k</span><span class="post-meta-separator"></span><i class="post-meta-icon solitude fas fa-clock" title="阅读耗时"></i><span>37 分钟</span></span></div></div></div><div class="post-radius-bottom"></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content article-container"><h1>力扣刷题日常(3-4)</h1>
+<h2 id="第三题-无重复字符的最长子串-难度-中等">第三题: 无重复字符的最长子串(难度: 中等)</h2>
+<h3 id="原题">原题:</h3>
+<p>给定一个字符串 <code>s</code> ,请你找出其中不含有重复字符的 <strong>最长 子串</strong> 的长度.</p>
+<p><strong>示例 1:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入: s = &quot;abcabcbb&quot;</span><br><span class="line">输出: 3 </span><br><span class="line">解释: 因为无重复字符的最长子串是 &quot;abc&quot;,所以其长度为 3.</span><br></pre></td></tr></table></figure>
+<p><strong>示例 2:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入: s = &quot;bbbbb&quot;</span><br><span class="line">输出: 1</span><br><span class="line">解释: 因为无重复字符的最长子串是 &quot;b&quot;,所以其长度为 1.</span><br></pre></td></tr></table></figure>
+<p><strong>示例 3:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">输入: s = &quot;pwwkew&quot;</span><br><span class="line">输出: 3</span><br><span class="line">解释: 因为无重复字符的最长子串是 &quot;wke&quot;,所以其长度为 3.</span><br><span class="line">     请注意,你的答案必须是 子串 的长度,&quot;pwke&quot; 是一个子序列,不是子串.</span><br></pre></td></tr></table></figure>
+<p><strong>提示:</strong></p>
+<ul>
+<li><code>0 &lt;= s.length &lt;= 5 * 104</code></li>
+<li><code>s</code> 由英文字母、数字、符号和空格组成</li>
+</ul>
+<hr>
+<h3 id="开始解题">开始解题:</h3>
+<h4 id="方法一-暴力求解">方法一: 暴力求解</h4>
+<p>那么看到这个题目的那一刻,我脑袋里的第一反应是<strong>暴力求法</strong>—把所有可能的子串都找出来,然后一个个检查它们是否含有重复字符,最后记录下最长的那个无重复子串的长度.</p>
+<p>比如对于 <code>s = &quot;abcabcbb&quot;</code>:</p>
+<ul>
+<li>“a” (无重复, 长度1)</li>
+<li>“ab” (无重复, 长度 2)</li>
+<li>“abc” (无重复, 长度 3)</li>
+<li>“abca” (有重复 ‘a’, 无效)</li>
+<li>…</li>
+<li>“b” (从第二个字符开始,无重复, 长度 1)</li>
+<li>“bc” (无重复, 长度 2)</li>
+<li>“bca” (无重复, 长度 3)</li>
+<li>“bcab” (有重复 ‘b’, 无效)</li>
+<li>…</li>
+</ul>
+<p>这个方法固然是可行的,但效率异常低下,如果字符串很长,那子串数量会<strong>爆发式增长</strong>,我们的计算量会变得格外大.</p>
+<h4 id="方法二-滑动窗口">方法二: 滑动窗口</h4>
+<p>既然我们的暴力求解太慢,那我们来想象一个&quot;<strong>窗口</strong>&quot;,这个窗口在字符串上<strong>从左到右滑动</strong>.我们始终保持在这个窗口内的所有字符都是不重复的.</p>
+<p>那这个&quot;窗口&quot;就是我们的&quot;子串&quot;,我们现在要做的就是:</p>
+<ol>
+<li>不断尝试扩大这个窗口的<strong>右边界</strong>,把新的字符包含进来.</li>
+<li>如果新进来的字符在窗口内<strong>没有重复</strong>,那就代表我们的无重复字串又变长了一点.我们记录下现在的长度,和<strong>之前记录的最大长度</strong>进行对比,看哪个更大.</li>
+<li>如果新进来的字符在窗口内<strong>已经存在</strong>了,说明窗口内的字串不满足&quot;无重复&quot;的条件了,那我们就必须<strong>收缩窗口的左边界</strong>,知道把那个重复的旧字符&quot;<strong>挤</strong>&quot;出窗口为止.</li>
+</ol>
+<p>这样,我们的窗口就在字符串上&quot;<strong>滑动</strong>&quot;了起来: 右边界一直向右移动,<strong>左边界在必要时也向右移动</strong>,这个过程中,窗口的最大尺寸就是我们要求的答案.</p>
+<p>这个就是&quot;<strong>滑动窗口</strong>&quot;算法思想</p>
+<p><strong>思路讲完了,接下来讲的就是实现了:</strong></p>
+<p>我们需要几个工具</p>
+<ol>
+<li><strong>两个指针</strong>: 一个 <code>left</code> 指针标记窗口的左边界, 一个 <code>right</code> 指针标记窗口的右边界.</li>
+<li>一个&quot;<strong>账本</strong>&quot;: 我们需要一个能快速查询&quot;<strong>某个字符是否已在当前窗口内</strong>&quot;以及&quot;<strong>它在哪个位置</strong>&quot;的工具.在C#中, <code>Dictionary&lt;char,.int&gt;</code>(字典,也叫哈希表)是完美的选择.
+<ul>
+<li>Key: 存储字符 <code>char</code></li>
+<li>Value: 存储该字符<strong>最近一次出现时的索引</strong> <code>int</code></li>
+</ul>
+</li>
+</ol>
+<p><strong>逻辑步骤拆解(以 <code>s = &quot;pwwkew&quot;</code>为例):</strong></p>
+<ul>
+<li>
+<p><strong>初始化</strong>:</p>
+<ul>
+<li><code>left = 0</code> (窗口左边界)</li>
+<li><code>maxLength = 0</code> (记录最大长度)</li>
+<li><code>charIndexMap = new Dictionary&lt;char, int&gt;()</code> (我们的“账本”)</li>
+</ul>
+</li>
+<li>
+<p><strong>开始滑动</strong> (用 <code>right</code> 指针从 0 遍历到字符串末尾):</p>
+</li>
+</ul>
+<ol>
+<li>
+<p><strong><code>right = 0</code></strong>, 字符是 <code>'p'</code></p>
+<ul>
+<li>账本里没有 <code>'p'</code>.</li>
+<li>把它加入账本: <code>charIndexMap['p'] = 0</code>.</li>
+<li>当前窗口是 “p”,长度为 <code>0 - 0 + 1 = 1</code>.</li>
+<li>更新 <code>maxLength = 1</code>.</li>
+</ul>
+</li>
+<li>
+<p><strong><code>right = 1</code></strong>, 字符是 <code>'w'</code></p>
+<ul>
+<li>账本里没有 <code>'w'</code>.</li>
+<li>加入账本: <code>charIndexMap['w'] = 1</code>.</li>
+<li>当前窗口是 “pw”,长度为 <code>1 - 0 + 1 = 2</code>.</li>
+<li>更新 <code>maxLength = 2</code>.</li>
+</ul>
+</li>
+<li>
+<p><strong><code>right = 2</code></strong>, 字符是 <code>'w'</code></p>
+<ul>
+<li><strong>冲突！</strong> 账本里已经有 <code>'w'</code> 了,它上次出现的位置是 <code>1</code>.</li>
+<li>这意味着我们的窗口 <code>[left, right]</code> (即从索引0到2,“pww”) 包含了重复字符.</li>
+<li>我们必须移动左边界 <code>left</code>.移动到哪里呢？应该移动到重复字符 <code>'w'</code> 上次出现位置的<strong>下一个位置</strong>.</li>
+<li>所以,<code>left</code> 更新为 <code>1 + 1 = 2</code>.</li>
+<li>现在窗口的起始点是索引 2.</li>
+<li>更新账本里 <code>'w'</code> 的位置: <code>charIndexMap['w'] = 2</code>.</li>
+<li>当前窗口是 “w” (从索引2到2),长度为 <code>2 - 2 + 1 = 1</code>.<code>maxLength</code> 仍然是 <code>2</code>.</li>
+</ul>
+</li>
+<li>
+<p><strong><code>right = 3</code></strong>, 字符是 <code>'k'</code></p>
+<ul>
+<li>账本里没有 <code>'k'</code> (注意:此时我们的有效窗口是从 <code>left=2</code> 开始的,所以之前的’p’和第一个’w’已经不算在内了).</li>
+<li>加入账本: <code>charIndexMap['k'] = 3</code>.</li>
+<li>当前窗口是 “wk”,长度为 <code>3 - 2 + 1 = 2</code>.<code>maxLength</code> 仍然是 <code>2</code>.</li>
+</ul>
+</li>
+<li>
+<p><strong><code>right = 4</code></strong>, 字符是 <code>'e'</code></p>
+<ul>
+<li>账本里没有 <code>'e'</code>.</li>
+<li>加入账本: <code>charIndexMap['e'] = 4</code>.</li>
+<li>当前窗口是 “wke”,长度为 <code>4 - 2 + 1 = 3</code>.</li>
+<li>更新 <code>maxLength = 3</code>.</li>
+</ul>
+</li>
+<li>
+<p><strong><code>right = 5</code></strong>, 字符是 <code>'w'</code></p>
+<ul>
+<li><strong>冲突！</strong> 账本里有 <code>'w'</code>,它上次出现的位置是 <code>2</code>.</li>
+<li>当前 <code>left</code> 是 <code>2</code>.重复字符的位置 <code>2</code> 没有比 <code>left</code> 小,所以这个重复是在我们当前窗口内的.</li>
+<li>移动左边界 <code>left</code> 到重复字符 <code>'w'</code> 上次位置的下一个位置.</li>
+<li><code>left</code> 更新为 <code>2 + 1 = 3</code>.</li>
+<li>更新账本里 <code>'w'</code> 的位置: <code>charIndexMap['w'] = 5</code>.</li>
+<li>当前窗口是 “kew” (从索引3到5),长度为 <code>5 - 3 + 1 = 3</code>.<code>maxLength</code> 仍然是 <code>3</code>.</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li><strong>循环结束</strong>.返回 <code>maxLength</code>,最终结果是 <code>3</code>.</li>
+</ul>
+<p>那么这个算法的核心优势在于,我们<strong>只遍历了字符串一次</strong>,所以它的<strong>效率非常高</strong>.</p>
+<hr>
+<h3 id="比喻解释">比喻解释:</h3>
+<p>上面的滑动窗口可能还是有些难以理解,我们来做个<strong>比喻</strong>吧</p>
+<p>想象我们有一个传送带,上面按顺序放着字符串 <code>s = &quot;abcabcbb&quot;</code> 的每个字符.我们有一个篮子（就是我们的“窗口”）,我们的任务是用这个篮子从传送带上尽可能多地连续装走字符,但篮子里<strong>绝对不能</strong>出现两个一样的字符.</p>
+<ol>
+<li>
+<p><strong>开始阶段</strong>:</p>
+<ul>
+<li>传送带过来 <code>'a'</code>,我们把它放进篮子.篮子:<code>{'a'}</code>.长度1.</li>
+<li>传送带过来 <code>'b'</code>,篮子里没有,我们放进去.篮子:<code>{'a', 'b'}</code>.长度2.</li>
+<li>传送带过来 <code>'c'</code>,篮子里没有,我们放进去.篮子:<code>{'a', 'b', 'c'}</code>.长度3.这是目前为止我们装到的最长记录.</li>
+</ul>
+</li>
+<li>
+<p><strong>冲突发生</strong>:</p>
+<ul>
+<li>现在,传送带过来了下一个字符:<code>'a'</code>.</li>
+<li>我们检查篮子,发现里面<strong>已经有一个 <code>'a'</code> 了</strong>！</li>
+<li>根据规则（篮子里不能有重复）,我们<strong>不能</strong>把这个新的 <code>'a'</code> 直接放进去.我们当前的篮子 <code>{'a', 'b', 'c'}</code> 已经满了（就这个新’a’而言）.</li>
+</ul>
+</li>
+<li>
+<p><strong>如何解决冲突？</strong>:</p>
+<ul>
+<li>我们的目标是继续从传送带上拿东西,并且要包含这个新的 <code>'a'</code>.</li>
+<li>为了能把新的 <code>'a'</code> 放进来,我们必须先把篮子里那个<strong>旧的 <code>'a'</code> 扔掉</strong>.</li>
+<li>但是,我们不能只扔掉旧的 <code>'a'</code>,因为我们必须保持篮子里的东西是<strong>连续</strong>从传送带上拿的.旧的 <code>'a'</code> 是我们拿的第一个东西.为了扔掉它,我们必须把我们从它开始拿的所有东西都按顺序扔掉,直到它被扔出去为止.</li>
+<li>所以,我们扔掉旧 <code>'a'</code>.为了保持连续性,我们其实是把我们的“起始点”（也就是 <code>left</code> 指针）移动到了旧 <code>'a'</code> 的下一个位置.</li>
+<li>操作前:篮子对应子串 <code>&quot;abc&quot;</code> (起始点 <code>left=0</code>)</li>
+<li>操作后:我们把旧 <code>'a'</code> 扔了,篮子的起始点变成了 <code>'b'</code> (起始点 <code>left=1</code>).现在篮子里是 <code>{'b', 'c'}</code>.</li>
+<li>现在篮子里没有 <code>'a'</code> 了,我们可以把传送带上那个新的 <code>'a'</code> 放进来了.</li>
+<li>最终,篮子变成了 <code>{'b', 'c', 'a'}</code>.它对应子串 <code>&quot;bca&quot;</code>.这是一个合法的、无重复的子串.</li>
+</ul>
+</li>
+</ol>
+<p><strong>简单一个总结:</strong></p>
+<p>收缩左边界（<code>left</code> 指针右移）的目的,就是<strong>为了修复窗口的合法性</strong>.</p>
+<p>当右指针 <code>right</code> 引入一个重复字符时,窗口 <code>[left, right]</code> 就变得不合法了.为了让它重新合法,我们必须从左边移除字符,直到把那个造成重复的“元凶”（旧的那个重复字符）移除出去为止.这样,窗口就又变回了一个不含重复字符的子串,我们就可以继续尝试向右扩大窗口,寻找更长的可能性了.</p>
+<p>如果不收缩左边界,那么从当前这个 <code>right</code> 指针开始,无论它再往右走多远,形成的子串 <code>[left, right]</code>, <code>[left, right+1]</code>, … 都将永远包含那个重复,永远不合法,也就失去了继续计算的意义.</p>
+<hr>
+<h3 id="解法代码">解法代码:</h3>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Solution</span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">int</span> <span class="title">LengthOfLongestSubstring</span>(<span class="params"><span class="built_in">string</span> s</span>)</span> &#123;</span><br><span class="line">        <span class="comment">// 处理边界情况</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">string</span>.IsNullOrEmpty(s)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line"> </span><br><span class="line">        <span class="comment">// 初始化变量</span></span><br><span class="line">        <span class="comment">// key: 字符, value: 该字符最近一次出现的索引</span></span><br><span class="line">        <span class="keyword">var</span> charIndexMap = <span class="keyword">new</span> Dictionary&lt;<span class="built_in">char</span>, <span class="built_in">int</span>&gt;(); </span><br><span class="line">        <span class="built_in">int</span> maxLength = <span class="number">0</span>;</span><br><span class="line">        <span class="built_in">int</span> left = <span class="number">0</span>; <span class="comment">// 滑动窗口的左边界</span></span><br><span class="line"> </span><br><span class="line">        <span class="comment">// 开始滑动窗口</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">int</span> right = <span class="number">0</span>; right &lt; s.Length; right++) &#123;</span><br><span class="line">            <span class="built_in">char</span> currentChar = s[right];</span><br><span class="line"> </span><br><span class="line">            <span class="comment">// 检查是否出现重复,并且重复的字符在当前窗口内</span></span><br><span class="line">            <span class="keyword">if</span> (charIndexMap.ContainsKey(currentChar)) &#123;</span><br><span class="line">                <span class="comment">// 更新左边界 left</span></span><br><span class="line">                <span class="comment">// Math.Max确保 left 指针不会向左回退</span></span><br><span class="line">                left = Math.Max(left, charIndexMap[currentChar] + <span class="number">1</span>);</span><br><span class="line">            &#125;</span><br><span class="line"> </span><br><span class="line">            <span class="comment">// 更新（或添加）当前字符的最新位置</span></span><br><span class="line">            charIndexMap[currentChar] = right;</span><br><span class="line"> </span><br><span class="line">            <span class="comment">// 计算当前窗口的长度,并尝试更新最大长度</span></span><br><span class="line">            maxLength = Math.Max(maxLength, right - left + <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line"> </span><br><span class="line">        <span class="keyword">return</span> maxLength;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="知识点解析">知识点解析:</h4>
+<ol>
+<li>
+<p><strong><code>string.IsNullOrEmpty(s)</code></strong></p>
+<ul>
+<li><strong>讲解</strong>: 这是一个非常实用的静态方法,用于检查一个字符串是否为 <code>null</code> 或者是否为空字符串 <code>&quot;&quot;</code>.在编写健壮的代码时,这是一个很好的习惯,可以避免因为传入了 <code>null</code> 而导致程序在后续操作（如 <code>s.Length</code>）中抛出 <code>NullReferenceException</code>.</li>
+</ul>
+</li>
+<li>
+<p><strong><code>charIndexMap[currentChar] = right;</code></strong></p>
+</li>
+</ol>
+<ul>
+<li><strong>讲解:</strong> 这是 <code>Dictionary</code> 的索引器用法,非常灵活.
+<ul>
+<li><strong>如果键 <code>currentChar</code> 已经存在</strong>,这行代码会<strong>更新</strong>该键对应的值为新的 <code>right</code>.</li>
+<li><strong>如果键 <code>currentChar</code> 不存在</strong>,这行代码会<strong>添加</strong>一个新的键值对到字典中.</li>
+</ul>
+</li>
+<li>在我们的代码里,它完美地实现了“更新字符最新位置”的需求.</li>
+</ul>
+<ol start="3">
+<li><strong>滑动窗口思想 (The Sliding Window Pattern)</strong></li>
+</ol>
+<ul>
+<li><strong>核心</strong>: 这是一种用于解决数组/字符串子区间问题的强大算法模型.它使用两个指针（<code>left</code>, <code>right</code>）来定义一个“窗口”,通过移动这两个指针来“滑动”并处理窗口内的数据.</li>
+<li><strong>本质</strong>: 它将一些问题的嵌套循环（暴力解法,如O(n²)）优化为单次遍历（O(n)）,通过巧妙地维护窗口状态,避免了大量重复计算.</li>
+</ul>
+<ol start="4">
+<li><strong>哈希表/字典的妙用 (The Power of Hash Maps / Dictionaries)</strong></li>
+</ol>
+<ul>
+<li><strong>核心</strong>: 当我们需要快速地“检查一个元素是否存在”或者“查找一个元素的关联信息”时,<code>Dictionary</code> (哈希表) 应该是我们的首选工具.</li>
+<li><strong>优势</strong>: 它提供了平均O(1)时间复杂度的插入、删除和查找操作,性能极高.在算法题中,它是优化时间复杂度的关键先生.</li>
+</ul>
+<ol start="5">
+<li><strong>空间换时间 (Space-for-Time Tradeoff)</strong></li>
+</ol>
+<ul>
+<li><strong>核心</strong>: 这是一个经典的计算机科学概念.在我们的解法中,我们额外使用了一个<code>Dictionary</code>来存储信息（占用了空间）,但正是这个额外的空间,让我们算法的执行时间从O(n²)或更高降低到了O(n).在很多场景下,用可接受的内存增长来换取巨大的性能提升是非常值得的.</li>
+</ul>
+<ol start="6">
+<li><strong>编写健壮的代码 (Writing Robust Code)</strong></li>
+</ol>
+<ul>
+<li><strong>核心</strong>: 在函数或方法的开头,优先处理“边缘情况”（Edge Cases）,比如输入为<code>null</code>、空字符串、空集合等.这能让我们的代码更加稳定,避免在后续逻辑中出现意外的运行时错误（如<code>NullReferenceException</code>）.</li>
+</ul>
+<h4 id="额外练习题">额外练习题:</h4>
+<h5 id="选择题"><strong>选择题</strong></h5>
+<ol>
+<li>
+<p>在解决“求满足某条件的<strong>连续</strong>子数组/子串”问题时,以下哪种算法思想通常是最高效的选择？<br>
+A. 递归 (Recursion)<br>
+B. 暴力枚举 (Brute Force)<br>
+C. 滑动窗口 (Sliding Window)<br>
+D. 排序 (Sorting)</p>
+</li>
+<li>
+<p>在“无重复字符的最长子串”算法中,使用 <code>Dictionary&lt;char, int&gt;</code> 的主要目的是什么？<br>
+A. 按字母顺序存储字符.<br>
+B. 统计每个字符出现的总次数.<br>
+C. 快速判断一个字符是否在当前窗口内,并获取其位置.<br>
+D. 减少代码行数.</p>
+</li>
+<li>
+<p>我们实现的滑动窗口解法的时间复杂度是多少？（n是字符串的长度）<br>
+A. O(1) - 常数时间<br>
+B. O(log n) - 对数时间<br>
+C. O(n) - 线性时间<br>
+D. O(n²) - 平方时间</p>
+</li>
+</ol>
+<h5 id="简答题"><strong>简答题</strong></h5>
+<ol>
+<li>
+<p>除了“无重复字符的最长子串”,请你设想一个在游戏开发中可能用得上“滑动窗口”思想的场景.</p>
+</li>
+<li>
+<p>在我们的代码中,更新左边界的代码是 <code>left = Math.Max(left, charIndexMap[currentChar] + 1);</code>.为什么不直接写成 <code>left = charIndexMap[currentChar] + 1;</code>？请用字符串 <code>&quot;abba&quot;</code> 作为例子来解释.</p>
+</li>
+</ol>
+<hr>
+<h5 id="参考答案"><strong>参考答案</strong></h5>
+<p><strong>选择题答案:</strong></p>
+<ol>
+<li><strong>C</strong>. 滑动窗口是专门用来高效处理连续子数组/子串问题的.</li>
+<li><strong>C</strong>. <code>Dictionary</code> 的O(1)查找特性是算法高效的关键,它让我们能瞬间知道新字符是否与窗口内的字符重复.</li>
+<li><strong>C</strong>. <code>right</code> 指针和 <code>left</code> 指针都只从左到右遍历字符串一次,所以总的时间复杂度是线性的 O(n).</li>
+</ol>
+<p><strong>简答题答案:</strong></p>
+<ol>
+<li>
+<p><strong>场景示例</strong>:</p>
+<ul>
+<li><strong>分析玩家操作</strong>: 统计玩家在任意连续的5秒内,点击鼠标或敲击键盘的最高频率（APM - Actions Per Minute）,用于判断玩家是否处于“高能”操作状态.</li>
+<li><strong>伤害统计</strong>: 计算一个持续性伤害技能（如毒雾、火焰地板）在任意3秒内对敌人造成的最大总伤害.</li>
+<li><strong>资源采集监控</strong>: 在一个资源点,判断最近采集的10个资源中,稀有资源的占比是否超过了某个阈值.</li>
+</ul>
+</li>
+<li>
+<p><strong>原因解释</strong>:<br>
+使用 <code>Math.Max</code> 是为了<strong>防止 <code>left</code> 指针向左回退</strong>.<code>left</code> 应该只增不减,代表窗口的起始点只能向前移动.</p>
+<p>以 <code>&quot;abba&quot;</code> 为例:</p>
+<ul>
+<li><code>right=0</code>, <code>char='a'</code>, <code>left=0</code>, <code>map={'a':0}</code></li>
+<li><code>right=1</code>, <code>char='b'</code>, <code>left=0</code>, <code>map={'a':0, 'b':1}</code></li>
+<li><code>right=2</code>, <code>char='b'</code>, 发现重复.<code>map['b']</code>是1.<code>left</code> 更新为 <code>Math.Max(0, 1 + 1) = 2</code>.此时 <code>left=2</code>, <code>map={'a':0, 'b':2}</code>.窗口是<code>&quot;b&quot;</code>.</li>
+<li><code>right=3</code>, <code>char='a'</code>, 发现重复.<code>map['a']</code>是0.
+<ul>
+<li>如果用 <code>left = map['a'] + 1</code>,<code>left</code> 会变成 <code>0 + 1 = 1</code>.但我们当前的 <code>left</code> 已经是 <code>2</code> 了！指针向左回退了,这是错误的,因为窗口的起始点不应该回到一个已经被判定为无效的位置.</li>
+<li>如果用 <code>left = Math.Max(left, map['a'] + 1)</code>,<code>left</code> 会变成 <code>Math.Max(2, 0 + 1) = 2</code>.<code>left</code> 保持在 <code>2</code>,逻辑正确.这说明重复的 <code>'a'</code> (在索引0) 早已在当前窗口 <code>[2, 3]</code> 的左边,对我们没有影响,无需移动左边界.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h4 id="可能的实际应用">可能的实际应用</h4>
+<ul>
+<li>
+<p><strong>滑动窗口</strong>:</p>
+<ul>
+<li><strong>性能监控</strong>: 我们可以写一个简单的性能分析工具,它记录最近60帧的<code>Time.deltaTime</code>.用滑动窗口可以实时计算出过去1秒（60帧）内的平均帧率、最低帧率等,如果低于某个阈值就发出警告.</li>
+<li><strong>AI行为分析</strong>: 分析NPC或敌人在过去一段时间内的行为序列,判断其是否在重复某个模式,从而做出反制.</li>
+</ul>
+</li>
+<li>
+<p><strong><code>Dictionary</code> (哈希表)</strong>:</p>
+<ul>
+<li><strong>对象池管理</strong>: 使用 <code>Dictionary&lt;string, Queue&lt;GameObject&gt;&gt;</code> 来管理不同种类的预制体对象池,通过预制体名称（string）快速找到对应的对象队列.</li>
+<li><strong>资源缓存</strong>: 加载过的<code>AudioClip</code>, <code>Texture2D</code>等资源可以存入 <code>Dictionary&lt;string, Object&gt;</code>,键是资源路径,值是资源本身.再次使用时先从字典中查找,避免重复的磁盘IO.这在Unity中是优化加载性能的常用手段.</li>
+<li><strong>状态机 (FSM)</strong>: 用 <code>Dictionary&lt;MyStateEnum, IState&gt;</code> 来存储状态枚举和对应的状态逻辑类,可以非常方便地切换和管理对象（玩家、敌人、UI）的状态.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="第四题-寻找两个正序数组的中位数-难度-困难">第四题: 寻找两个正序数组的中位数(难度: 困难)</h2>
+<h3 id="原题-2">原题:</h3>
+<p>给定两个大小分别为 <code>m</code> 和 <code>n</code> 的正序（从小到大）数组 <code>nums1</code> 和 <code>nums2</code>.请你找出并返回这两个正序数组的 <strong>中位数</strong> .</p>
+<p>算法的时间复杂度应该为 <code>O(log (m+n))</code> .</p>
+<p><strong>示例 1:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入:nums1 = [1,3], nums2 = [2]</span><br><span class="line">输出:2.00000</span><br><span class="line">解释:合并数组 = [1,2,3] ,中位数 2</span><br></pre></td></tr></table></figure>
+<p><strong>示例 2:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入:nums1 = [1,2], nums2 = [3,4]</span><br><span class="line">输出:2.50000</span><br><span class="line">解释:合并数组 = [1,2,3,4] ,中位数 (2 + 3) / 2 = 2.5</span><br></pre></td></tr></table></figure>
+<p><strong>提示:</strong></p>
+<ul>
+<li><code>nums1.length == m</code></li>
+<li><code>nums2.length == n</code></li>
+<li><code>0 &lt;= m &lt;= 1000</code></li>
+<li><code>0 &lt;= n &lt;= 1000</code></li>
+<li><code>1 &lt;= m + n &lt;= 2000</code></li>
+<li><code>-106 &lt;= nums1[i], nums2[i] &lt;= 106</code></li>
+</ul>
+<hr>
+<h3 id="开始解题-2">开始解题</h3>
+<p>这道题目要求了我们的时间复杂度应该是 <code>O(log(m+n))</code> , 看到 <code>log</code> 级别的复杂度,我们的第一反应通常是二分搜索</p>
+<p>但是我们应该在哪里进行二分搜索了</p>
+<p>一个比较直观但是不符合要求的思路是:</p>
+<ol>
+<li>创建一个新的大数组.</li>
+<li>将 <code>nums1</code> 和 <code>nums2</code> 合并到这个大数组中并排序.</li>
+<li>根据大数组的长度是奇数还是偶数,直接找到中位数.<br>
+这个方法的时间复杂度是 <code>O(m+n)</code>（合并过程）,空间复杂度也是 <code>O(m+n)</code>,不满足题目 <code>O(log(m+n))</code> 的时间复杂度要求.因此,我们必须寻找更巧妙的办法.</li>
+</ol>
+<h4 id="核心思想-寻找-分割线-而不是-中位数">核心思想: 寻找&quot;分割线&quot;而不是&quot;中位数&quot;</h4>
+<p>这道题的精髓在于,我们不直接去寻找具体的中位数数值,而是去寻找一个&quot;分割线&quot;,这个分割线能把两个数组划分成&quot;左半部分&quot;和&quot;右半部分&quot;,并且同时满足以下两个条件:</p>
+<ol>
+<li>长度相等: 左半部分所有的元素个数 = 右半部分所有元素的个数(或当总数为奇数时,左半部分比右半部分多一个)</li>
+<li>顺序正确: 左半部分的所有元素 &lt;= 右半部分的所有元素</li>
+</ol>
+<p>那么当我们找到了这个分割线之后1,中位数就由分割线两侧的元素决定了</p>
+<h4 id="那么我们应该如何寻找这个-分割线-呢">那么我们应该如何寻找这个&quot;分割线&quot;呢</h4>
+<p>我们用二分搜索来寻找这条分割线在其中一个数组(比如 <code>num1</code> )中的位置</p>
+<ol>
+<li>
+<p><strong>定义分割线</strong>:<br>
+假设我们在 <code>nums1</code> 的索引 <code>i</code> 处切一刀,把 <code>nums1</code> 分成 <code>nums1[0...i-1]</code> (左半部分) 和 <code>nums1[i...m-1]</code> (右半部分).<br>
+为了满足上面提到的“长度相等”条件,<code>nums2</code> 的分割线位置 <code>j</code> 就被确定了.如果两个数组总长度为 <code>total = m + n</code>,我们希望左半部分总共有 <code>(total + 1) / 2</code> 个元素.这个公式很巧妙,无论 <code>total</code> 是奇数还是偶数都适用.<br>
+所以,<code>i + j = (m + n + 1) / 2</code>,从而 <code>j = (m + n + 1) / 2 - i</code>.</p>
+</li>
+<li>
+<p><strong>二分搜索过程</strong>:<br>
+我们在较短的那个数组（假设是 <code>nums1</code>）上进行二分搜索,搜索范围是 <code>[0, m]</code>,目的是找到一个合适的 <code>i</code>.</p>
+<ul>
+<li>在每一次循环中,我们取一个中间位置 <code>i</code>.</li>
+<li>根据 <code>i</code> 计算出 <code>j</code>.</li>
+<li>现在我们有了四个关键的“边界值”:
+<ul>
+<li><code>nums1</code> 左半部分的最大值: <code>maxLeft1 = nums1[i-1]</code></li>
+<li><code>nums1</code> 右半部分的最小值: <code>minRight1 = nums1[i]</code></li>
+<li><code>nums2</code> 左半部分的最大值: <code>maxLeft2 = nums2[j-1]</code></li>
+<li><code>nums2</code> 右半部分的最小值: <code>minRight2 = nums2[j]</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>判断分割是否正确</strong>:<br>
+要满足“顺序正确”的条件,必须保证 <code>左半部分的最大值 ≤ 右半部分的最小值</code>.具体来说,就是:<br>
+<code>maxLeft1 ≤ minRight2</code> <strong>并且</strong> <code>maxLeft2 ≤ minRight1</code></p>
+</li>
+<li>
+<p><strong>调整二分搜索范围</strong>:</p>
+<ul>
+<li>如果 <code>maxLeft1 &gt; minRight2</code>:说明 <code>nums1</code> 的分割点 <code>i</code> 太靠右了,导致 <code>nums1</code> 左边的元素太大.我们需要把 <code>i</code> 向左移动.在二分搜索中,这意味着收缩右边界 <code>high = i - 1</code>.</li>
+<li>如果 <code>maxLeft2 &gt; minRight1</code>:说明 <code>nums1</code> 的分割点 <code>i</code> 太靠左了,导致 <code>nums2</code> 左边的元素太大（因为 <code>i</code> 小了,<code>j</code> 就会变大）.我们需要把 <code>i</code> 向右移动.在二分搜索中,这意味着收缩左边界 <code>low = i + 1</code>.</li>
+<li>如果上述两个条件都满足,那我们就找到了完美的分割线 <code>i</code> 和 <code>j</code>.</li>
+</ul>
+</li>
+</ol>
+<h4 id="那当我们找到分割线之后-要如何计算中位数呢">那当我们找到分割线之后,要如何计算中位数呢</h4>
+<ul>
+<li><strong>如果总长度 <code>(m+n)</code> 是奇数</strong>:中位数就是左半部分所有元素里的那个最大值.即 <code>max(maxLeft1, maxLeft2)</code>.</li>
+<li><strong>如果总长度 <code>(m+n)</code> 是偶数</strong>:中位数是左半部分最大值和右半部分最小值的平均数.即 <code>(max(maxLeft1, maxLeft2) + min(minRight1, minRight2)) / 2.0</code>.</li>
+</ul>
+<h4 id="举个栗子-nums1-1-3-nums2-2">举个栗子:<code>nums1 = [1,3]</code>, <code>nums2 = [2]</code></h4>
+<ul>
+<li><code>m=2</code>, <code>n=1</code>, <code>total=3</code>.左半部分应有 <code>(3+1)/2 = 2</code> 个元素.</li>
+<li>我们在 <code>nums1</code> 上二分搜索 <code>i</code>.搜索范围 <code>[0, 2]</code>.</li>
+<li><strong>尝试1</strong>: <code>low=0, high=2</code> -&gt; <code>i = 1</code>.
+<ul>
+<li><code>j = (3+1)/2 - i = 2 - 1 = 1</code>.</li>
+<li>分割如下:
+<ul>
+<li><code>nums1</code> 左: <code>[1]</code> (<code>maxLeft1=1</code>) | <code>nums1</code> 右: <code>[3]</code> (<code>minRight1=3</code>)</li>
+<li><code>nums2</code> 左: <code>[2]</code> (<code>maxLeft2=2</code>) | <code>nums2</code> 右: <code>[]</code> (空)</li>
+</ul>
+</li>
+<li>检查条件:<code>maxLeft2 (2) &gt; minRight1 (3)</code> ？不成立.</li>
+<li>检查条件:<code>maxLeft1 (1) &gt; minRight2</code> ？<code>minRight2</code> 不存在,我们先不考虑这个边界.</li>
+<li>我们发现 <code>maxLeft2 &gt; maxLeft1</code>,但 <code>maxLeft2</code> 并没有大于 <code>minRight1</code>.</li>
+<li>让我们重新检查条件:<code>maxLeft1(1) &lt;= minRight2(不存在)</code> 和 <code>maxLeft2(2) &lt;= minRight1(3)</code>.</li>
+<li><code>2 &lt;= 3</code> 是成立的.另一个条件因为 <code>minRight2</code> 不存在,我们可以认为它也成立（在代码实现中会用 <code>int.MaxValue</code> 处理）.</li>
+<li>所以,分割是正确的！</li>
+</ul>
+</li>
+<li><strong>计算中位数</strong>:
+<ul>
+<li>总长度是3（奇数）.</li>
+<li>中位数是左半部分的最大值:<code>max(maxLeft1, maxLeft2) = max(1, 2) = 2</code>.</li>
+<li>最终结果是 <code>2.0</code>.</li>
+</ul>
+</li>
+</ul>
+<h4 id="更形象的理解方式-切卡片游戏">更形象的理解方式:切卡片游戏</h4>
+<p>想象一下,<code>nums1</code> 和 <code>nums2</code> 是两摞已经按数字从小到大排好序的卡片.</p>
+<p><strong>我们的目标</strong>:找到一个“想象中的”合并后的大卡片堆的<strong>中位数</strong>.</p>
+<p><strong>中位数的本质是什么？</strong> 它就是一条分割线,这条线恰好把所有卡片分成数量相等的“左半堆”和“右半堆”,并且左半堆里最大的那张卡片,一定小于等于右半堆里最小的那张卡片.</p>
+<p><strong>直接合并的笨办法</strong>:把两摞卡片拿过来,一张一张比较,排成新的一大摞,然后从中间拿起那张卡片.这就是 <code>O(m+n)</code> 的方法,太慢了.</p>
+<p><strong>聪明的办法（二分搜索）</strong>:我们不真的去合并,我们只在这两摞卡片上“比划”一下,找到那条完美的“分割线”应该切在哪里.</p>
+<h4 id="游戏开始">游戏开始:</h4>
+<ol>
+<li><strong>确定目标</strong>:假设 <code>nums1</code> 有 <code>m</code> 张,<code>nums2</code> 有 <code>n</code> 张.总共 <code>m+n</code> 张. 我们的“左半堆”需要有 <code>k = (m+n+1)/2</code> 张卡片.（这个 <code>+1</code> 的技巧可以同时兼容总数是奇数和偶数的情况,非常方便）.</li>
+<li><strong>核心问题</strong>:我们怎么凑够这 <code>k</code> 张卡片作为“左半堆”呢？ 我们可以从 <code>nums1</code> 里拿 <code>i</code> 张,那么就必须从 <code>nums2</code> 里拿 <code>j = k - i</code> 张. 看到了吗？只要我们确定了在 <code>nums1</code> 上切一刀的位置（<code>i</code>）,在 <code>nums2</code> 上的切分位置（<code>j</code>）就<strong>自动确定</strong>了！</li>
+<li><strong>二分搜索的用武之地</strong>:我们的任务就是找到那个<strong>刚刚好的 <code>i</code></strong>. <code>i</code> 的取值范围是从 <code>0</code> (一张都不从<code>nums1</code>拿) 到 <code>m</code> (把<code>nums1</code>全拿了). 我们不用一个一个地去试 <code>i=0, i=1, i=2...</code>,那样太慢了.我们可以用“猜”的办法,也就是<strong>二分搜索</strong>.</li>
+</ol>
+<h4 id="猜-i-的过程">猜 <code>i</code> 的过程:</h4>
+<p>假设 <code>nums1 = [1, 2]</code>, <code>nums2 = [3, 4]</code> <code>m=2, n=2</code>, 总数是4.左半堆需要 <code>k = (4+1)/2 = 2</code> 张卡片. 我们在 <code>nums1</code> 上猜一个切割位置 <code>i</code>（<code>i</code> 的范围是 <code>[0, 2]</code>）.</p>
+<ul>
+<li><strong>第一次猜</strong>:我们猜中间,<code>i = 1</code>.
+<ul>
+<li>这意味着我们从 <code>nums1</code> 拿 <code>1</code> 张卡片 <code>[1]</code> 作为左半堆的一部分.</li>
+<li>为了凑够2张,我们必须从 <code>nums2</code> 拿 <code>j = 2 - 1 = 1</code> 张卡片 <code>[3]</code>.</li>
+<li>现在我们想象中的“左半堆”是 <code>{1, 3}</code>,“右半堆”是 <code>{2, 4}</code>.</li>
+<li>检查一下这个分割是否合格？
+<ul>
+<li>左半堆最大的卡片是 <code>3</code>.</li>
+<li>右半堆最小的卡片是 <code>2</code>.</li>
+<li>出问题了！<code>3 &gt; 2</code>！这不符合“左边都比右边小”的规则.</li>
+</ul>
+</li>
+<li><strong>分析原因</strong>:左半堆的 <code>3</code> (来自<code>nums2</code>) 太大了.说明我们从 <code>nums2</code> 拿得太多了,<code>j</code> 太大了.因为 <code>j = k - i</code>,所以是我们的 <code>i</code> 猜得<strong>太小了</strong>.</li>
+<li><strong>调整策略</strong>:既然 <code>i=1</code> 太小,那正确答案肯定在 <code>i</code> 的右边.我们接下来在 <code>[2, 2]</code> 的范围里猜.</li>
+</ul>
+</li>
+<li><strong>第二次猜</strong>:范围 <code>[2, 2]</code> 里只能猜 <code>i = 2</code>.
+<ul>
+<li>这意味着我们从 <code>nums1</code> 拿 <code>2</code> 张卡片 <code>[1, 2]</code>.</li>
+<li>为了凑够2张,我们必须从 <code>nums2</code> 拿 <code>j = 2 - 2 = 0</code> 张卡片 <code>[]</code>.</li>
+<li>现在我们想象中的“左半堆”是 <code>{1, 2}</code>,“右半堆”是 <code>{3, 4}</code>.</li>
+<li>再次检查:
+<ul>
+<li>左半堆最大的卡片是 <code>2</code>.</li>
+<li>右半堆最小的卡片是 <code>3</code>.</li>
+<li><code>2 &lt;= 3</code>,完美！</li>
+</ul>
+</li>
+<li><strong>找到答案了！</strong> 这就是我们要的分割.</li>
+</ul>
+</li>
+</ul>
+<p><strong>总结一下</strong>: 二分搜索不是在数组的值 <code>[1,2,3,4]</code> 上搜索,而是在<strong>分割点的位置 <code>i</code></strong> (<code>[0, m]</code>) 上进行搜索. 每一次猜测一个 <code>i</code>,我们就得到了一个“候选分割方案”.然后我们通过检查 <code>nums1[i-1]</code>、<code>nums1[i]</code>、<code>nums2[j-1]</code>、<code>nums2[j]</code> 这四个边界值,来判断我们的 <code>i</code> 是猜大了、猜小了,还是刚刚好.从而不断缩小 <code>i</code> 的搜索范围,直到找到最终答案.</p>
+<hr>
+<h3 id="解法代码-2">解法代码:</h3>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Solution</span> &#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="built_in">double</span> <span class="title">FindMedianSortedArrays</span>(<span class="params"><span class="built_in">int</span>[] nums1, <span class="built_in">int</span>[] nums2</span>)</span> &#123;</span><br><span class="line">        <span class="comment">// 1. 预处理:确保nums1是较短的数组</span></span><br><span class="line">        <span class="comment">// 这样做可以优化二分查找的范围,使其在更小的集合上进行,提高效率.</span></span><br><span class="line">        <span class="keyword">if</span> (nums1.Length &gt; nums2.Length) &#123;</span><br><span class="line">            <span class="keyword">return</span> FindMedianSortedArrays(nums2, nums1);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 2. 初始化变量</span></span><br><span class="line">        <span class="built_in">int</span> m = nums1.Length;</span><br><span class="line">        <span class="built_in">int</span> n = nums2.Length;</span><br><span class="line">        <span class="comment">// low 和 high 是二分查找在短数组nums1上的搜索范围</span></span><br><span class="line">        <span class="built_in">int</span> low = <span class="number">0</span>;</span><br><span class="line">        <span class="built_in">int</span> high = m;</span><br><span class="line">        <span class="comment">// halfLen 是合并后数组左半部分的元素总数</span></span><br><span class="line">        <span class="built_in">int</span> halfLen = (m + n + <span class="number">1</span>) / <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 3. 二分查找过程</span></span><br><span class="line">        <span class="keyword">while</span> (low &lt;= high) &#123;</span><br><span class="line">            <span class="comment">// i 是 nums1 分割线右侧第一个元素的索引,也是其左侧部分的元素个数</span></span><br><span class="line">            <span class="built_in">int</span> i = low + (high - low) / <span class="number">2</span>;</span><br><span class="line">            <span class="comment">// j 是 nums2 分割线右侧第一个元素的索引,由 i 推导得出</span></span><br><span class="line">            <span class="built_in">int</span> j = halfLen - i;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 4. 移动分割线 i</span></span><br><span class="line">            <span class="keyword">if</span> (i &lt; high &amp;&amp; nums2[j - <span class="number">1</span>] &gt; nums1[i]) &#123;</span><br><span class="line">                <span class="comment">// i 太小了,需要向右移动,增大 i</span></span><br><span class="line">                <span class="comment">// nums2左侧最大值 &gt; nums1右侧最小值,说明i的分割点需要右移</span></span><br><span class="line">                low = i + <span class="number">1</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (i &gt; low &amp;&amp; nums1[i - <span class="number">1</span>] &gt; nums2[j]) &#123;</span><br><span class="line">                <span class="comment">// i 太大了,需要向左移动,减小 i</span></span><br><span class="line">                <span class="comment">// nums1左侧最大值 &gt; nums2右侧最小值,说明i的分割点需要左移</span></span><br><span class="line">                high = i - <span class="number">1</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="comment">// 5. 找到了完美的分割线 i,计算中位数</span></span><br><span class="line">                </span><br><span class="line">                <span class="comment">// 确定左半部分的最大值</span></span><br><span class="line">                <span class="built_in">int</span> maxLeft;</span><br><span class="line">                <span class="keyword">if</span> (i == <span class="number">0</span>) &#123; <span class="comment">// nums1的左侧部分为空</span></span><br><span class="line">                    maxLeft = nums2[j - <span class="number">1</span>];</span><br><span class="line">                &#125; <span class="keyword">else</span> <span class="keyword">if</span> (j == <span class="number">0</span>) &#123; <span class="comment">// nums2的左侧部分为空</span></span><br><span class="line">                    maxLeft = nums1[i - <span class="number">1</span>];</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    maxLeft = Math.Max(nums1[i - <span class="number">1</span>], nums2[j - <span class="number">1</span>]);</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                <span class="comment">// 如果总元素个数是奇数,中位数就是左半部分的最大值</span></span><br><span class="line">                <span class="keyword">if</span> ((m + n) % <span class="number">2</span> == <span class="number">1</span>) &#123;</span><br><span class="line">                    <span class="keyword">return</span> maxLeft;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                <span class="comment">// 如果总元素个数是偶数,还需要确定右半部分的最小值</span></span><br><span class="line">                <span class="built_in">int</span> minRight;</span><br><span class="line">                <span class="keyword">if</span> (i == m) &#123; <span class="comment">// nums1的右侧部分为空</span></span><br><span class="line">                    minRight = nums2[j];</span><br><span class="line">                &#125; <span class="keyword">else</span> <span class="keyword">if</span> (j == n) &#123; <span class="comment">// nums2的右侧部分为空</span></span><br><span class="line">                    minRight = nums1[i];</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    minRight = Math.Min(nums1[i], nums2[j]);</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                <span class="comment">// 中位数是左半部分最大值和右半部分最小值的平均数</span></span><br><span class="line">                <span class="keyword">return</span> (maxLeft + minRight) / <span class="number">2.0</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h4 id="这里特别难理解-我再讲一下吧-从4-移动分割线-i-开始">这里特别难理解,我再讲一下吧(从4.移动分割线 i 开始)</h4>
+<h5 id="场景回顾"><strong>场景回顾:</strong></h5>
+<p>我们已经进入了 <code>while</code> 循环.在循环的每一次迭代中,我们都做了一件事:在 <code>nums1</code> 上“试探性地”切了一刀,位置是 <code>i</code>.然后根据 <code>i</code> 计算出了 <code>nums2</code> 上配套的切割位置 <code>j</code>.</p>
+<p>现在,我们手上有四个关键的“边界”数字:</p>
+<ul>
+<li><code>nums1[i-1]</code>:<code>nums1</code> 左半部分的最大值 (L1_Max)</li>
+<li><code>nums1[i]</code>:<code>nums1</code> 右半部分的最小值 (R1_Min)</li>
+<li><code>nums2[j-1]</code>:<code>nums2</code> 左半部分的最大值 (L2_Max)</li>
+<li><code>nums2[j]</code>:<code>nums2</code> 右半部分的最小值 (R2_Min)</li>
+</ul>
+<p><strong>我们的终极目标</strong>:找到一个 <code>i</code>,使得 <strong><code>L1_Max &lt;= R2_Min</code></strong> 并且 <strong><code>L2_Max &lt;= R1_Min</code></strong>. 这意味着我们找到了完美的分割,左边的都比右边的小.</p>
+<p>现在,我们来逐行分析代码是如何实现这个目标的.</p>
+<hr>
+<h5 id="深入讲解-if-else-if-else-逻辑">深入讲解 <code>if-else if-else</code> 逻辑</h5>
+<h6 id="1-if-i-high-nums2-j-1-nums1-i">1. <code>if (i &lt; high &amp;&amp; nums2[j - 1] &gt; nums1[i])</code></h6>
+<ul>
+<li>
+<p><strong>代码翻译</strong>:这个条件检查的是 <code>L2_Max &gt; R1_Min</code>.也就是 <code>nums2</code> 左边的最大值,是否大于 <code>nums1</code> 右边的最小值.</p>
+</li>
+<li>
+<p><strong>意味着什么？</strong> 如果这个条件成立,说明我们的分割出错了.我们把一个本应属于“右半堆”的小数字(<code>nums1[i]</code>)留在了右边,却把一个本应属于“左半堆”的大数字(<code>nums2[j-1]</code>)划入了左边.</p>
+</li>
+<li>
+<p><strong>用栗子说话</strong>: <code>nums1 = [10, 20]</code>, <code>nums2 = [1, 2, 3]</code></p>
+<ul>
+<li><code>m=2, n=3</code>, <code>halfLen = (2+3+1)/2 = 3</code>.</li>
+<li>假设我们二分查找到 <code>i=1</code>.那么 <code>j = 3 - 1 = 2</code>.</li>
+<li>分割如下:
+<ul>
+<li><code>nums1</code> 左: <code>[10]</code> (L1_Max=10) | <code>nums1</code> 右: <code>[20]</code> (R1_Min=20)</li>
+<li><code>nums2</code> 左: <code>[1, 2]</code> (L2_Max=2) | <code>nums2</code> 右: <code>[3]</code> (R2_Min=3)</li>
+</ul>
+</li>
+<li>此时 <code>L2_Max(2) &lt;= R1_Min(20)</code>,但 <code>L1_Max(10) &gt; R2_Min(3)</code>.我们的代码会进入下一个 <code>else if</code> 分支.</li>
+</ul>
+</li>
+<li>
+<p><strong>再看一个例子</strong>: <code>nums1 = [1, 5]</code>, <code>nums2 = [2, 3, 4, 6]</code></p>
+<ul>
+<li><code>m=2, n=4</code>, <code>halfLen = (2+4+1)/2 = 3</code>.</li>
+<li>假设我们二分查找到 <code>i=1</code>.那么 <code>j = 3 - 1 = 2</code>.</li>
+<li>分割如下:
+<ul>
+<li><code>nums1</code> 左: <code>[1]</code> (L1_Max=1) | <code>nums1</code> 右: <code>[5]</code> (R1_Min=5)</li>
+<li><code>nums2</code> 左: <code>[2, 3]</code> (L2_Max=3) | <code>nums2</code> 右: <code>[4, 6]</code> (R2_Min=4)</li>
+</ul>
+</li>
+<li>此时 <code>L1_Max(1) &lt;= R2_Min(4)</code> 成立.但 <code>L2_Max(3) &lt;= R1_Min(5)</code> 也成立.这是完美分割！</li>
+</ul>
+</li>
+<li>
+<p><strong>回到这个 <code>if</code> 判断</strong>:<code>nums2[j - 1] &gt; nums1[i]</code></p>
+<ul>
+<li><strong>原因分析</strong>:这个不等式成立,说明 <code>i</code> 的值<strong>太小了</strong>.因为 <code>i</code> 小,导致 <code>j = halfLen - i</code> 的值偏大,使得我们从 <code>nums2</code> 中取了太多的元素进入左半部分,其中就包括了那个“太大”的 <code>nums2[j-1]</code>.</li>
+<li><strong>如何修正</strong>:我们需要增大 <code>i</code>.在二分搜索中,这意味着正确答案在当前 <code>i</code> 的右侧.所以我们更新搜索区间的下界:<code>low = i + 1</code>.</li>
+</ul>
+</li>
+</ul>
+<h6 id="2-else-if-i-low-nums1-i-1-nums2-j">2. <code>else if (i &gt; low &amp;&amp; nums1[i - 1] &gt; nums2[j])</code></h6>
+<ul>
+<li><strong>代码翻译</strong>:这个条件检查的是 <code>L1_Max &gt; R2_Min</code>.也就是 <code>nums1</code> 左边的最大值,是否大于 <code>nums2</code> 右边的最小值.</li>
+<li><strong>意味着什么？</strong> 这同样说明分割出错了.我们把一个“太大”的数字 <code>nums1[i-1]</code> 划入了左半堆.</li>
+<li><strong>原因分析</strong>:这个不等式成立,说明 <code>i</code> 的值<strong>太大了</strong>.因为 <code>i</code> 大,我们从 <code>nums1</code> 中取了太多的元素进入左半部分,其中就包括了那个“太大”的 <code>nums1[i-1]</code>.</li>
+<li><strong>如何修正</strong>:我们需要减小 <code>i</code>.在二分搜索中,这意味着正确答案在当前 <code>i</code> 的左侧.所以我们更新搜索区间的上界:<code>high = i - 1</code>.</li>
+</ul>
+<h6 id="3-else">3. <code>else</code></h6>
+<ul>
+<li><strong>代码翻译</strong>:如果上面两个 <code>if</code> 都不成立,这意味着什么？
+<ul>
+<li><code>nums2[j - 1] &lt;= nums1[i]</code> <strong>并且</strong></li>
+<li><code>nums1[i - 1] &lt;= nums2[j]</code></li>
+</ul>
+</li>
+<li><strong>意味着什么？</strong> 这就是我们寻找到的<strong>完美分割</strong>,我们成功地把两个数组划分成了左右两半,并且左半部分的所有元素都小于等于右半部分的所有元素.</li>
+<li><strong>接下来做什么？</strong> 计算中位数！</li>
+</ul>
+<hr>
+<h5 id="深入讲解中位数计算-在-else-块内">深入讲解中位数计算 (在 <code>else</code> 块内)</h5>
+<p>现在我们已经找到了完美的 <code>i</code> 和 <code>j</code>.</p>
+<h6 id="1-计算-maxLeft-左半部分的最大值">1. 计算 <code>maxLeft</code> (左半部分的最大值)</h6>
+<p>左半部分由 <code>nums1</code> 的前 <code>i</code> 个元素和 <code>nums2</code> 的前 <code>j</code> 个元素组成.它的最大值,必然是 <code>nums1[i-1]</code> 和 <code>nums2[j-1]</code> 中较大的那一个.</p>
+<p>但是,这里有<strong>边界情况</strong>需要处理:</p>
+<ul>
+<li><code>if (i == 0)</code>: <code>nums1</code> 的左半部分是空的,那么整个左半部分的最大值就是 <code>nums2[j-1]</code>.</li>
+<li><code>else if (j == 0)</code>: <code>nums2</code> 的左半部分是空的,那么整个左半部分的最大值就是 <code>nums1[i-1]</code>.</li>
+<li><code>else</code>: 两边都不为空,<code>maxLeft</code> 就是 <code>Math.Max(nums1[i-1], nums2[j-1])</code>.</li>
+</ul>
+<h6 id="2-判断总长度是奇数还是偶数">2. 判断总长度是奇数还是偶数</h6>
+<ul>
+<li><code>if ((m + n) % 2 == 1)</code>: 如果总长度是奇数,中位数就是正中间那个数.在我们的分割方案里,左半部分比右半部分多一个元素,这个多出来的元素 <code>maxLeft</code> 就是中位数.所以直接 <code>return maxLeft</code>.</li>
+</ul>
+<h6 id="3-计算-minRight-右半部分的最小值-仅在总长度为偶数时需要">3. 计算 <code>minRight</code> (右半部分的最小值) - 仅在总长度为偶数时需要</h6>
+<p>如果总长度是偶数,中位数是中间两个数的平均值.我们已经找到了左边最大的 <code>maxLeft</code>,现在需要找右边最小的 <code>minRight</code>.</p>
+<p>右半部分由 <code>nums1</code> 从 <code>i</code> 开始的元素和 <code>nums2</code> 从 <code>j</code> 开始的元素组成.它的最小值,必然是 <code>nums1[i]</code> 和 <code>nums2[j]</code> 中较小的那一个.</p>
+<p>同样,处理<strong>边界情况</strong>:</p>
+<ul>
+<li><code>if (i == m)</code>: <code>nums1</code> 的右半部分是空的！那么整个右半部分的最小值就是 <code>nums2[j]</code>.</li>
+<li><code>else if (j == n)</code>: <code>nums2</code> 的右半部分是空的！那么整个右半部分的最小值就是 <code>nums1[i]</code>.</li>
+<li><code>else</code>: 两边都不为空,<code>minRight</code> 就是 <code>Math.Min(nums1[i], nums2[j])</code>.</li>
+</ul>
+<h6 id="4-返回最终结果-总长度为偶数">4. 返回最终结果 (总长度为偶数)</h6>
+<p>中位数是 <code>(maxLeft + minRight) / 2.0</code>.使用 <code>2.0</code> 来确保结果是 <code>double</code> 类型的浮点数,而不是整数除法.</p>
+<hr>
+<h4 id="知识点总结：">知识点总结：</h4>
+<ol>
+<li><strong>二分搜索的泛化应用</strong>： 二分搜索的核心是“<strong>在一个有序的集合中，通过不断排除一半的可能性来寻找目标</strong>”。这个“集合”不一定是一个存有具体数值的数组。它可以是<strong>答案的可能范围</strong>、<strong>索引的范围</strong>，或者任何具有单调性的抽象概念。在这道题中，我们搜索的就不是一个值，而是一个满足特定条件的“<strong>分割点索引</strong>”。</li>
+<li><strong>问题转化的思想</strong>： 直接解决一个问题可能很困难，但我们可以尝试将其<strong>转化为一个等价且更容易解决的问题</strong>。这道题的精髓就是将“寻找中位数”这个目标，转化为了“<strong>寻找一个完美的分割线</strong>”。一旦找到了这条线，中位数就自然浮现了。</li>
+<li><strong>边界条件的严谨处理</strong>： 算法的正确性很大程度上取决于对边界条件的正确处理。在这道题中，分割点 <code>i</code> 或 <code>j</code> 可能会取到 <code>0</code> 或者数组的长度 <code>m/n</code>，这意味着某一个“左半部分”或“右半部分”可能是空的。代码中通过 <code>if (i == 0)</code> 等判断来处理这些边界，是保证算法健壮性的关键。</li>
+<li><strong>利用不变量和约束</strong>： 在我们的算法中，<code>i + j = halfLen</code> 是一个恒成立的<strong>约束条件</strong>（不变量）。这个约束极大地简化了问题，让我们只需要在一个变量 <code>i</code> 上进行搜索，另一个变量 <code>j</code> 就会被自动确定。在设计算法时，寻找并利用这样的不变量，可以有效降低问题的复杂度。</li>
+</ol>
+<hr>
+<h4 id="练习题：">练习题：</h4>
+<h5 id="选择题-2"><strong>选择题</strong></h5>
+<p><strong>问题：</strong> 在解决 “寻找两个正序数组的中位数” 这个问题时，我们使用二分搜索的主要目的是什么？</p>
+<p>(A) 在合并后的大数组中快速查找中位数的值。</p>
+<p>(B) 在两个数组中分别查找值为中位数的元素。</p>
+<p>© 在较短数组的所有可能“分割点”索引中，查找一个能满足特定条件的最佳分割点。</p>
+<p>(D) 减少将两个数组合并所需的时间复杂度。</p>
+<h5 id="简答题-2"><strong>简答题</strong></h5>
+<p><strong>问题：</strong> 在该算法中，我们将“寻找中位数”问题转化为了“寻找完美分割线”的问题。请简述我们是如何判断一个分割线（由 <code>nums1</code> 的分割点 <code>i</code> 和 <code>nums2</code> 的分割点 <code>j</code> 定义）是否是“完美”的？</p>
+<hr>
+<h5 id="参考答案-2">参考答案</h5>
+<p><strong>选择题答案是 ©。</strong></p>
+<p><strong>解析：</strong></p>
+<ul>
+<li>(A) 是错误的，该算法的核心就是避免了合并数组。</li>
+<li>(B) 是错误的，中位数的值可能并不存在于任何一个原始数组中（例如 <code>[1,2]</code> 和 <code>[3,4]</code> 的中位数是2.5）。</li>
+<li>© 正确地描述了算法的核心思想。我们的二分搜索是在 <code>nums1</code> 的索引范围 <code>[0, m]</code> 上进行的，目标是找到那个完美的 <code>i</code>。</li>
+<li>(D) 虽然结果上确实避免了 <code>O(m+n)</code> 的合并，但二分搜索的直接目的不是“减少合并时间”，而是作为一种“不合并”的解决方案，其搜索目标是分割点，而非优化合并本身。</li>
+</ul>
+<p><strong>简答题参考答案：</strong></p>
+<p>一个分割线是“完美”的，需要同时满足两个交叉条件：</p>
+<ol>
+<li><code>nums1</code> 左半部分的最大值 (<code>nums1[i-1]</code>) 必须小于或等于 <code>nums2</code> 右半部分的最小值 (<code>nums2[j]</code>)。</li>
+<li><code>nums2</code> 左半部分的最大值 (<code>nums2[j-1]</code>) 必须小于或等于 <code>nums1</code> 右半部分的最小值 (<code>nums1[i]</code>)。</li>
+</ol>
+<p>这两个条件确保了所有划分到“左半堆”的元素都小于或等于所有划分到“右半堆”的元素，这正是中位数分割线的本质定义。</p>
+<hr>
+<h4 id="可能的实际应用-2">可能的实际应用</h4>
+<ol>
+<li><strong>游戏开发 (性能优化)</strong>： 假设我们要在一个巨大的有序列表（如排行榜、伤害记录）中找到第 K 名的玩家或数据，而这个列表分布在多个服务器或文件中。使用类似的思想，我们可以在不合并所有数据的情况下，高效地定位到第 K 个元素。</li>
+<li><strong>资源调度与负载均衡</strong>： 想象一下，我们有两组服务器，每组的服务器按负载从低到高排序。我们想重新分配任务，使得所有服务器的中位数负载最低。这个问题就可以借鉴本题的思路，通过二分查找寻找一个最优的分配方案，而不是暴力尝试所有可能性。</li>
+<li><strong>数据分析与统计</strong>： 在处理海量数据流时，数据可能被分片存储在不同的地方。当需要计算全局的百分位数（中位数是50%分位数）时，这种分治和二分的思想可以让我们在不加载全部数据到内存的情况下，高效地估算出结果。</li>
+</ol>
+</article><div class="post-copyright"><div class="post-copyright__author_group"><div class="post-copyright__author_img"><img class="post-copyright__author_img_front" src="/img/avatar.png"></div><div class="post-copyright__author_name">NFA晨曦</div><div class="post-copyright__author_desc">记录与分享</div></div><div class="post-tools" id="post-tools"><div class="post-tools-left"><div id="quit-box" onclick="RemoveRewardMask()"></div><div class="post-reward"><div class="reward-button" title="赞赏作者" onclick="AddRewardMask()"><i class="solitude fas fa-heart"></i>赞赏作者</div><div class="reward-main"><ul class="reward-all"><span class="reward-title">感谢您的赞赏</span><ul class="reward-group"><li class="reward-item"><a href="https://blog.nfasystem.top/img/wechat.jpg"><img class="post-qr-code-img nolazyload" src="/img/wechat.jpg" alt="微信赞赏码" style="border-color: var(--efu-black)"></a><div class="post-qr-code-desc">微信赞赏码</div></li></ul><a class="reward-main-btn" href="/about/"><div class="reward-text">赞赏名单</div><div class="reward-dec"></div></a></ul></div></div><script>function RemoveRewardMask() {
+    let rewardMainElements = document.querySelectorAll(".reward-main");
+    let quitBoxElement = document.querySelector("#quit-box");
+
+    rewardMainElements.forEach(element => {
+        element.style.display = "none";
+    });
+
+    if (quitBoxElement) {
+        quitBoxElement.style.display = "none";
+    }
+}
+
+function AddRewardMask() {
+    let rewardMainElements = document.querySelectorAll(".reward-main");
+    let quitBoxElement = document.querySelector("#quit-box");
+
+    rewardMainElements.forEach(element => {
+        element.style.display = "flex";
+    });
+
+    if (quitBoxElement) {
+        quitBoxElement.style.display = "flex";
+    }
+}</script></div></div><div class="post-copyright__notice"><span class="post-copyright-info">本文是原创文章，采用<a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh-hans">CC BY-NC-SA 4.0</a>协议，完整转载请注明来自<a href="/">晨曦の小站</a></span></div></div><div class="post-tools-right"><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E7%AE%97%E6%B3%95/"><span class="tags-punctuation"><i class="solitude fas fa-hashtag"></i>算法<span class="tagsPageCount">9</span></span></a><a class="post-meta__tags" href="/tags/%E5%8A%9B%E6%89%A3/"><span class="tags-punctuation"><i class="solitude fas fa-hashtag"></i>力扣<span class="tagsPageCount">9</span></span></a></div></div></div><nav class="needEndHide pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/95bdd374/"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">力扣刷题日常(5-6)</div></div></a></div><div class="next-post pull-right"><a href="/posts/7eb38127/"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">力扣刷题日常(1-2)</div></div></a></div></nav>
+        <div class="relatedPosts">
+            <div class="headline">
+                <i class="solitude fas fa-star"></i>
+                <span>喜欢这篇的人也看了</span>
+                <div class="relatedPosts-link">
+                    <a onclick="event.preventDefault(); toRandomPost();" href="javascript:void(0);" rel="external nofollow" data-pjax-state="">随便逛逛</a>
+                </div>
+            </div>
+            <div class="relatedPosts-list">
+            <div>
+                <a href="/posts/6491732a/" title="力扣刷题日常(17-18)">
+                    <img class="cover" src= "" data-lazy-src="https://image.nfasystem.top/img-nfa/LK17-18.webp" alt="cover">
+                    <div class="content is-center">
+                        <div class="title">力扣刷题日常(17-18)</div>
+                    </div>
+                </a>
+            </div>
+            <div>
+                <a href="/posts/80d20dc4/" title="力扣刷题日常(15-16)">
+                    <img class="cover" src= "" data-lazy-src="https://image.nfasystem.top/img-nfa/LK15-16.webp" alt="cover">
+                    <div class="content is-center">
+                        <div class="title">力扣刷题日常(15-16)</div>
+                    </div>
+                </a>
+            </div>
+            </div>
+        </div><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="solitude fas fa-comment"></i><span> 评论</span><span class="count"> (<span class="twikoo-count"><i class="solitude fas fa-spinner fa-spin"></i></span>)</span></div></div><div class="comment-wrap"><div id="twikoo-wrap"></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-content"><div class="card-info-avatar is-center"><div class="top-group"><div class="sayhi" id="sayhi" onclick="sco.changeWittyWord()"></div></div></div><div class="avatar"><img alt="头像" src="/img/avatar.png"></div><div class="description">这是晨曦の博客，专注于分享，由第四领域——晨曦负责与维护。</div><div class="bottom-group"><span class="left"><div class="name">NFA晨曦</div><div class="desc">只有迎风，风筝才能飞得更高。</div></span><div class="social-icons is-center"><a class="social-icon" target="_blank" rel="noopener" href="https://github.com/nfachenxi" title="Github"><i class="solitude  fab fa-github"></i></a><a class="social-icon" target="_blank" rel="noopener" href="https://space.bilibili.com/316806831" title="Bilibili"><i class="solitude  fab fa-bilibili"></i></a></div></div></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="solitude fas fa-bars"></i><span>文章目录</span></div><div class="toc-content" id="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">力扣刷题日常(3-4)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E9%A2%98-%E6%97%A0%E9%87%8D%E5%A4%8D%E5%AD%97%E7%AC%A6%E7%9A%84%E6%9C%80%E9%95%BF%E5%AD%90%E4%B8%B2-%E9%9A%BE%E5%BA%A6-%E4%B8%AD%E7%AD%89"><span class="toc-text">第三题: 无重复字符的最长子串(难度: 中等)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%9F%E9%A2%98"><span class="toc-text">原题:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%80%E5%A7%8B%E8%A7%A3%E9%A2%98"><span class="toc-text">开始解题:</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E4%B8%80-%E6%9A%B4%E5%8A%9B%E6%B1%82%E8%A7%A3"><span class="toc-text">方法一: 暴力求解</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E4%BA%8C-%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3"><span class="toc-text">方法二: 滑动窗口</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AF%94%E5%96%BB%E8%A7%A3%E9%87%8A"><span class="toc-text">比喻解释:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E6%B3%95%E4%BB%A3%E7%A0%81"><span class="toc-text">解法代码:</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9F%A5%E8%AF%86%E7%82%B9%E8%A7%A3%E6%9E%90"><span class="toc-text">知识点解析:</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A2%9D%E5%A4%96%E7%BB%83%E4%B9%A0%E9%A2%98"><span class="toc-text">额外练习题:</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%80%89%E6%8B%A9%E9%A2%98"><span class="toc-text">选择题</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%AE%80%E7%AD%94%E9%A2%98"><span class="toc-text">简答题</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E7%AD%94%E6%A1%88"><span class="toc-text">参考答案</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%AF%E8%83%BD%E7%9A%84%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8"><span class="toc-text">可能的实际应用</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E5%9B%9B%E9%A2%98-%E5%AF%BB%E6%89%BE%E4%B8%A4%E4%B8%AA%E6%AD%A3%E5%BA%8F%E6%95%B0%E7%BB%84%E7%9A%84%E4%B8%AD%E4%BD%8D%E6%95%B0-%E9%9A%BE%E5%BA%A6-%E5%9B%B0%E9%9A%BE"><span class="toc-text">第四题: 寻找两个正序数组的中位数(难度: 困难)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%9F%E9%A2%98-2"><span class="toc-text">原题:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%80%E5%A7%8B%E8%A7%A3%E9%A2%98-2"><span class="toc-text">开始解题</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E6%80%9D%E6%83%B3-%E5%AF%BB%E6%89%BE-%E5%88%86%E5%89%B2%E7%BA%BF-%E8%80%8C%E4%B8%8D%E6%98%AF-%E4%B8%AD%E4%BD%8D%E6%95%B0"><span class="toc-text">核心思想: 寻找&quot;分割线&quot;而不是&quot;中位数&quot;</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%82%A3%E4%B9%88%E6%88%91%E4%BB%AC%E5%BA%94%E8%AF%A5%E5%A6%82%E4%BD%95%E5%AF%BB%E6%89%BE%E8%BF%99%E4%B8%AA-%E5%88%86%E5%89%B2%E7%BA%BF-%E5%91%A2"><span class="toc-text">那么我们应该如何寻找这个&quot;分割线&quot;呢</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%82%A3%E5%BD%93%E6%88%91%E4%BB%AC%E6%89%BE%E5%88%B0%E5%88%86%E5%89%B2%E7%BA%BF%E4%B9%8B%E5%90%8E-%E8%A6%81%E5%A6%82%E4%BD%95%E8%AE%A1%E7%AE%97%E4%B8%AD%E4%BD%8D%E6%95%B0%E5%91%A2"><span class="toc-text">那当我们找到分割线之后,要如何计算中位数呢</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%BE%E4%B8%AA%E6%A0%97%E5%AD%90-nums1-1-3-nums2-2"><span class="toc-text">举个栗子:nums1 &#x3D; [1,3], nums2 &#x3D; [2]</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9B%B4%E5%BD%A2%E8%B1%A1%E7%9A%84%E7%90%86%E8%A7%A3%E6%96%B9%E5%BC%8F-%E5%88%87%E5%8D%A1%E7%89%87%E6%B8%B8%E6%88%8F"><span class="toc-text">更形象的理解方式:切卡片游戏</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B8%B8%E6%88%8F%E5%BC%80%E5%A7%8B"><span class="toc-text">游戏开始:</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%8C%9C-i-%E7%9A%84%E8%BF%87%E7%A8%8B"><span class="toc-text">猜 i 的过程:</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E6%B3%95%E4%BB%A3%E7%A0%81-2"><span class="toc-text">解法代码:</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%99%E9%87%8C%E7%89%B9%E5%88%AB%E9%9A%BE%E7%90%86%E8%A7%A3-%E6%88%91%E5%86%8D%E8%AE%B2%E4%B8%80%E4%B8%8B%E5%90%A7-%E4%BB%8E4-%E7%A7%BB%E5%8A%A8%E5%88%86%E5%89%B2%E7%BA%BF-i-%E5%BC%80%E5%A7%8B"><span class="toc-text">这里特别难理解,我再讲一下吧(从4.移动分割线 i 开始)</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%9C%BA%E6%99%AF%E5%9B%9E%E9%A1%BE"><span class="toc-text">场景回顾:</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%B7%B1%E5%85%A5%E8%AE%B2%E8%A7%A3-if-else-if-else-%E9%80%BB%E8%BE%91"><span class="toc-text">深入讲解 if-else if-else 逻辑</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#1-if-i-high-nums2-j-1-nums1-i"><span class="toc-text">1. if (i &lt; high &amp;&amp; nums2[j - 1] &gt; nums1[i])</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#2-else-if-i-low-nums1-i-1-nums2-j"><span class="toc-text">2. else if (i &gt; low &amp;&amp; nums1[i - 1] &gt; nums2[j])</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#3-else"><span class="toc-text">3. else</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%B7%B1%E5%85%A5%E8%AE%B2%E8%A7%A3%E4%B8%AD%E4%BD%8D%E6%95%B0%E8%AE%A1%E7%AE%97-%E5%9C%A8-else-%E5%9D%97%E5%86%85"><span class="toc-text">深入讲解中位数计算 (在 else 块内)</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#1-%E8%AE%A1%E7%AE%97-maxLeft-%E5%B7%A6%E5%8D%8A%E9%83%A8%E5%88%86%E7%9A%84%E6%9C%80%E5%A4%A7%E5%80%BC"><span class="toc-text">1. 计算 maxLeft (左半部分的最大值)</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#2-%E5%88%A4%E6%96%AD%E6%80%BB%E9%95%BF%E5%BA%A6%E6%98%AF%E5%A5%87%E6%95%B0%E8%BF%98%E6%98%AF%E5%81%B6%E6%95%B0"><span class="toc-text">2. 判断总长度是奇数还是偶数</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#3-%E8%AE%A1%E7%AE%97-minRight-%E5%8F%B3%E5%8D%8A%E9%83%A8%E5%88%86%E7%9A%84%E6%9C%80%E5%B0%8F%E5%80%BC-%E4%BB%85%E5%9C%A8%E6%80%BB%E9%95%BF%E5%BA%A6%E4%B8%BA%E5%81%B6%E6%95%B0%E6%97%B6%E9%9C%80%E8%A6%81"><span class="toc-text">3. 计算 minRight (右半部分的最小值) - 仅在总长度为偶数时需要</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#4-%E8%BF%94%E5%9B%9E%E6%9C%80%E7%BB%88%E7%BB%93%E6%9E%9C-%E6%80%BB%E9%95%BF%E5%BA%A6%E4%B8%BA%E5%81%B6%E6%95%B0"><span class="toc-text">4. 返回最终结果 (总长度为偶数)</span></a></li></ol></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93%EF%BC%9A"><span class="toc-text">知识点总结：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%83%E4%B9%A0%E9%A2%98%EF%BC%9A"><span class="toc-text">练习题：</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%80%89%E6%8B%A9%E9%A2%98-2"><span class="toc-text">选择题</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%AE%80%E7%AD%94%E9%A2%98-2"><span class="toc-text">简答题</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E7%AD%94%E6%A1%88-2"><span class="toc-text">参考答案</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%AF%E8%83%BD%E7%9A%84%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8-2"><span class="toc-text">可能的实际应用</span></a></li></ol></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="solitude fas fa-map"></i><span>最近发布</span></div><div class="aside-list"><a class="aside-list-item" href="/posts/81s2cdc0/" title="序章"><div class="thumbnail"><img alt="序章" src="/img/deb5.webp"></div><div class="content"><span class="title" href="/posts/81s2cdc0/" title="序章">序章</span><span class="categories" href="/posts/81s2cdc0/">小说</span></div></a><a class="aside-list-item" href="/posts/6491732a/" title="力扣刷题日常(17-18)"><div class="thumbnail"><img alt="力扣刷题日常(17-18)" src="https://image.nfasystem.top/img-nfa/LK17-18.webp"></div><div class="content"><span class="title" href="/posts/6491732a/" title="力扣刷题日常(17-18)">力扣刷题日常(17-18)</span><span class="categories" href="/posts/6491732a/">力扣刷题</span></div></a><a class="aside-list-item" href="/posts/80d20dc4/" title="力扣刷题日常(15-16)"><div class="thumbnail"><img alt="力扣刷题日常(15-16)" src="https://image.nfasystem.top/img-nfa/LK15-16.webp"></div><div class="content"><span class="title" href="/posts/80d20dc4/" title="力扣刷题日常(15-16)">力扣刷题日常(15-16)</span><span class="categories" href="/posts/80d20dc4/">力扣刷题</span></div></a><a class="aside-list-item" href="/posts/3da49ae6/" title="力扣刷题日常(13-14)"><div class="thumbnail"><img alt="力扣刷题日常(13-14)" src="https://image.nfasystem.top/img-nfa/LK13-14.webp"></div><div class="content"><span class="title" href="/posts/3da49ae6/" title="力扣刷题日常(13-14)">力扣刷题日常(13-14)</span><span class="categories" href="/posts/3da49ae6/">力扣刷题</span></div></a><a class="aside-list-item" href="/posts/113e6e00/" title="力扣刷题日常(11-12)"><div class="thumbnail"><img alt="力扣刷题日常(11-12)" src="https://image.nfasystem.top/img-nfa/LK11-12.webp"></div><div class="content"><span class="title" href="/posts/113e6e00/" title="力扣刷题日常(11-12)">力扣刷题日常(11-12)</span><span class="categories" href="/posts/113e6e00/">力扣刷题</span></div></a></div></div><div class="card-widget card-route-switch"><div class="card-content"><div class="item-headline"><i class="fas fa-route"></i><span>线路切换</span></div><div class="route-list" id="route-list"><div class="route-item" data-url="https://cx.nfasystem.top" data-name="Vercel 线路"><div class="route-name">Vercel 线路</div><div class="route-right"><div class="route-ping"><span class="ping-value">--</span><span class="ping-unit">ms</span></div><div class="route-status"><i class="fas fa-circle-notch fa-spin"></i></div></div></div><div class="route-item" data-url="https://nfachenxi.nfasystem.top" data-name="GitHub Pages"><div class="route-name">GitHub Pages</div><div class="route-right"><div class="route-ping"><span class="ping-value">--</span><span class="ping-unit">ms</span></div><div class="route-status"><i class="fas fa-circle-notch fa-spin"></i></div></div></div><div class="route-item" data-url="https://chenxi.nfasystem.top" data-name="腾讯云 EdgePage"><div class="route-name">腾讯云 EdgePage</div><div class="route-right"><div class="route-ping"><span class="ping-value">--</span><span class="ping-unit">ms</span></div><div class="route-status"><i class="fas fa-circle-notch fa-spin"></i></div></div></div><div class="route-item" data-url="https://blog.nfasystem.top" data-name="私人服务器"><div class="route-name">私人服务器</div><div class="route-right"><div class="route-ping"><span class="ping-value">--</span><span class="ping-unit">ms</span></div><div class="route-status"><i class="fas fa-circle-notch fa-spin"></i></div></div></div></div></div></div></div></div></main><footer id="footer"><div id="st-footer-bar"><div class="footer-logo"><span>晨曦の小站</span></div><div class="footer-bar-description">文章来自第四领域晨曦</div><div><a class="footer-bar-link" href="/about/" title="了解更多">了解更多</a></div></div><div id="footer_deal"><a class="deal_link" target="_blank" rel="noopener" href="https://github.com/nfachenxi" title="Github"><i class="solitude  fab fa-github"></i></a><a class="deal_link" href="mailto:nfachenxi@163.com" title="邮箱"><i class="solitude  far fa-envelope"></i></a><div><div class="nolazyload footer_mini_logo" id="footer_mini_logo" title="返回顶部" onclick="sco.toTop()"><img src= "" data-lazy-src="/img/avatar.png" alt="返回顶部"></div></div><a class="deal_link" target="_blank" rel="noopener" href="https://space.bilibili.com/316806831" title="Bilibili"><i class="solitude  fab fa-bilibili"></i></a><a class="deal_link" target="_blank" rel="noopener" href="https://v.douyin.com/dvJIjrxxf6c/" title="抖音"><i class="solitude  fab fa-tiktok"></i></a></div><div><div id="st-footer"><div class="footer-group"><h3 class="footer-title">导航</h3><div class="footer-links"><a class="footer-item" href="/archives/" title="归档">归档</a><a class="footer-item" href="/categories/" title="分类">分类</a></div></div><div class="footer-group"><h3 class="footer-title">关于本站</h3><div class="footer-links"><a class="footer-item" href="/privacy/" title="隐私策略">隐私策略</a><a class="footer-item" href="/copyright/" title="版权声明">版权声明</a></div></div></div></div><div id="footer-bar"><div class="footer-bar-links"><div class="footer-bar-left"><div class="copyright">© 2025 - 2026 By<a class="footer-bar-link" href="/" title="NFA晨曦">NFA晨曦</a></div><div class="beian-group"><div><a class="footer-bar-link" target="_blank" rel="noopener" href="https://beian.mps.gov.cn/#/query/webSearch" title="鲁公网安备37028502240668号"><div><img class="beian-icon" src= "" data-lazy-src="https://beian.mps.gov.cn/img/logo01.dd7ff50e.png" alt="鲁公网安备37028502240668号"></div><span class="beian-name">鲁公网安备37028502240668号</span></a><a class="footer-bar-link" target="_blank" rel="noopener" href="https://beian.miit.gov.cn/" title="鲁ICP备2023032296号-1"><span class="beian-name">鲁ICP备2023032296号-1</span></a></div><a class="footer-bar-link" target="_blank" rel="noopener" href="https://hexo.io/" title="框架：Hexo">框架：Hexo</a><a class="footer-bar-link" target="_blank" rel="noopener" href="https://github.com/everfu/hexo-theme-solitude" title="主题：Solitude">主题：Solitude</a></div></div><div class="footer-bar-right"></div></div></div><div><div class="comment-barrage needEndHide"></div></div></footer></div><div><div id="rightMenu"><div class="rightMenu-group rightMenu-small"><div class="rightMenu-item" id="menu-backward"><i class="solitude fas fa-arrow-left"></i></div><div class="rightMenu-item" id="menu-forward"><i class="solitude fas fa-arrow-right"></i></div><div class="rightMenu-item" id="menu-refresh"><i class="solitude fas fa-arrows-rotate"></i></div><div class="rightMenu-item" id="menu-top"><i class="solitude fas fa-arrow-up"></i></div></div><div class="rightMenu-group rightMenu-line rightMenuPlugin"><div class="rightMenu-item" id="menu-copytext"><i class="solitude fas fa-clone"></i><span>复制选中文本</span></div><div class="rightMenu-item" id="menu-pastetext"><i class="solitude fas fa-clipboard"></i><span>粘贴文本</span></div><div class="rightMenu-item" id="menu-commenttext"><i class="solitude fas fa-comment-medical"></i><span>引用到评论</span></div><div class="rightMenu-item" id="menu-newwindow"><i class="solitude far fa-window-maximize"></i><span>新窗口打开</span></div><div class="rightMenu-item" id="menu-copylink"><i class="solitude fas fa-link"></i><span>复制链接地址</span></div><div class="rightMenu-item" id="menu-copyimg"><i class="solitude fas fa-clone"></i><span>复制此图片</span></div><div class="rightMenu-item" id="menu-downloadimg"><i class="solitude fas fa-cloud-arrow-down"></i><span>下载此图片</span></div><div class="rightMenu-item" id="menu-search"><i class="solitude fas fa-magnifying-glass"></i><span>站内搜索</span></div><div class="rightMenu-item" id="menu-music-toggle"><i class="solitude fas fa-play"></i><span>播放音乐</span></div><div class="rightMenu-item" id="menu-music-back"><i class="solitude fas fa-backward"></i><span>切换到上一首</span></div><div class="rightMenu-item" id="menu-music-forward"><i class="solitude fas fa-forward"></i><span>切换到下一首</span></div><div class="rightMenu-item" id="menu-music-copyMusicName"><i class="solitude fas fa-clone"></i><span>复制歌名</span></div></div><div class="rightMenu-group rightMenu-line rightMenuOther"><div class="rightMenu-item" id="menu-randomPost" onclick="toRandomPost()||rm.hideRightMenu()"><i class="solitude fas fa-tower-broadcast"></i><span>随机文章</span></div><div class="rightMenu-item" onclick="pjax.loadUrl('/categories/')||rm.hideRightMenu()"><i class="solitude fas fa-clone"></i><span>全部分类</span></div><div class="rightMenu-item" onclick="pjax.loadUrl('/tags/')||rm.hideRightMenu()"><i class="solitude fas fa-tags"></i><span>全部标签</span></div></div><div class="rightMenu-group rightMenu-line rightMenuOther"><div class="rightMenu-item" id="menu-darkmode" onclick="sco.switchDarkMode()"><i class="solitude fas fa-circle-half-stroke"></i><span class="menu-darkmode-text">深色模式</span></div></div></div><div id="rightmenu-mask"></div></div><div><!-- Critical scripts loaded synchronously--><script src="/js/utils.js?v=3.0.21"></script><script src="/js/main.js?v=3.0.21"></script><!-- Non-critical scripts loaded asynchronously--><script async src="/js/third_party/waterfall.min.js?v=3.0.21"></script><script src="https://fastly.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js"></script><!-- Feature-specific scripts loaded asynchronously--><script defer src="https://image.nfasystem.top/CDN/mermaid.min.js"></script><script defer src="/js/chart.umd.min.js"></script><script defer src="https://fastly.jsdelivr.net/npm/typeit@8.8.7/dist/index.umd.min.js"></script><script defer src="/js/third_party/universe.min.js?v=3.0.21"></script><script>document.addEventListener('DOMContentLoaded', () => {
+  if (typeof dark === 'function') dark();
+});
+</script><!-- UI enhancement scripts--><script src="/js/lazyload.iife.min.js"></script><script defer src="/js/snackbar.min.js"></script><script src="/js/medium-zoom.min.js"></script><script src="/js/swiper-bundle.min.js"></script><!-- Music player scripts--><script>var meting_api = 'https://meting.qjqq.cn/?server=:server&type=:type&id=:id&auth=:auth&r=:r';</script><script defer src="/js/APlayer.min.js"></script><script defer src="/js/Meting.min.js"></script><!-- Cover color processing scripts--><script>window.paceOptions = {
+  restartOnPushState: false
+}
+
+utils.addGlobalFn('pjaxSend', () => {
+  Pace.restart()
+}, 'pace_restart')
+</script><script src="/js/pace.min.js"></script><!-- Search functionality--><!-- Right menu functionality--><script defer src="/js/right_menu.js?v=3.0.21"></script><!-- Route switch functionality--><script defer src="/js/route-switch.js"></script><div class="js-pjax"><script>(() => {
+    const getCount = () => {
+        const ele = document.querySelectorAll('.twikoo-count')
+        if (!ele) return
+        twikoo.getCommentsCount({
+            envId: 'https://comment.nfasystem.top',
+            region: '',
+            urls: [window.location.pathname],
+            includeReply: false
+        }).then(res => {
+            ele.forEach(item => item.textContent = res[0].count)
+        }).catch(err => {
+            console.error(err)
+        })
+    }
+    const init = () => {
+        twikoo.init(Object.assign({
+            el: '#twikoo-wrap',
+            envId: 'https://comment.nfasystem.top',
+            region: '',
+            path: window.location.pathname,
+            onCommentLoaded: () => {
+                GLOBAL_CONFIG.lightbox && utils.lightbox(document.querySelectorAll('#twikoo .tk-content img:not(.tk-owo-emotion)'))
+            }
+        }, null))
+
+         && getCount()
+        sco.owoBig({
+            body: '.OwO-body',
+            item: '.OwO-items li'
+        })
+
+        true && barrageTwikoo()
+    }
+
+    const loadTwikoo = () => {
+        if (typeof twikoo === 'object') setTimeout(init,0)
+        else utils.getScript('/js/twikoo.all.min.js').then(init)
+    }
+
+    if ('Twikoo' === 'Twikoo' || true) {
+        if (true) utils.loadComment(document.getElementById('twikoo-wrap'), loadTwikoo)
+        else loadTwikoo()
+    } else {
+        window.loadTwoComment = loadTwikoo
+    }
+})()
+</script><script>async function barrageTwikoo() {
+    await fetch("https://comment.nfasystem.top", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            event: "COMMENT_GET",
+            accessToken: "",
+            url: window.location.pathname
+        })
+    }).then(async res => {
+        if (!res.ok) throw new Error("HTTP error! status: " + res.status)
+        const data = await res.json();
+        const init = () => {
+            initializeCommentBarrage((data.data).map(item => Object.assign({
+                content: item.comment,
+                nick: item.nick,
+                mailMd5: item.mailMd5,
+                id: item.id
+            })))
+        }
+        if (typeof initializeCommentBarrage === "undefined") await utils.getScript('/js/third_party/barrage.min.js?v=3.0.21').then(init)
+        else init()
+    }).catch(error => console.error("An error occurred while fetching comments: ", error))
+}</script><script>mermaid.run();
+</script></div></div><!-- pjax--><script>let pjax = null;
+
+function initPjax() {
+    if (typeof Pjax === 'undefined') {
+        console.warn('Pjax is not loaded yet, retrying...');
+        setTimeout(initPjax, 100);
+        return;
+    }
+
+    pjax = new Pjax({
+        elements: 'a:not([target="_blank"])',
+        selectors: ["title","#body-wrap","#site-config","meta[name=\"description\"]",".js-pjax","meta[property^=\"og:\"]","#config-diff",".rs_show",".rs_hide"],
+        cacheBust: false,
+        analytics: false,
+        scrollRestoration: false
+    })
+
+    // 将 pjax 实例挂载到全局
+    window.pjax = pjax;
+
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+        const newScript = document.createElement('script')
+        const content = item.text || item.textContent || item.innerHTML || ""
+        Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+        newScript.appendChild(document.createTextNode(content))
+        item.parentNode.replaceChild(newScript, item)
+    })
+
+    document.addEventListener('pjax:complete', () => {
+        window.refreshFn()
+
+        document.querySelectorAll('script[data-pjax]').forEach(item => {
+            const newScript = document.createElement('script')
+            const content = item.text || item.textContent || item.innerHTML || ""
+            Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+            newScript.appendChild(document.createTextNode(content))
+            item.parentNode.replaceChild(newScript, item)
+        })
+
+        GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+    })
+
+    document.addEventListener('pjax:error', (e) => {
+        if (e.request.status === 404) {
+            pjax.loadUrl('/404.html')
+        }
+    })
+}
+
+// 初始化 Pjax
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initPjax);
+} else {
+    initPjax();
+}</script><!-- google adsense--><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><button class="search-close-button"><i class="solitude fas fa-xmark"></i></button></nav><div class="search-wrap"><div class="search-box"><input class="search-box-input" id="search-input" type="text" autocomplete="off" spellcheck="false" autocorrect="off" autocapitalize="off" placeholder="输入关键词快速查找"></div><div id="search-results"><div id="search-hits"><a class="tag-list" href="javascript:void(0);" onclick="pjax.loadUrl('/tags/Unity/')">Unity</a><a class="tag-list" href="javascript:void(0);" onclick="pjax.loadUrl('/tags/%E7%AE%97%E6%B3%95/')">算法</a></div></div><div id="search-pagination"></div><div id="search-tips"></div></div></div><div id="search-mask"></div></div><script src="/js/search/local.js?v=3.0.21"></script><div><div class="needEndHide" id="nav-music"><div id="nav-music-hoverTips"><i class="music-control-btn fas fa-backward-step" id="music-prev" onclick="sco.musicSkipBack()"></i><i class="music-control-btn fas fa-pause" id="music-pause" onclick="sco.musicToggle()"></i><i class="music-control-btn fas fa-play" id="music-play" onclick="sco.musicToggle()"></i><i class="music-control-btn fas fa-forward-step" id="music-next" onclick="sco.musicSkipForward()"></i></div><meting-js id="13944001327" server="netease" type="playlist" mutex="true" preload="none" theme="var(--efu-main)" data-lrctype="0" order="random" volume="0.5"></meting-js></div></div></body></html>
+        <script>
+            const posts = ["posts/81s2cdc0/","posts/6491732a/","posts/80d20dc4/","posts/3da49ae6/","posts/113e6e00/","posts/9cf22d8b/","posts/a1373671/","posts/95bdd374/","posts/82e0ee2a/","posts/7eb38127/","posts/ec87c3ca/","posts/fc4aea50/","posts/a266d19c/","posts/878304ff/","posts/8596feee/","posts/efdc60b2/"];
+            function toRandomPost() {
+                const randomPost = posts[Math.floor(Math.random() * posts.length)];
+                pjax.loadUrl(GLOBAL_CONFIG.root + randomPost);
+            }
+        </script>
